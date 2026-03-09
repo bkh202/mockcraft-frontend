@@ -66,11 +66,10 @@ import PortfolioPage from "../pages/portfoliobuilder/components/PortfolioPage";
 import PortfolioDashboard from "../pages/dashboard/PortfolioDashboard";
 
 
-import PreviewPortfolio from "../pages/portfoliobuilder/components/PreviewPortfolio";
-import AnalyzerDashboard from "../pages/dashboard/AnalyzerDashboard";
+
+
 import ResumeAnalyzerPage from "../resumeanalyzer/components/ResumeAnalyzerPage";
 import ScanHistory from "../resumeanalyzer/components/ScanHistory";
-import VoiceInterviewRoom from "../aiInterview/componenets/VoiceInterviewRoom";
 import InterviewSetup from "../aiInterview/componenets/InterviewSetup";
 import InterviewEvaluation from "../aiInterview/componenets/InterviewEvaluation";
 import UpgradePage from "../payment/UpgradePage";
