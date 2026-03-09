@@ -1,0 +1,145 @@
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "../../api/axiosInstance";
+
+export default function PortfolioNavbar() {
+  const [user, setUser] = useState(null);
+  const [showProfileMenu, setShowProfileMenu] = useState(false);
+  const [showMobileMenu, setShowMobileMenu] = useState(false);
+  const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    // Fetch user details
+    axios.get("/user/me")
+      .then(res => setUser(res.data))
+      .catch(err => console.log(err));
+  }, []);
+
+  const handleLogout = () => {
+    localStorage.removeItem("token");
+    navigate("/login");
+  };
+
+  const navLinks = [
+    { label: "Dashboard", icon: "📊", path: "/portfolio/dashboard" },
+    { label: "My Portfolios", icon: "💼", path: "/portfolio/my" },
+    { label: "Resumes", icon: "📄", path: "/portfolio/resumes" },
+    { label: "Templates", icon: "🎨", path: "/portfolio/templates" },
+  ];
+
+  return (
+    <nav className="sticky top-0 z-50 bg-white/95 backdrop-blur-lg border-b border-gray-200 shadow-sm">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex h-16 items-center justify-between">
+          
+          {/* Left: Logo and Brand */}
+          <div className="flex items-center">
+            <button
+              onClick={() => setShowMobileMenu(!showMobileMenu)}
+              className="lg:hidden mr-3 p-2 rounded-lg hover:bg-gray-100"
+            >
+              <svg className="w-6 h-6 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h16" />
+              </svg>
+            </button>
+
+            <Link to="/portfolio/dashboard" className="flex items-center gap-3">
+              <div className="relative">
+                <div className="w-10 h-10 rounded-xl bg-linear-to-br from-indigo-600 to-purple-600 flex items-center justify-center shadow-md">
+                  <span className="text-white font-bold text-lg">MC</span>
+                </div>
+                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white"></div>
+              </div>
+              <div className="hidden md:block">
+                <h1 className="text-xl font-bold bg-linear-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
+                  Portfolio Builder
+                </h1>
+                <p className="text-xs text-gray-500 font-medium">by MockCraft</p>
+              </div>
+            </Link>
+
+            {/* Desktop Navigation */}
+            <div className="hidden lg:flex ml-10 items-center space-x-2">
+              {navLinks.map((item) => {
+                const isActive = location.pathname.includes(item.path);
+                return (
+                  <Link
+                    key={item.label}
+                    to={item.path}
+                    className={`flex items-center gap-2 px-4 py-2 text-sm font-medium rounded-lg transition-all ${
+                      isActive 
+                        ? "text-indigo-700 bg-indigo-50 shadow-sm" 
+                        : "text-gray-600 hover:text-indigo-600 hover:bg-gray-50"
+                    }`}
+                  >
+                    <span>{item.icon}</span>
+                    {item.label}
+                  </Link>
+                );
+              })}
+            </div>
+          </div>
+
+          {/* Right: User Profile */}
+          <div className="flex items-center gap-4">
+            <Link 
+              to="/portfolio/create" 
+              className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition shadow-sm"
+            >
+              <span>✨</span> Create New
+            </Link>
+
+            <div className="relative">
+              <button
+                onClick={() => setShowProfileMenu(!showProfileMenu)}
+                className="flex items-center gap-3 p-1 rounded-full hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-all"
+              >
+                <div className="w-9 h-9 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-700 font-bold border border-indigo-200">
+                  {user?.fullName?.charAt(0) || "U"}
+                </div>
+              </button>
+
+              {/* Profile Dropdown */}
+              {showProfileMenu && (
+                <div className="absolute right-0 mt-2 w-64 bg-white rounded-xl shadow-xl border border-gray-100 py-2 z-50">
+                  <div className="px-4 py-3 border-b border-gray-50">
+                    <p className="text-sm font-bold text-gray-900">{user?.fullName || "Awesome User"}</p>
+                    <p className="text-xs text-gray-500 truncate">{user?.email || "user@mockcraft.com"}</p>
+                  </div>
+                  <div className="p-2">
+                    <button onClick={handleLogout} className="flex items-center gap-3 w-full px-3 py-2 text-sm text-red-600 font-medium hover:bg-red-50 rounded-lg transition-colors">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                      </svg>
+                      Logout
+                    </button>
+                  </div>
+                </div>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Menu */}
+      {showMobileMenu && (
+        <div className="lg:hidden border-t border-gray-100 bg-white">
+          <div className="px-4 py-3 space-y-1">
+            {navLinks.map((item) => (
+              <Link
+                key={item.label}
+                to={item.path}
+                className="flex items-center gap-3 px-4 py-3 text-sm font-medium text-gray-700 hover:text-indigo-600 hover:bg-indigo-50 rounded-xl transition-colors"
+                onClick={() => setShowMobileMenu(false)}
+              >
+                <span className="text-lg">{item.icon}</span>
+                {item.label}
+              </Link>
+            ))}
+          </div>
+        </div>
+      )}
+    </nav>
+  );
+}
