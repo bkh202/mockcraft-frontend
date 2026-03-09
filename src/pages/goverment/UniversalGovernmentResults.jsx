@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosInstance";
 import { CheckCircle, XCircle, Clock, Award } from "lucide-react";
 
-export default function GovernmentResults() {
+export default function UniversalGovernmentResults() {
   const { attemptId } = useParams();
   const navigate = useNavigate();
   const [resultData, setResultData] = useState(null);

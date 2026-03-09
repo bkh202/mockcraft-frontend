@@ -23,15 +23,15 @@ import VerbalAbility from "../pages/aptitude/VerbalAbility";
 import GovernmentHome from "../pages/goverment/GovernmentHome";
 import MedicalHome from "../pages/medical/MedicalHome";
 import NeetHome from "../pages/medical/NeetHome";
-import UniversalAptitudeResults from "../Pages/aptitude/UniversalAptitudeResults";
-import UniversalEngineeringResults from "../Pages/engineering/UniversalEngineeringResults";
+
+
 import PhysicsPage from "../pages/medical/physics/PhysicsPage";
-import UniversalNEETResults from "../pages/medical/UniversalNEETResults";
+
 import ChemistryPage from "../pages/medical/chemistry/ChemistryPage";
 import BiologyPage from "../pages/medical/biology/BiologyPage";
 
 import ReasoningPage from "../pages/goverment/branches/reasoning/ReasoningPage";
-import UniversalGovernmentResults from "../pages/goverment/UniversalGovernmentResults";
+
 import EnglishPage from "../pages/goverment/branches/english/EnglishPage";
 import GeneralAwarenessPage from "../pages/goverment/branches/general/GeneralAawarenessPage";
 import Unauthorized from "../pages/Unauthorized";
@@ -66,7 +66,10 @@ import PortfolioPage from "../pages/portfoliobuilder/components/PortfolioPage";
 import PortfolioDashboard from "../pages/dashboard/PortfolioDashboard";
 
 
-
+import UniversalAptitudeResults from "../pages/aptitude/UniversalAptitudeResults";
+import UniversalEngineeringResults from "../pages/engineering/UniversalEngineeringResults";
+import UniversalNEETResults from "../pages/medical/UniversalNEETResults";
+import UniversalGovernmentResults from "../pages/goverment/UniversalGovernmentResults";
 
 import ResumeAnalyzerPage from "../resumeanalyzer/components/ResumeAnalyzerPage";
 import ScanHistory from "../resumeanalyzer/components/ScanHistory";

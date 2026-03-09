@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 import { CheckCircle, XCircle, Clock, Award } from "lucide-react";
 import axiosInstance from "../../api/axiosInstance";
 
-export default function NEETResults() {
+export default function UniversalNEETResults() {
   const { attemptId } = useParams();
   const navigate = useNavigate();
   const [resultData, setResultData] = useState(null);
