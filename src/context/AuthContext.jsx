@@ -37,20 +37,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (token, email, role) => {
-    // ✅ FIX: Hamesha localStorage — sessionStorage nahi
-    // Purani condition galat thi:
-    // "localStorage mein token hai? localStorage : sessionStorage"
-    // Pehli baar login pe localStorage empty hota tha
-    // → sessionStorage mein save hota tha
-    // → PremiumRoute localStorage check karta tha → token nahi milta → /login!
+  const login = async (token, email, role, refreshToken) => {
     localStorage.setItem("accessToken", token);
     localStorage.setItem("email", email);
     localStorage.setItem("role", role);
+    if (refreshToken) localStorage.setItem("refreshToken", refreshToken); // ✅ ADD
 
     setAuthToken(token);
     await loadUser();
-  };
+};
 
   const logout = () => {
     localStorage.removeItem("accessToken");

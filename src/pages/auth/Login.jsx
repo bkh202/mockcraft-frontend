@@ -62,7 +62,7 @@ const Login = () => {
     
     // Use the login function from AuthContext
     if (login) {
-      await login(accessToken, email, role);
+       await login(accessToken, email, role, refreshToken);
       console.log("AuthContext login successful");
     } else {
       // Fallback if login function not available
