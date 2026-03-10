@@ -53,8 +53,13 @@ const Dashboard = () => {
 
   const getTierFromToken = () => {
     try {
+      // ✅ Trial active users ko bhi allow karo
+      const hasPremiumAccess = localStorage.getItem("hasPremiumAccess");
+      if (hasPremiumAccess === "true") return true;
+
       const saved = localStorage.getItem("userTier");
       if (saved === "PREMIUM") return true;
+
       const token = localStorage.getItem("accessToken");
       if (!token) return false;
       const payload = JSON.parse(atob(token.split(".")[1]));
@@ -218,8 +223,8 @@ const Dashboard = () => {
                         <path d="M10 2a5 5 0 00-5 5v2a2 2 0 00-2 2v5a2 2 0 002 2h10a2 2 0 002-2v-5a2 2 0 00-2-2H7V7a3 3 0 016 0v1h2V7a5 5 0 00-5-5z" />
                       </svg>
                     </div>
-                    <div className="absolute inset-0 bg-slate-900/40 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center">
-                      <span className="bg-amber-400 text-slate-950 text-xs font-black px-3 py-1.5 rounded-full shadow-lg">Unlock Access</span>
+                    <div className="absolute inset-0 bg-slate-900/40 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center pointer-events-none">
+                      <span className="bg-amber-400 text-slate-950 text-xs font-black px-3 py-1.5 rounded-full shadow-lg pointer-events-auto">Unlock Access</span>
                     </div>
                   </>
                 )}
