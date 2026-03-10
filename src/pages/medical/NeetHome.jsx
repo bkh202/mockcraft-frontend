@@ -72,49 +72,7 @@ export default function NeetHome() {
       {/* Main Content */}
       <div className="max-w-7xl mx-auto">
         {/* Progress Overview */}
-        <div className="mb-8 bg-white rounded-2xl p-6 shadow-lg border border-gray-200">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h2 className="text-xl font-bold text-gray-900">Your Progress</h2>
-              <p className="text-gray-600">Overall completion: 68%</p>
-            </div>
-            <button className="bg-linear-to-r from-green-600 to-emerald-600 text-white px-5 py-2.5 rounded-xl font-medium hover:shadow-lg transition-all duration-300">
-              Resume Learning
-            </button>
-          </div>
-          
-          <div className="space-y-4">
-            <div>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="font-medium">Biology</span>
-                <span className="text-gray-600">72%</span>
-              </div>
-              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-green-500 rounded-full" style={{ width: '72%' }}></div>
-              </div>
-            </div>
-            
-            <div>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="font-medium">Chemistry</span>
-                <span className="text-gray-600">65%</span>
-              </div>
-              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-purple-500 rounded-full" style={{ width: '65%' }}></div>
-              </div>
-            </div>
-            
-            <div>
-              <div className="flex justify-between text-sm mb-1">
-                <span className="font-medium">Physics</span>
-                <span className="text-gray-600">58%</span>
-              </div>
-              <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-                <div className="h-full bg-blue-500 rounded-full" style={{ width: '58%' }}></div>
-              </div>
-            </div>
-          </div>
-        </div>
+      
 
         {/* Subject Cards */}
         <div className="mb-10">

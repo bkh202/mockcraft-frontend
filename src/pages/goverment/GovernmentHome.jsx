@@ -48,13 +48,7 @@ export default function GovernmentHome() {
     }
   ];
 
-  const examCategories = [
-    { name: "SSC CGL", color: "bg-blue-100", icon: "📝" },
-    { name: "SSC CHSL", color: "bg-green-100", icon: "📋" },
-    { name: "Railway", color: "bg-purple-100", icon: "🚂" },
-    { name: "Banking", color: "bg-yellow-100", icon: "💰" },
-    { name: "UPSC", color: "bg-red-100", icon: "🏛️" },
-  ];
+  
 
   return (
     <div className="p-4 md:p-6">
