@@ -132,26 +132,7 @@ export default function GovernmentHome() {
         </div>
       </div>
 
-      {/* Exam Categories Quick Access */}
-      <div className="mb-10">
-        <h2 className="text-2xl font-bold text-gray-900 mb-6">
-          Popular Government Exams
-        </h2>
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4">
-          {examCategories.map((exam, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl border border-gray-200 p-4 text-center"
-            >
-              <div className={`w-12 h-12 ${exam.color} rounded-lg flex items-center justify-center mb-3 mx-auto`}>
-                <span className="text-xl">{exam.icon}</span>
-              </div>
-              <h3 className="font-semibold text-gray-900 mb-1">{exam.name}</h3>
-              <p className="text-sm text-gray-600">{exam.count}</p>
-            </div>
-          ))}
-        </div>
-      </div>
+    
 
       {/* Subject Cards */}
       <div className="mb-12">
