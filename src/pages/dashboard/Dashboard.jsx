@@ -32,7 +32,7 @@ const UpgradePopup = ({ feature, onClose }) => (
       <p className="text-slate-500 mb-5 text-sm font-medium">Get access to {feature?.title || "this feature"} and supercharge your preparation.</p>
       <div className="flex gap-3">
         <button onClick={onClose} className="flex-1 px-4 py-3 border border-slate-200 rounded-xl text-slate-700 font-bold hover:bg-slate-50 transition-colors text-sm">Cancel</button>
-        <button className="flex-1 px-4 py-3 bg-gradient-to-r from-amber-400 to-orange-500 text-white font-black rounded-xl hover:opacity-90 transition-opacity shadow-lg text-sm">Upgrade Now</button>
+        <button className="flex-1 px-4 py-3 bg-linear-to-r from-amber-400 to-orange-500 text-white font-black rounded-xl hover:opacity-90 transition-opacity shadow-lg text-sm">Upgrade Now</button>
       </div>
     </div>
   </div>
@@ -124,13 +124,13 @@ const Dashboard = () => {
 
         {/* ── 1. HEADER ── */}
         <div className="bg-white rounded-2xl sm:rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
-          <div className="p-4 sm:p-6 lg:p-8 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-gradient-to-r from-white to-blue-50/50">
+          <div className="p-4 sm:p-6 lg:p-8 border-b border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-4 bg-linear-to-r from-white to-blue-50/50">
             <div className="min-w-0">
               <div className="inline-flex items-center gap-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-bold uppercase tracking-wider mb-2">
                 <span className="w-1.5 h-1.5 rounded-full bg-blue-600 animate-pulse"></span> Student Dashboard
               </div>
               <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-slate-900 tracking-tight truncate">
-                Welcome, <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-600 to-indigo-600">{dashboard?.profile?.name || "Learner"}</span>!
+                Welcome, <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-600 to-indigo-600">{dashboard?.profile?.name || "Learner"}</span>!
               </h1>
               <p className="text-slate-500 font-medium mt-1 text-sm">Here is your learning trajectory for today.</p>
             </div>
@@ -154,7 +154,7 @@ const Dashboard = () => {
         </div>
 
         {/* ── 2. AI LEARNING PATH ── */}
-        <div className="bg-gradient-to-br from-indigo-900 to-slate-900 rounded-2xl sm:rounded-3xl shadow-lg p-0.5 relative overflow-hidden">
+        <div className="bg-linear-to-br from-indigo-900 to-slate-900 rounded-2xl sm:rounded-3xl shadow-lg p-0.5 relative overflow-hidden">
           <div className="absolute top-0 right-0 w-48 h-48 bg-blue-500/20 blur-[60px] rounded-full pointer-events-none"></div>
           <div className="bg-slate-900/80 backdrop-blur-md rounded-[20px] sm:rounded-[22px] p-4 sm:p-6 lg:p-8 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 relative z-10 border border-white/10">
             <div className="min-w-0 flex-1">
@@ -186,14 +186,14 @@ const Dashboard = () => {
         </div>
 
         {/* ── 3. PREMIUM MODULES ── */}
-        <div className="bg-gradient-to-b from-amber-50 to-white rounded-2xl sm:rounded-3xl shadow-sm border border-amber-200/60 overflow-hidden">
+        <div className="bg-linear-to-b from-amber-50 to-white rounded-2xl sm:rounded-3xl shadow-sm border border-amber-200/60 overflow-hidden">
           <div className="p-4 sm:p-6 border-b border-amber-100 flex flex-col xs:flex-row xs:items-center justify-between gap-3">
             <div>
               <h2 className="text-lg sm:text-xl font-black text-slate-900 mb-0.5 flex items-center gap-2">✨ Pro Tools</h2>
               <p className="text-slate-500 font-medium text-xs sm:text-sm">Gain the unfair advantage in your career journey.</p>
             </div>
             {!isPremium() && (
-              <span className="inline-flex items-center px-3 py-1.5 bg-gradient-to-r from-amber-400 to-orange-500 text-white rounded-xl text-xs font-black shadow-md self-start xs:self-auto shrink-0">
+              <span className="inline-flex items-center px-3 py-1.5 bg-linear-to-r from-amber-400 to-orange-500 text-white rounded-xl text-xs font-black shadow-md self-start xs:self-auto shrink-0">
                 UPGRADE REQUIRED
               </span>
             )}
