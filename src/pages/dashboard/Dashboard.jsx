@@ -24,19 +24,27 @@ const CategoryCard = ({ title, count, color, link }) => (
   </Link>
 );
 
-const UpgradePopup = ({ feature, onClose }) => (
-  <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-    <div className="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl">
-      <div className="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">⭐</div>
-      <h2 className="text-xl font-black text-slate-900 mb-2">Unlock Premium</h2>
-      <p className="text-slate-500 mb-5 text-sm font-medium">Get access to {feature?.title || "this feature"} and supercharge your preparation.</p>
-      <div className="flex gap-3">
-        <button onClick={onClose} className="flex-1 px-4 py-3 border border-slate-200 rounded-xl text-slate-700 font-bold hover:bg-slate-50 transition-colors text-sm">Cancel</button>
-        <button className="flex-1 px-4 py-3 bg-linear-to-r from-amber-400 to-orange-500 text-white font-black rounded-xl hover:opacity-90 transition-opacity shadow-lg text-sm">Upgrade Now</button>
+const UpgradePopup = ({ feature, onClose }) => {
+  const navigate = useNavigate(); // ✅ ADD
+
+  return (
+    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-[99999] p-4">
+      <div className="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl">
+        <div className="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">⭐</div>
+        <h2 className="text-xl font-black text-slate-900 mb-2">Unlock Premium</h2>
+        <p className="text-slate-500 mb-5 text-sm font-medium">Get access to {feature?.title || "this feature"}.</p>
+        <div className="flex gap-3">
+          <button onClick={onClose} className="flex-1 px-4 py-3 border border-slate-200 rounded-xl text-slate-700 font-bold hover:bg-slate-50 text-sm">Cancel</button>
+          <button
+            onClick={() => { onClose(); navigate('/upgrade'); }} // ✅ FIX
+            className="flex-1 px-4 py-3 bg-linear-to-r from-amber-400 to-orange-500 text-white font-black rounded-xl text-sm">
+            Upgrade Now
+          </button>
+        </div>
       </div>
     </div>
-  </div>
-);
+  );
+};
 
 const Dashboard = () => {
   const [dashboard, setDashboard] = useState(null);
