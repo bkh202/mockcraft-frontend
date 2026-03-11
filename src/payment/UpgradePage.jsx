@@ -15,7 +15,7 @@ const FEATURES = [
 
 export default function UpgradePage() {
   const navigate = useNavigate();
-  const { user } = useAuth(); 
+ const { user, loadUser } = useAuth(); 
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [step,    setStep]    = useState(null);
@@ -31,7 +31,6 @@ export default function UpgradePage() {
   }, [user, navigate]);
 
   const handleUpgrade = async () => {
-    const { loadUser } = useAuth();
     setLoading(true);
     setError(null);
     setStep(0);
@@ -41,17 +40,32 @@ export default function UpgradePage() {
       setStep(1);
       await new Promise((r) => setTimeout(r, 600));
 
-      const verifyRes = await axios.post("/api/payment/verify", { orderId: order.orderId });
+      const verifyRes = await axios.post("/api/payment/verify", { 
+        orderId: order.orderId 
+      });
       const result = verifyRes.data;
       if (!result.success) throw new Error(result.error || "Verification failed");
 
       setStep(2);
-      await new Promise((r) => setTimeout(r, 500));
 
-      localStorage.setItem("userTier",          "PREMIUM");
-      localStorage.setItem("hasPremiumAccess",  "true");
-      localStorage.setItem("trialActive",       "false");
+      // ✅ ADD: Backend mein tier update karo
+      const upgradeRes = await axios.post("/auth/upgrade-to-premium");
+      
+      // ✅ Naya access token save karo (PREMIUM tier embedded hai)
+      if (upgradeRes.data.accessToken) {
+        const storage = localStorage.getItem("accessToken") 
+          ? localStorage 
+          : sessionStorage;
+        storage.setItem("accessToken", upgradeRes.data.accessToken);
+      }
+
+      localStorage.setItem("userTier",         "PREMIUM");
+      localStorage.setItem("hasPremiumAccess", "true");
+      localStorage.setItem("trialActive",      "false");
+      
+      // ✅ AuthContext refresh karo
       await loadUser();
+      
       setSuccess(true);
     } catch (err) {
       setError(err.response?.data?.error || err.message || "Something went wrong");
@@ -59,7 +73,7 @@ export default function UpgradePage() {
     } finally {
       setLoading(false);
     }
-  };
+};
 
   const steps = ["Order", "Payment", "Activated"];
 
