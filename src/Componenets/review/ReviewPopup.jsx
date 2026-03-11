@@ -1,6 +1,6 @@
 // components/ReviewPopup.jsx
 import { useState } from "react";
-import axiosInstance from "../api/axiosInstance";
+import axiosInstance from "../../api/axiosInstance";
 
 export default function ReviewPopup({ onClose }) {
   const [rating, setRating] = useState(0);
