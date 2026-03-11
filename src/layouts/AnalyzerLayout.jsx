@@ -1,5 +1,5 @@
 import { Outlet, useNavigate } from "react-router-dom";
- // Tera existing navbar
+// Tera existing navbar
 import AnalyzerNavbar from "../Componenets/nav/AnalyzerNavbar";
 
 export default function AnalyzerLayout() {
@@ -11,7 +11,7 @@ export default function AnalyzerLayout() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          
+
           {/* MAIN CONTENT AREA (Yahan tera ResumeAnalyzerPage render hoga) */}
           <main className="lg:col-span-3">
             <Outlet />
@@ -19,14 +19,14 @@ export default function AnalyzerLayout() {
 
           {/* RIGHT SIDEBAR (ATS Tools & Info) */}
           <aside className="space-y-6 hidden lg:block">
-            
+
             {/* Quick Actions */}
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-slate-700">
               <h3 className="font-bold text-gray-900 dark:text-white mb-4 flex items-center gap-2">
                 ⚡ Analyzer Tools
               </h3>
               <div className="space-y-3">
-                <button 
+                <button
                   onClick={() => navigate('/resume-analyzer')}
                   className="w-full flex items-center p-3 rounded-xl hover:bg-teal-50 dark:hover:bg-teal-900/20 text-left transition-colors border border-transparent hover:border-teal-100 dark:hover:border-teal-800 group"
                 >
@@ -38,7 +38,7 @@ export default function AnalyzerLayout() {
                   </div>
                 </button>
 
-                <button 
+                <button
                   onClick={() => navigate('/analyzer/history')}
                   className="w-full flex items-center p-3 rounded-xl hover:bg-indigo-50 dark:hover:bg-indigo-900/20 text-left transition-colors border border-transparent hover:border-indigo-100 dark:hover:border-indigo-800 group"
                 >
@@ -51,7 +51,7 @@ export default function AnalyzerLayout() {
                 </button>
 
                 {/* AI Interview Teaser (Next Module) */}
-                <button 
+                <button
                   onClick={() => navigate('/ai-mock-interview')}
                   className="w-full flex items-center p-3 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-900/20 text-left transition-colors border border-transparent hover:border-rose-100 dark:hover:border-rose-800 group"
                 >
@@ -62,13 +62,15 @@ export default function AnalyzerLayout() {
                     <span className="text-sm font-semibold text-gray-700 dark:text-slate-300 group-hover:text-rose-700 dark:group-hover:text-rose-400">AI Interview Prep</span>
                   </div>
                 </button>
-                 <button 
+                <button
                   onClick={() => navigate('/resume-to-portfolio-dashboard')}
                   className="w-full flex items-center p-3 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-900/20 text-left transition-colors border border-transparent hover:border-rose-100 dark:hover:border-rose-800 group"
                 >
                   <div className="flex items-center gap-3">
                     <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:bg-rose-600 group-hover:text-white transition-colors">
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                      </svg>
                     </div>
                     <span className="text-sm font-semibold text-gray-700 dark:text-slate-300 group-hover:text-rose-700 dark:group-hover:text-rose-400">Portfolio Builder</span>
                   </div>
@@ -78,18 +80,20 @@ export default function AnalyzerLayout() {
 
             {/* AI Scan Limits Widget */}
             <div className="bg-white dark:bg-slate-800 rounded-2xl shadow-sm p-6 border border-gray-100 dark:border-slate-700">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-sm font-bold text-gray-900 dark:text-white">AI Deep Scans</h3>
-                <span className="text-xs font-bold text-teal-600 bg-teal-50 dark:bg-teal-900/30 dark:text-teal-400 px-2 py-1 rounded-md">FREE PLAN</span>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 bg-teal-50 dark:bg-teal-900/30 text-teal-600 rounded-xl flex items-center justify-center text-xl">
+                  💡
+                </div>
+                <h3 className="text-sm font-bold text-gray-900 dark:text-white">Pro Tip</h3>
               </div>
-              <p className="text-xs text-gray-500 dark:text-slate-400 mb-4">You have used 1 out of 5 free resume scans today.</p>
-              
-              <div className="w-full bg-gray-100 dark:bg-slate-700 rounded-full h-2 mb-2 overflow-hidden">
-                <div className="bg-linear-to-r from-teal-400 to-emerald-500 h-2 rounded-full w-1/5"></div>
+              <p className="text-xs text-gray-600 dark:text-slate-400 leading-relaxed">
+                Tailor your resume for each job — match keywords from the job description to improve your ATS score significantly.
+              </p>
+              <div className="mt-4 pt-3 border-t border-gray-100 dark:border-slate-700">
+                <p className="text-xs font-semibold text-teal-600 dark:text-teal-400">
+                  ✨ Upload your resume to get AI-powered feedback
+                </p>
               </div>
-              <button className="w-full mt-4 text-xs font-bold text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
-                Upgrade to Pro for Unlimited Scans ↗
-              </button>
             </div>
 
             {/* ATS Pro Tip */}

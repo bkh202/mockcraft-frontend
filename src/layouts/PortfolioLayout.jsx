@@ -10,7 +10,7 @@ export default function PortfolioLayout() {
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
-          
+
           {/* MAIN CONTENT AREA */}
           <main className="lg:col-span-3">
             {/* Yahan par tera Dashboard, Edit Page, ya Create Page render hoga */}
@@ -19,14 +19,14 @@ export default function PortfolioLayout() {
 
           {/* RIGHT SIDEBAR (Tools & Info) */}
           <aside className="space-y-6 hidden lg:block">
-            
+
             {/* Quick Actions */}
             <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
               <h3 className="font-bold text-gray-900 mb-4 flex items-center gap-2">
                 ⚡ Quick Actions
               </h3>
               <div className="space-y-3">
-                <button 
+                <button
                   onClick={() => navigate('/ai-mock-interview')}
                   className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-indigo-50 text-left transition-colors border border-transparent hover:border-indigo-100 group"
                 >
@@ -38,7 +38,7 @@ export default function PortfolioLayout() {
                   </div>
                 </button>
 
-                <button 
+                <button
                   onClick={() => navigate('/resume-analyzer')}
                   className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-emerald-50 text-left transition-colors border border-transparent hover:border-emerald-100 group"
                 >
@@ -54,18 +54,20 @@ export default function PortfolioLayout() {
 
             {/* Storage / Limits Widget */}
             <div className="bg-white rounded-2xl shadow-sm p-6 border border-gray-100">
-              <div className="flex items-center justify-between mb-2">
-                <h3 className="text-sm font-bold text-gray-900">Workspace Usage</h3>
-                <span className="text-xs font-bold text-indigo-600 bg-indigo-50 px-2 py-1 rounded-md">FREE PLAN</span>
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 bg-indigo-50 text-indigo-600 rounded-xl flex items-center justify-center text-xl">
+                  🚀
+                </div>
+                <h3 className="text-sm font-bold text-gray-900">Portfolio Tip</h3>
               </div>
-              <p className="text-xs text-gray-500 mb-4">You have used 2 out of 5 free portfolios.</p>
-              
-              <div className="w-full bg-gray-100 rounded-full h-2 mb-2 overflow-hidden">
-                <div className="bg-linear-to-r from-indigo-500 to-purple-500 h-2 rounded-full w-2/5"></div>
+              <p className="text-xs text-gray-600 leading-relaxed">
+                A strong portfolio increases your chances of getting shortlisted by <span className="font-bold text-indigo-600">3x</span>. Add your best projects with live links and GitHub repos.
+              </p>
+              <div className="mt-4 pt-3 border-t border-gray-100">
+                <p className="text-xs font-semibold text-indigo-600">
+                  ✨ Build your portfolio from resume in 1 click
+                </p>
               </div>
-              <button className="w-full mt-4 text-xs font-bold text-gray-500 hover:text-indigo-600 transition-colors">
-                Upgrade to Pro ↗
-              </button>
             </div>
 
             {/* AI Pro Tip */}
