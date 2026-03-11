@@ -34,7 +34,7 @@ export default function PortfolioLayout() {
                     <div className="w-8 h-8 rounded-lg bg-indigo-100 text-indigo-600 flex items-center justify-center group-hover:bg-indigo-600 group-hover:text-white transition-colors">
                       +
                     </div>
-                    <span className="text-sm font-semibold text-gray-700 group-hover:text-indigo-700">New Portfolio</span>
+                    <span className="text-sm font-semibold text-gray-700 group-hover:text-indigo-700">AI Interview</span>
                   </div>
                 </button>
 
@@ -46,7 +46,7 @@ export default function PortfolioLayout() {
                     <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center group-hover:bg-emerald-600 group-hover:text-white transition-colors">
                       📄
                     </div>
-                    <span className="text-sm font-semibold text-gray-700 group-hover:text-emerald-700">Upload Resume</span>
+                    <span className="text-sm font-semibold text-gray-700 group-hover:text-emerald-700">Resume Analyzer</span>
                   </div>
                 </button>
               </div>
