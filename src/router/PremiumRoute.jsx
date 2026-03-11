@@ -38,10 +38,10 @@ export default function PremiumRoute({ children }) {
       });
   }, []);
 
-  if (status === "loading") {
+if (status === "loading") {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-gray-950">
-        <div className="w-10 h-10 border-4 border-yellow-400 border-t-transparent rounded-full animate-spin" />
+      <div className="min-h-screen flex items-center justify-center bg-gray-50">
+        <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
       </div>
     );
   }
