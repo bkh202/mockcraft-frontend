@@ -62,6 +62,17 @@ export default function AnalyzerLayout() {
                     <span className="text-sm font-semibold text-gray-700 dark:text-slate-300 group-hover:text-rose-700 dark:group-hover:text-rose-400">AI Interview Prep</span>
                   </div>
                 </button>
+                 <button 
+                  onClick={() => navigate('/resume-to-portfolio-dashboard')}
+                  className="w-full flex items-center p-3 rounded-xl hover:bg-rose-50 dark:hover:bg-rose-900/20 text-left transition-colors border border-transparent hover:border-rose-100 dark:hover:border-rose-800 group"
+                >
+                  <div className="flex items-center gap-3">
+                    <div className="w-8 h-8 rounded-lg bg-rose-100 dark:bg-rose-900/50 text-rose-600 dark:text-rose-400 flex items-center justify-center group-hover:bg-rose-600 group-hover:text-white transition-colors">
+                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 11a7 7 0 01-7 7m0 0a7 7 0 01-7-7m7 7v4m0 0H8m4 0h4m-4-8a3 3 0 01-3-3V5a3 3 0 116 0v6a3 3 0 01-3 3z" /></svg>
+                    </div>
+                    <span className="text-sm font-semibold text-gray-700 dark:text-slate-300 group-hover:text-rose-700 dark:group-hover:text-rose-400">Portfolio Builder</span>
+                  </div>
+                </button>
               </div>
             </div>
 
@@ -74,7 +85,7 @@ export default function AnalyzerLayout() {
               <p className="text-xs text-gray-500 dark:text-slate-400 mb-4">You have used 1 out of 5 free resume scans today.</p>
               
               <div className="w-full bg-gray-100 dark:bg-slate-700 rounded-full h-2 mb-2 overflow-hidden">
-                <div className="bg-gradient-to-r from-teal-400 to-emerald-500 h-2 rounded-full w-1/5"></div>
+                <div className="bg-linear-to-r from-teal-400 to-emerald-500 h-2 rounded-full w-1/5"></div>
               </div>
               <button className="w-full mt-4 text-xs font-bold text-gray-500 hover:text-teal-600 dark:hover:text-teal-400 transition-colors">
                 Upgrade to Pro for Unlimited Scans ↗
@@ -82,7 +93,7 @@ export default function AnalyzerLayout() {
             </div>
 
             {/* ATS Pro Tip */}
-            <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700 relative overflow-hidden shadow-lg">
+            <div className="bg-linear-to-br from-slate-900 to-slate-800 rounded-2xl p-6 border border-slate-700 relative overflow-hidden shadow-lg">
               <div className="absolute top-0 right-0 -mt-4 -mr-4 w-24 h-24 bg-teal-500/20 rounded-full blur-2xl"></div>
               <h3 className="font-bold text-white mb-2 flex items-center gap-2 relative z-10">
                 <span className="text-teal-400">💡</span> ATS Secret

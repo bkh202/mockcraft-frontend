@@ -83,7 +83,7 @@ export default function PortfolioNavbar() {
           {/* Right: User Profile */}
           <div className="flex items-center gap-4">
             <Link 
-              to="/portfolio/create" 
+              to="/create" 
               className="hidden md:flex items-center gap-2 px-4 py-2 bg-gray-900 text-white text-sm font-semibold rounded-lg hover:bg-gray-800 transition shadow-sm"
             >
               <span>✨</span> Create New
