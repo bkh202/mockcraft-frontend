@@ -30,7 +30,8 @@ axiosInstance.interceptors.request.use(
   (config) => {
     if (config.url && /\/auth\/(login|signup|refresh|logout)/.test(config.url)) return config;
 
-    const token = localStorage.getItem('accessToken');
+    const token = localStorage.getItem('accessToken')
+      || sessionStorage.getItem('accessToken');
     if (token) {
       config.headers.Authorization = `Bearer ${token}`;
     }

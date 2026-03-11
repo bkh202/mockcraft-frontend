@@ -18,7 +18,8 @@ export const AuthProvider = ({ children }) => {
   const loadUser = async () => {
     // ✅ FIX: Sirf localStorage — sessionStorage nahi
     // Pehle dono check karta tha — inconsistency hoti thi
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("accessToken") 
+             || sessionStorage.getItem("accessToken"); // ← ADD sessionStorage
 
     if (!token) {
       setUser(null);
@@ -37,14 +38,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (token, email, role, refreshToken) => {
-    localStorage.setItem("accessToken", token);
-    localStorage.setItem("email", email);
-    localStorage.setItem("role", role);
-    if (refreshToken) localStorage.setItem("refreshToken", refreshToken); // ✅ ADD
+  const login = async (token, email, role, refreshToken, rememberMe = false) => {
+  const storage = rememberMe ? localStorage : sessionStorage;
 
-    setAuthToken(token);
-    await loadUser();
+  storage.setItem("accessToken", token);
+  storage.setItem("email", email);
+  storage.setItem("role", role);
+  if (refreshToken) storage.setItem("refreshToken", refreshToken);
+
+  setAuthToken(token);
+  await loadUser();
 };
 
   const logout = () => {

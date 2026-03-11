@@ -23,89 +23,90 @@ const Login = () => {
     return Object.keys(newErrors).length === 0;
   };
 
-   const handleSubmit = async (e) => {
-  e.preventDefault();
-  console.log("LOGIN BUTTON CLICKED");
-  setErrors({});
-  setLoading(true);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    console.log("LOGIN BUTTON CLICKED");
+    setErrors({});
+    setLoading(true);
 
-  if (!validateForm()) {
-    setLoading(false);
-    return;
-  }
+    if (!validateForm()) {
+      setLoading(false);
+      return;
+    }
 
-  try {
-    console.log("Request payload:", { email, password });
+    try {
+      console.log("Request payload:", { email, password });
 
-    const response = await axios.post(
-      "/auth/login",
-      {
-        email,
-        password,
-      },
-      {
-        headers: {
-          "Content-Type": "application/json",
+      const response = await axios.post(
+        "/auth/login",
+        {
+          email,
+          password,
+          rememberMe,
         },
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
+        }
+      );
+
+      console.log("API Response:", response.data);
+
+      const { accessToken, refreshToken, role } = response.data;
+
+      if (!accessToken) {
+        throw new Error("Access token not returned by backend");
       }
-    );
 
-    console.log("API Response:", response.data);
-    
-    const { accessToken, refreshToken, role } = response.data;
+      console.log("Tokens received, calling AuthContext login...");
 
-    if (!accessToken) {
-      throw new Error("Access token not returned by backend");
+      // Use the login function from AuthContext
+      if (login) {
+        await login(accessToken, email, role, refreshToken, rememberMe);
+        console.log("AuthContext login successful");
+      } else {
+        // Fallback if login function not available
+        console.warn("login function not found in AuthContext, using fallback");
+        const storage = rememberMe ? localStorage : sessionStorage;
+        storage.setItem("accessToken", accessToken);
+        storage.setItem("email", email);
+        storage.setItem("role", role);
+
+        // Set axios header
+        axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
+
+        // Manually set user
+        setUser({ email, role });
+      }
+
+      console.log("Navigating to /dashboard...");
+      navigate("/dashboard", { replace: true });
+
+    } catch (err) {
+      console.error("LOGIN ERROR FULL:", err);
+      console.error("Error response:", err.response?.data);
+      console.error("Error status:", err.response?.status);
+
+      let errorMessage = "Login failed. Please try again.";
+
+      if (err.response?.status === 401) {
+        errorMessage = "Invalid email or password. Please check your credentials.";
+      } else if (err.response?.status === 403) {
+        errorMessage = "Access forbidden. Please contact support.";
+      } else if (err.response?.data?.error) {
+        errorMessage = err.response.data.error;
+      } else if (err.message) {
+        errorMessage = err.message;
+      } else if (err.code === "ERR_NETWORK") {
+        errorMessage = "Network error. Please check if the backend server is running.";
+      }
+
+      setErrors({ form: errorMessage });
+    } finally {
+      setLoading(false);
     }
-
-    console.log("Tokens received, calling AuthContext login...");
-    
-    // Use the login function from AuthContext
-    if (login) {
-       await login(accessToken, email, role, refreshToken);
-      console.log("AuthContext login successful");
-    } else {
-      // Fallback if login function not available
-      console.warn("login function not found in AuthContext, using fallback");
-      const storage = rememberMe ? localStorage : sessionStorage;
-      storage.setItem("accessToken", accessToken);
-      storage.setItem("email", email);
-      storage.setItem("role", role);
-      
-      // Set axios header
-      axios.defaults.headers.common["Authorization"] = `Bearer ${accessToken}`;
-      
-      // Manually set user
-      setUser({ email, role });
-    }
-    
-    console.log("Navigating to /dashboard...");
-    navigate("/dashboard", { replace: true });
-
-  } catch (err) {
-    console.error("LOGIN ERROR FULL:", err);
-    console.error("Error response:", err.response?.data);
-    console.error("Error status:", err.response?.status);
-    
-    let errorMessage = "Login failed. Please try again.";
-    
-    if (err.response?.status === 401) {
-      errorMessage = "Invalid email or password. Please check your credentials.";
-    } else if (err.response?.status === 403) {
-      errorMessage = "Access forbidden. Please contact support.";
-    } else if (err.response?.data?.error) {
-      errorMessage = err.response.data.error;
-    } else if (err.message) {
-      errorMessage = err.message;
-    } else if (err.code === "ERR_NETWORK") {
-      errorMessage = "Network error. Please check if the backend server is running.";
-    }
-    
-    setErrors({ form: errorMessage });
-  } finally {
-    setLoading(false);
-  }
-};
+  };
 
   return (
     <AuthLayout type="login">
@@ -125,9 +126,8 @@ const Login = () => {
               type="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className={`w-full pl-10 pr-4 py-3 rounded-xl border ${
-                errors.email ? "border-red-300" : "border-gray-300"
-              } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none`}
+              className={`w-full pl-10 pr-4 py-3 rounded-xl border ${errors.email ? "border-red-300" : "border-gray-300"
+                } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none`}
               placeholder="you@example.com"
               disabled={loading}
             />
@@ -150,9 +150,8 @@ const Login = () => {
               type={showPassword ? "text" : "password"}
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className={`w-full pl-4 pr-12 py-3 rounded-xl border ${
-                errors.password ? "border-red-300" : "border-gray-300"
-              } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none`}
+              className={`w-full pl-4 pr-12 py-3 rounded-xl border ${errors.password ? "border-red-300" : "border-gray-300"
+                } focus:ring-2 focus:ring-blue-500 focus:border-blue-500 focus:outline-none`}
               placeholder="Enter your password"
               disabled={loading}
             />
@@ -191,11 +190,10 @@ const Login = () => {
         <button
           type="submit"
           disabled={loading}
-          className={`w-full py-3 font-semibold rounded-xl transition-colors ${
-            loading
+          className={`w-full py-3 font-semibold rounded-xl transition-colors ${loading
               ? "bg-gray-400 cursor-not-allowed"
               : "bg-blue-600 hover:bg-blue-700 text-white"
-          }`}
+            }`}
         >
           {loading ? (
             <span className="flex items-center justify-center">
@@ -220,9 +218,9 @@ const Login = () => {
           </p>
         </div>
       </form>
-      
+
       {/* Debug info - remove in production */}
-     
+
     </AuthLayout>
   );
 };
