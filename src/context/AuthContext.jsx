@@ -38,9 +38,21 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (token, email, role, refreshToken, rememberMe = false) => {
-  const storage = rememberMe ? localStorage : sessionStorage;
+ const login = async (token, email, role, refreshToken, rememberMe = false) => {
+  
+  // ✅ Pehle dono storage clear karo
+  localStorage.removeItem("accessToken");
+  localStorage.removeItem("refreshToken");
+  localStorage.removeItem("email");
+  localStorage.removeItem("role");
+  localStorage.removeItem("userTier");
+  sessionStorage.removeItem("accessToken");
+  sessionStorage.removeItem("refreshToken");
+  sessionStorage.removeItem("email");
+  sessionStorage.removeItem("role");
 
+  // ✅ Ab naya token save karo
+  const storage = rememberMe ? localStorage : sessionStorage;
   storage.setItem("accessToken", token);
   storage.setItem("email", email);
   storage.setItem("role", role);
