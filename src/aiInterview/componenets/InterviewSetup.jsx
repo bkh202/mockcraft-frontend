@@ -7,18 +7,14 @@ import axiosInstance from '../../api/axiosInstance';
 
 export default function InterviewSetup() {
   const location = useLocation();
-  const [storedResume, setStoredResume] = useState(null);
+  const [storedResume, setStoredResume]   = useState(null);
   const [useResumeMode, setUseResumeMode] = useState(false);
 
   useEffect(() => {
     try {
       const incomingData = location.state?.resumeData;
-      if (incomingData) {
-        setStoredResume(incomingData);
-        setUseResumeMode(true);
-        return;
-      }
-      const raw = localStorage.getItem('parsedResumeData');
+      if (incomingData) { setStoredResume(incomingData); setUseResumeMode(true); return; }
+      const raw  = localStorage.getItem('parsedResumeData');
       const data = raw ? JSON.parse(raw) : null;
       setStoredResume(data);
       setUseResumeMode(!!data);
@@ -37,16 +33,14 @@ export default function InterviewSetup() {
   });
 
   const [questions, setQuestions] = useState([]);
-  const [loading, setLoading]     = useState(false);
-  const [error, setError]         = useState('');
+  const [loading,   setLoading]   = useState(false);
+  const [error,     setError]     = useState('');
 
-  const update = (field) => (e) =>
-    setFormData((prev) => ({ ...prev, [field]: e.target.value }));
+  const update = (field) => (e) => setFormData((prev) => ({ ...prev, [field]: e.target.value }));
 
   const startInterview = async (e) => {
     e.preventDefault();
     setError('');
-
     const count = parseInt(formData.questionCount, 10);
     if (isNaN(count) || count < 1 || count > 10) { setError('Question count must be between 1 and 10.'); return; }
     if (!useResumeMode && !formData.resumeSkills.trim()) { setError('Please enter your core skills.'); return; }
@@ -55,10 +49,8 @@ export default function InterviewSetup() {
 
     let combinedExperience = "";
     if (useResumeMode && storedResume) {
-      if (storedResume.experience?.length > 0)
-        combinedExperience += "WORK EXPERIENCE:\n" + JSON.stringify(storedResume.experience) + "\n\n";
-      if (storedResume.projects?.length > 0)
-        combinedExperience += "PROJECTS:\n" + JSON.stringify(storedResume.projects) + "\n";
+      if (storedResume.experience?.length > 0) combinedExperience += "WORK EXPERIENCE:\n" + JSON.stringify(storedResume.experience) + "\n\n";
+      if (storedResume.projects?.length > 0)   combinedExperience += "PROJECTS:\n" + JSON.stringify(storedResume.projects) + "\n";
     }
 
     const resumeData = useResumeMode && storedResume
@@ -67,19 +59,13 @@ export default function InterviewSetup() {
 
     try {
       const { data: result } = await axiosInstance.post('/api/interview/generate', {
-        companyName: formData.companyName,
-        jobRole: formData.jobRole,
-        experienceLevel: formData.experienceLevel,
-        difficulty: formData.difficulty,
-        questionCount: count,
-        resumeData,
+        companyName: formData.companyName, jobRole: formData.jobRole,
+        experienceLevel: formData.experienceLevel, difficulty: formData.difficulty,
+        questionCount: count, resumeData,
       }, { headers: { 'Content-Type': 'application/json' } });
 
-      if (result?.success && Array.isArray(result.data) && result.data.length > 0) {
-        setQuestions(result.data);
-      } else {
-        setError(result?.message || 'Server returned no questions. Please try again.');
-      }
+      if (result?.success && Array.isArray(result.data) && result.data.length > 0) setQuestions(result.data);
+      else setError(result?.message || 'Server returned no questions. Please try again.');
     } catch (err) {
       setError(err.response?.data?.message || err.message || 'Network error. Please try again.');
     } finally {
@@ -101,16 +87,15 @@ export default function InterviewSetup() {
             <Settings2 className="w-5 h-5 text-indigo-600" />
           </div>
           <div>
-            <h2 className="text-xl font-black text-slate-900">Configure Interview</h2>
-            <p className="text-xs text-slate-500">Set up your AI mock interview session</p>
+            <h2 className="text-xl font-black text-gray-900">Configure Interview</h2>
+            <p className="text-xs text-gray-500">Set up your AI mock interview session</p>
           </div>
         </div>
 
-        {/* Error Banner */}
+        {/* Error */}
         {error && (
-          <div className="flex items-start gap-2 bg-rose-50 text-rose-600 p-3 rounded-lg mb-5 text-sm font-semibold border border-rose-100">
-            <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" />
-            {error}
+          <div className="flex items-start gap-2 bg-rose-50 text-rose-600 p-3 rounded-xl mb-5 text-sm font-semibold border border-rose-100">
+            <AlertCircle className="w-4 h-4 mt-0.5 shrink-0" /> {error}
           </div>
         )}
 
@@ -119,17 +104,15 @@ export default function InterviewSetup() {
           <button type="button" onClick={() => setUseResumeMode(true)} disabled={!storedResume}
             title={!storedResume ? 'No resume found. Upload one first.' : ''}
             className={`flex-1 py-3 rounded-xl font-bold border text-sm transition ${
-              useResumeMode ? 'bg-indigo-600 border-indigo-600 text-white shadow-sm' : 'bg-white border-gray-200 text-slate-500 hover:border-indigo-200 hover:text-indigo-600'
+              useResumeMode ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white border-gray-200 text-gray-500 hover:border-indigo-200 hover:text-indigo-600'
             } disabled:opacity-40 disabled:cursor-not-allowed`}>
-            <FileText className="inline w-4 h-4 mr-1.5 -mt-0.5" />
-            Use Parsed Resume
+            <FileText className="inline w-4 h-4 mr-1.5 -mt-0.5" /> Use Parsed Resume
           </button>
           <button type="button" onClick={() => setUseResumeMode(false)}
             className={`flex-1 py-3 rounded-xl font-bold border text-sm transition ${
-              !useResumeMode ? 'bg-indigo-600 border-indigo-600 text-white shadow-sm' : 'bg-white border-gray-200 text-slate-500 hover:border-indigo-200 hover:text-indigo-600'
+              !useResumeMode ? 'bg-indigo-600 border-indigo-600 text-white' : 'bg-white border-gray-200 text-gray-500 hover:border-indigo-200 hover:text-indigo-600'
             }`}>
-            <PenLine className="inline w-4 h-4 mr-1.5 -mt-0.5" />
-            Manual Entry
+            <PenLine className="inline w-4 h-4 mr-1.5 -mt-0.5" /> Manual Entry
           </button>
         </div>
 
@@ -137,21 +120,21 @@ export default function InterviewSetup() {
 
           <div className="grid grid-cols-2 gap-4">
             <div>
-              <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Target Company</label>
+              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">Target Company</label>
               <input type="text" value={formData.companyName} onChange={update('companyName')} required placeholder="e.g. Google"
-                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-slate-800 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 outline-none transition" />
+                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-gray-800 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 outline-none transition" />
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Job Role</label>
+              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">Job Role</label>
               <input type="text" value={formData.jobRole} onChange={update('jobRole')} required placeholder="e.g. Backend Engineer"
-                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-slate-800 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 outline-none transition" />
+                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-gray-800 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 outline-none transition" />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Experience Level</label>
+            <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">Experience Level</label>
             <select value={formData.experienceLevel} onChange={update('experienceLevel')}
-              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-slate-800 text-sm focus:border-indigo-500 outline-none transition">
+              className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-gray-800 text-sm focus:border-indigo-500 outline-none transition">
               <option value="Fresher">Fresher (0–1 yrs)</option>
               <option value="Junior">Junior (1–3 yrs)</option>
               <option value="Mid-level">Mid-level (3–5 yrs)</option>
@@ -160,13 +143,13 @@ export default function InterviewSetup() {
           </div>
 
           {useResumeMode ? (
-            <div className="flex items-start gap-3 bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-emerald-700 text-sm font-medium">
+            <div className="flex items-start gap-3 bg-emerald-50 border border-emerald-200 p-4 rounded-xl text-sm font-medium">
               <CheckCircle2 className="w-5 h-5 shrink-0 mt-0.5 text-emerald-600" />
-              <div>
+              <div className="text-emerald-700">
                 <span>Using skills and experience from your selected resume.</span>
                 {storedResume?.name && <span className="block text-emerald-600 text-xs mt-1 font-bold">Candidate: {storedResume.name}</span>}
                 {storedResume?.skills && (
-                  <span className="block text-emerald-600/70 text-xs mt-1 font-normal line-clamp-2">
+                  <span className="block text-emerald-600/80 text-xs mt-1 line-clamp-2">
                     Skills: {Array.isArray(storedResume.skills) ? storedResume.skills.join(', ') : storedResume.skills}
                   </span>
                 )}
@@ -174,20 +157,20 @@ export default function InterviewSetup() {
             </div>
           ) : (
             <div>
-              <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">
-                Core Skills <span className="normal-case font-normal text-slate-400">(comma separated)</span>
+              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">
+                Core Skills <span className="normal-case font-normal text-gray-400">(comma separated)</span>
               </label>
               <textarea value={formData.resumeSkills} onChange={update('resumeSkills')} required rows={2}
                 placeholder="React, Node.js, PostgreSQL, System Design..."
-                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-slate-800 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-500/20 outline-none transition resize-none" />
+                className="w-full border border-gray-200 rounded-xl px-3 py-2.5 text-gray-800 text-sm focus:border-indigo-500 focus:ring-1 focus:ring-indigo-100 outline-none transition resize-none" />
             </div>
           )}
 
           <div className="grid grid-cols-2 gap-4 bg-gray-50 p-4 rounded-xl border border-gray-100">
             <div>
-              <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Difficulty</label>
+              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">Difficulty</label>
               <select value={formData.difficulty} onChange={update('difficulty')}
-                className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-slate-800 text-sm focus:border-indigo-500 outline-none transition">
+                className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-gray-800 text-sm focus:border-indigo-500 outline-none transition">
                 <option value="Easy">Easy — Basics</option>
                 <option value="Medium">Medium — Practical</option>
                 <option value="Hard">Hard — In-depth</option>
@@ -195,18 +178,16 @@ export default function InterviewSetup() {
               </select>
             </div>
             <div>
-              <label className="block text-xs font-bold text-slate-500 mb-1.5 uppercase tracking-wide">Questions</label>
+              <label className="block text-xs font-bold text-gray-500 mb-1.5 uppercase tracking-wide">Questions</label>
               <input type="number" min="1" max="10" value={formData.questionCount} onChange={update('questionCount')} required
-                className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-slate-800 text-sm focus:border-indigo-500 outline-none transition" />
-              <p className="text-xs text-slate-400 mt-1">Max 10 questions.</p>
+                className="w-full bg-white border border-gray-200 rounded-xl px-3 py-2.5 text-gray-800 text-sm focus:border-indigo-500 outline-none transition" />
+              <p className="text-xs text-gray-400 mt-1">Max 10 questions.</p>
             </div>
           </div>
 
           <button type="submit" disabled={loading}
-            className="w-full bg-indigo-600 hover:bg-indigo-700 active:bg-indigo-800 text-white font-bold py-4 rounded-xl transition flex justify-center items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-sm">
-            {loading
-              ? <><Loader2 className="w-5 h-5 animate-spin" /> Generating Questions...</>
-              : 'Generate Interview Session →'}
+            className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-4 rounded-xl transition flex justify-center items-center gap-2 disabled:opacity-50 shadow-sm">
+            {loading ? <><Loader2 className="w-5 h-5 animate-spin" /> Generating Questions...</> : 'Generate Interview Session →'}
           </button>
 
         </form>
