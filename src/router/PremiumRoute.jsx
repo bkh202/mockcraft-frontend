@@ -13,7 +13,8 @@ export default function PremiumRoute({ children }) {
   const [status, setStatus] = useState("loading"); // "loading" | "allow" | "deny"
 
   useEffect(() => {
-    const token = localStorage.getItem("accessToken");
+    const token = localStorage.getItem("accessToken") 
+           || sessionStorage.getItem("accessToken"); 
     if (!token) {
       setStatus("deny");
       return;

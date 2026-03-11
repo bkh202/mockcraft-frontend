@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "../api/axiosInstance";
+import { useAuth } from "../context/AuthContext";
 
 const FEATURES = [
   { icon: "🎤", title: "AI Mock Interview",   desc: "Practice with real company questions" },
@@ -14,6 +15,7 @@ const FEATURES = [
 
 export default function UpgradePage() {
   const navigate = useNavigate();
+  const { user } = useAuth(); 
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(false);
   const [step,    setStep]    = useState(null);
@@ -22,7 +24,14 @@ export default function UpgradePage() {
 
   const trialExpired = searchParams.get("reason") === "trial_expired";
 
+  useEffect(() => {
+    if (user?.tier === "PREMIUM") {
+      navigate("/dashboard", { replace: true });
+    }
+  }, [user, navigate]);
+
   const handleUpgrade = async () => {
+    const { loadUser } = useAuth();
     setLoading(true);
     setError(null);
     setStep(0);
@@ -42,6 +51,7 @@ export default function UpgradePage() {
       localStorage.setItem("userTier",          "PREMIUM");
       localStorage.setItem("hasPremiumAccess",  "true");
       localStorage.setItem("trialActive",       "false");
+      await loadUser();
       setSuccess(true);
     } catch (err) {
       setError(err.response?.data?.error || err.message || "Something went wrong");
