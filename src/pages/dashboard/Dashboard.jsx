@@ -25,19 +25,22 @@ const CategoryCard = ({ title, count, color, link }) => (
 );
 
 const UpgradePopup = ({ feature, onClose }) => {
-  const navigate = useNavigate(); // ✅ ADD
+  const navigate = useNavigate();
 
   return (
-    <div className="fixed inset-0 bg-slate-900/60 backdrop-blur-sm flex items-center justify-center z-[99999] p-4">
+    <div className="fixed inset-0 bg-black/30 backdrop-blur-sm flex items-center justify-center z-[99999] p-4">
       <div className="bg-white rounded-3xl p-6 max-w-sm w-full text-center shadow-2xl">
-        <div className="w-14 h-14 bg-amber-100 text-amber-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">⭐</div>
-        <h2 className="text-xl font-black text-slate-900 mb-2">Unlock Premium</h2>
-        <p className="text-slate-500 mb-5 text-sm font-medium">Get access to {feature?.title || "this feature"}.</p>
+        <div className="w-14 h-14 bg-indigo-100 text-indigo-600 rounded-full flex items-center justify-center mx-auto mb-4 text-2xl">⭐</div>
+        <h2 className="text-xl font-black text-gray-900 mb-2">Unlock Premium</h2>
+        <p className="text-gray-500 mb-5 text-sm font-medium">Get access to {feature?.title || "this feature"}.</p>
         <div className="flex gap-3">
-          <button onClick={onClose} className="flex-1 px-4 py-3 border border-slate-200 rounded-xl text-slate-700 font-bold hover:bg-slate-50 text-sm">Cancel</button>
+          <button onClick={onClose}
+            className="flex-1 px-4 py-3 border border-gray-200 rounded-xl text-gray-700 font-bold hover:bg-gray-50 text-sm">
+            Cancel
+          </button>
           <button
-            onClick={() => { onClose(); navigate('/upgrade'); }} // ✅ FIX
-            className="flex-1 px-4 py-3 bg-linear-to-r from-amber-400 to-orange-500 text-white font-black rounded-xl text-sm">
+            onClick={() => { onClose(); navigate('/upgrade'); }}
+            className="flex-1 px-4 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-black rounded-xl text-sm transition">
             Upgrade Now
           </button>
         </div>
