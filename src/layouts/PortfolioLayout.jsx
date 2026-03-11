@@ -27,7 +27,7 @@ export default function PortfolioLayout() {
               </h3>
               <div className="space-y-3">
                 <button 
-                  onClick={() => navigate('/portfolio/create')}
+                  onClick={() => navigate('/ai-mock-interview')}
                   className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-indigo-50 text-left transition-colors border border-transparent hover:border-indigo-100 group"
                 >
                   <div className="flex items-center gap-3">
@@ -39,7 +39,7 @@ export default function PortfolioLayout() {
                 </button>
 
                 <button 
-                  onClick={() => navigate('/portfolio/resumes')}
+                  onClick={() => navigate('/resume-analyzer')}
                   className="w-full flex items-center justify-between p-3 rounded-xl hover:bg-emerald-50 text-left transition-colors border border-transparent hover:border-emerald-100 group"
                 >
                   <div className="flex items-center gap-3">
