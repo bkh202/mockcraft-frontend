@@ -5,6 +5,7 @@ import GrowthTips from "./GrowthTips";
 import Motivation from "./Motivation";
 import Navbar from "../../Componenets/nav/Navbar";
 import PremiumModules from "./PremiumModules";
+import Testimonials from "./Testimonials";
 
 
 
@@ -20,6 +21,7 @@ const LandingPage = () => {
       <HowToUse />
       <Features />
       <GrowthTips />
+      <Testimonials />
       <Motivation />
     </div>
   );
