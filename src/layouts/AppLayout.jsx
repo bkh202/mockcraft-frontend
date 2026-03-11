@@ -2,6 +2,8 @@
 import { Outlet, Link } from "react-router-dom";
 import AppNavbar from "../Componenets/nav/AppNavbar";
 import TrialBanner from "../trail/components/TrialBanner";
+import { useState } from "react";
+import ReviewPopup from "../Componenets/ReviewPopup";
 
 const tips = [
   "Take 5-minute breaks every 25 minutes of study.",
@@ -20,6 +22,7 @@ const quickLinks = [
 
 export default function AppLayout() {
   const randomTip = tips[Math.floor(Math.random() * tips.length)];
+  const [showReview, setShowReview] = useState(false);
 
   return (
     <div className="min-h-screen bg-linear-to-br from-gray-50 via-blue-50/30 to-indigo-50/30">
@@ -36,6 +39,12 @@ export default function AppLayout() {
 
           {/* SIDEBAR */}
           <aside className="space-y-5">
+            <button
+              onClick={() => setShowReview(true)}
+              className="w-full flex items-center justify-center gap-2 py-3 bg-linear-to-r from-yellow-400 to-orange-400 text-white font-bold rounded-xl hover:opacity-90 transition-all shadow-md text-sm"
+            >
+              ⭐ Rate MockCraft
+            </button>
 
             {/* Quick Navigation */}
             <div className="bg-white rounded-xl shadow-sm p-5 border border-gray-200">
