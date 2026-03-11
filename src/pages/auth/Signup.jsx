@@ -14,6 +14,7 @@ const Signup = () => {
   });
   const [errors, setErrors] = useState({});
   const [showPassword, setShowPassword] = useState(false);
+  const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
 
   const handleChange = (e) => {
@@ -55,36 +56,24 @@ const Signup = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setErrors({});
-
     if (!validateForm()) return;
 
+    setLoading(true); // ✅ Start
     try {
-      await axios.post(
-        "/auth/signup",
-        {
-          fullName: formData.name,
-          email: formData.email,
-          password: formData.password,
-        },
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-
-      // Successful signup → redirect to login
+      await axios.post("/auth/signup", {
+        fullName: formData.name,
+        email: formData.email,
+        password: formData.password,
+      }, { headers: { "Content-Type": "application/json" } });
       navigate("/login");
     } catch (err) {
       if (err.response) {
-        setErrors({
-          form: err.response.data.message || "Registration failed",
-        });
+        setErrors({ form: err.response.data.message || "Registration failed" });
       } else {
-        setErrors({
-          form: "Server unreachable. Check backend.",
-        });
+        setErrors({ form: "Server unreachable. Check backend." });
       }
+    } finally {
+      setLoading(false); // ✅ Stop
     }
   };
 
@@ -101,9 +90,8 @@ const Signup = () => {
             name="name"
             value={formData.name}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-xl border ${
-              errors.name ? "border-red-300" : "border-gray-300"
-            } focus:ring-2 focus:ring-blue-500`}
+            className={`w-full px-4 py-3 rounded-xl border ${errors.name ? "border-red-300" : "border-gray-300"
+              } focus:ring-2 focus:ring-blue-500`}
             placeholder="John Doe"
           />
           {errors.name && (
@@ -121,9 +109,8 @@ const Signup = () => {
             name="email"
             value={formData.email}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-xl border ${
-              errors.email ? "border-red-300" : "border-gray-300"
-            } focus:ring-2 focus:ring-blue-500`}
+            className={`w-full px-4 py-3 rounded-xl border ${errors.email ? "border-red-300" : "border-gray-300"
+              } focus:ring-2 focus:ring-blue-500`}
             placeholder="you@example.com"
           />
           {errors.email && (
@@ -141,9 +128,8 @@ const Signup = () => {
             name="password"
             value={formData.password}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-xl border ${
-              errors.password ? "border-red-300" : "border-gray-300"
-            } focus:ring-2 focus:ring-blue-500`}
+            className={`w-full px-4 py-3 rounded-xl border ${errors.password ? "border-red-300" : "border-gray-300"
+              } focus:ring-2 focus:ring-blue-500`}
             placeholder="Create a strong password"
           />
           {errors.password && (
@@ -161,9 +147,8 @@ const Signup = () => {
             name="confirmPassword"
             value={formData.confirmPassword}
             onChange={handleChange}
-            className={`w-full px-4 py-3 rounded-xl border ${
-              errors.confirmPassword ? "border-red-300" : "border-gray-300"
-            } focus:ring-2 focus:ring-blue-500`}
+            className={`w-full px-4 py-3 rounded-xl border ${errors.confirmPassword ? "border-red-300" : "border-gray-300"
+              } focus:ring-2 focus:ring-blue-500`}
             placeholder="Re-enter your password"
           />
           {errors.confirmPassword && (
@@ -200,11 +185,19 @@ const Signup = () => {
         {/* Submit */}
         <button
           type="submit"
-          className="w-full py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700"
+          disabled={loading}
+          className="w-full py-3 bg-green-600 text-white font-semibold rounded-xl hover:bg-green-700 disabled:opacity-70 flex items-center justify-center gap-2"
         >
-          Create Account
+          {loading ? (
+            <>
+              <svg className="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                <circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" />
+                <path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z" />
+              </svg>
+              Creating Account...
+            </>
+          ) : "Create Account"}
         </button>
-
         {/* Login */}
         <div className="text-center">
           <p className="text-sm text-gray-600">
