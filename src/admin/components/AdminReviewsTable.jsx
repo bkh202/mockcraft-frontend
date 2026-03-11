@@ -1,6 +1,6 @@
 // components/AdminReviewsTable.jsx
 import { useEffect, useState } from "react";
-import axiosInstance from "../../../api/axiosInstance";
+import axiosInstance from "../../api/axiosInstance";
 
 export default function AdminReviewsTable() {
   const [reviews, setReviews] = useState([]);
