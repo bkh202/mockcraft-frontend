@@ -4,6 +4,7 @@ import UsersTable from "./components/UsersTable";
 import AuditTable from "./components/AuditTable";
 import AiUsageGraph from "./components/AiUsageGraph";
 import AiGenerationLogTable from "./components/AiGenerationLogTable";
+import AdminReviewsTable from "./components/AdminReviewsTable"; 
 
 const AdminDashboard = () => {
   return (
@@ -39,6 +40,10 @@ const AdminDashboard = () => {
 
       {/* AI Generation Logs */}
       <AiGenerationLogTable />
+
+      <div className="mt-8">
+        <AdminReviewsTable />
+      </div>
 
     </div>
   );

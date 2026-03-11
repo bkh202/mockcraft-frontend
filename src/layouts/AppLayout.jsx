@@ -3,7 +3,7 @@ import { Outlet, Link } from "react-router-dom";
 import AppNavbar from "../Componenets/nav/AppNavbar";
 import TrialBanner from "../trail/components/TrialBanner";
 import { useState } from "react";
-import ReviewPopup from "../Componenets/ReviewPopup";
+import ReviewPopup from "../Componenets/review/ReviewPopup";
 
 const tips = [
   "Take 5-minute breaks every 25 minutes of study.",

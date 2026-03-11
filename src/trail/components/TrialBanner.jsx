@@ -24,7 +24,9 @@ export default function TrialBanner() {
         fontSize: "14px",
         fontWeight: "500",
         width: "100%",
-        zIndex: 9999,
+         zIndex: 9999,
+        position: "sticky",  // ✅ fixed se sticky karo
+        top: 0,
       }}
     >
       <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>

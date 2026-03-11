@@ -74,12 +74,12 @@ export default function AppNavbar() {
             </button>
 
             <Link to="/dashboard" className="flex items-center gap-3 group">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-600 shadow-md shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all">
+              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-blue-600 to-indigo-600 shadow-md shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all">
                 <span className="text-white font-black tracking-tight">MC</span>
                 <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white shadow-sm"></div>
               </div>
               <div className="hidden md:block">
-                <h1 className="text-xl font-black bg-gradient-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent tracking-tight">
+                <h1 className="text-xl font-black bg-linear-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent tracking-tight">
                   MockCraft
                 </h1>
                 <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest -mt-1">
@@ -125,7 +125,7 @@ export default function AppNavbar() {
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="flex items-center gap-3 p-1.5 pr-3 rounded-full border border-slate-200 hover:border-blue-200 hover:bg-blue-50/50 transition-all focus:outline-none focus:ring-2 focus:ring-blue-500/20"
               >
-                <div className="w-8 h-8 rounded-full bg-gradient-to-br from-indigo-100 to-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm shadow-inner">
+                <div className="w-8 h-8 rounded-full bg-linear-to-br from-indigo-100 to-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm shadow-inner">
                   {user?.fullName ? user.fullName.charAt(0).toUpperCase() : <User className="w-4 h-4" />}
                 </div>
                 <div className="hidden md:block text-left">
