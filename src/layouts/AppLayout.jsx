@@ -29,6 +29,9 @@ export default function AppLayout() {
       <TrialBanner />
       <AppNavbar />
 
+      {/* ✅ Review Popup */}
+      {showReview && <ReviewPopup onClose={() => setShowReview(false)} />}
+
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
         <div className="grid grid-cols-1 lg:grid-cols-4 gap-6">
 
@@ -39,6 +42,8 @@ export default function AppLayout() {
 
           {/* SIDEBAR */}
           <aside className="space-y-5">
+
+            {/* ✅ Rate Us Button */}
             <button
               onClick={() => setShowReview(true)}
               className="w-full flex items-center justify-center gap-2 py-3 bg-linear-to-r from-yellow-400 to-orange-400 text-white font-bold rounded-xl hover:opacity-90 transition-all shadow-md text-sm"
