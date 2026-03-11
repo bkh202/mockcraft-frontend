@@ -23,9 +23,8 @@ export default function PortfolioNavbar() {
 
   const navLinks = [
     { label: "Dashboard", icon: "📊", path: "/portfolio/dashboard" },
-    { label: "My Portfolios", icon: "💼", path: "/portfolio/my" },
-    { label: "Resumes", icon: "📄", path: "/portfolio/resumes" },
-    { label: "Templates", icon: "🎨", path: "/portfolio/templates" },
+    { label: "Resumes", icon: "📄", path: "/analyzer/history" },
+    { label: "AI Interview", icon: "🎨", path: "/ai-mock-interview" },
   ];
 
   return (
@@ -95,7 +94,7 @@ export default function PortfolioNavbar() {
                 onClick={() => setShowProfileMenu(!showProfileMenu)}
                 className="flex items-center gap-3 p-1 rounded-full hover:bg-gray-50 border border-transparent hover:border-gray-200 transition-all"
               >
-                <div className="w-9 h-9 rounded-full bg-gradient-to-r from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-700 font-bold border border-indigo-200">
+                <div className="w-9 h-9 rounded-full bg-linear-to-r from-indigo-100 to-purple-100 flex items-center justify-center text-indigo-700 font-bold border border-indigo-200">
                   {user?.fullName?.charAt(0) || "U"}
                 </div>
               </button>
