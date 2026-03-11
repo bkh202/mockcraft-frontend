@@ -148,7 +148,7 @@ export default function UpgradePage() {
                   Processing…
                 </>
               ) : (
-                "Unlock Premium — ₹99/month"
+                "Unlock Premium — ₹499/month"
               )}
             </button>
 
