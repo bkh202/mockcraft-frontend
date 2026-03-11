@@ -24,7 +24,7 @@ export default function PortfolioNavbar() {
   const navLinks = [
     { label: "Dashboard", icon: "📊", path: "/portfolio/dashboard" },
     { label: "Resumes", icon: "📄", path: "/analyzer/history" },
-    { label: "AI Interview", icon: "🎨", path: "/ai-mock-interview" },
+    { label: "AI Interview", icon: "🎙️", path: "/ai-mock-interview" },
   ];
 
   return (
