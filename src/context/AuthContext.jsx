@@ -52,7 +52,7 @@ export const AuthProvider = ({ children }) => {
   sessionStorage.removeItem("role");
 
   // ✅ Ab naya token save karo
-  const storage = rememberMe ? localStorage : sessionStorage;
+  const storage = localStorage;
   storage.setItem("accessToken", token);
   storage.setItem("email", email);
   storage.setItem("role", role);

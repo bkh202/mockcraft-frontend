@@ -13,8 +13,8 @@ export const categorizeSkills = (skillsArray) => {
   // Keywords to match
   const kw = {
     frontend: ["html", "css", "javascript", "react", "angular", "vue", "bootstrap", "tailwind", "figma", "ui", "ux", "jsp"],
-    backend: ["java", "python", "node", "express", "spring", "django", "c++", "c#", "php", "rest", "api", "microservices"],
-    database: ["mysql", "sql", "mongo", "postgres", "redis", "oracle", "hibernate", "jpa"]
+    backend: ["java", "python", "node", "express", "spring", "django", "c++", "c#", "php", "rest", "api", "microservices","servlet"],
+    database: ["mysql", "sql", "mongo", "postgres", "redis", "oracle", "hibernate", "jpa","casendra"]
   };
 
   skillsArray.forEach(skill => {
@@ -45,6 +45,7 @@ export const getSkillLogo = (skillName) => {
   if(name.includes('aws')) name = 'amazonwebservices';
   if(name.includes('docker')) name = 'docker';
   if(name.includes('git')) name = 'git';
+  if(name.includes('github')) name = 'github';
 
   // Return Devicon image URL
   return `https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/${name}/${name}-original.svg`;
