@@ -1,5 +1,5 @@
 import Layout from "../../components/Layout";
-import AboutSection from "./sections/AboutSection";
+import AboutSection from "./sections/AboutSection"
 import SkillsSection from "./sections/SkillsSection";
 import ExperienceSection from "./sections/ExperienceSection";
 import ProjectsSection from "./sections/ProjectsSection";

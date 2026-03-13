@@ -1,5 +1,5 @@
 import ContactForm from "../../components/ContactForm";
-import { getSkillLogo } from "../../components/categorizeSkills";
+import { getSkillLogo } from "../../../components/categorizeSkills";
 
 function ContactSection({ data }) {
   return (
