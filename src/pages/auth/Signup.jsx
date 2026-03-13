@@ -169,7 +169,9 @@ const Signup = () => {
               className="h-4 w-4 text-blue-600 border-gray-300 rounded"
             />
             <span className="ml-2 text-sm text-gray-700">
-              I agree to the Terms & Privacy Policy
+              <Link to="/terms" target="_blank" className="text-indigo-600 hover:underline">
+                Terms & Conditions
+              </Link>
             </span>
           </label>
           {errors.acceptTerms && (

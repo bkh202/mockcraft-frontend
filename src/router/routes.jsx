@@ -79,6 +79,7 @@ import UpgradePage from "../payment/UpgradePage";
 import EditPortfolioPage from "../pages/portfoliobuilder/edit/EditPortfolioPage";
 import CreatePortfolioPage from "../pages/portfoliobuilder/createportfolio/CreatePortfolioPage";
 import ForgotPassword from "../pages/auth/ForgotPassword";
+import TermsAndConditions from "../pages/auth/TermsAndConditions";
 
 
 // ─── Public Routes ────────────────────────────────────────────────────────────
@@ -88,7 +89,9 @@ export const publicRoutes = [
   { path: "/login",        element: <Login /> },
   { path: "/unauthorized", element: <Unauthorized /> },
   { path: "/p/:slug",      element: <PortfolioPage /> },
-  { path: "/forgot-password",      element: <ForgotPassword /> }
+  { path: "/forgot-password",      element: <ForgotPassword /> },
+  { path: "/terms",      element: <TermsAndConditions /> }
+
 ];
 
 // ─── Resume / Interview / Payment Routes ─────────────────────────────────────
