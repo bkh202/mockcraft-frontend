@@ -78,6 +78,7 @@ import InterviewEvaluation from "../aiInterview/componenets/InterviewEvaluation"
 import UpgradePage from "../payment/UpgradePage";
 import EditPortfolioPage from "../pages/portfoliobuilder/edit/EditPortfolioPage";
 import CreatePortfolioPage from "../pages/portfoliobuilder/createportfolio/CreatePortfolioPage";
+import ForgotPassword from "../pages/auth/ForgotPassword";
 
 
 // ─── Public Routes ────────────────────────────────────────────────────────────
@@ -87,6 +88,7 @@ export const publicRoutes = [
   { path: "/login",        element: <Login /> },
   { path: "/unauthorized", element: <Unauthorized /> },
   { path: "/p/:slug",      element: <PortfolioPage /> },
+  { path: "/forgot-password",      element: <ForgotPassword /> }
 ];
 
 // ─── Resume / Interview / Payment Routes ─────────────────────────────────────
