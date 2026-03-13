@@ -1,4 +1,4 @@
-import { getSkillLogo } from "../../components/categorizeSkills";
+import { getSkillLogo } from "../../../components/categorizeSkills";
 
 function AboutSection({ data }) {
   return (
