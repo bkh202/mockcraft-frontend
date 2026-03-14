@@ -2,6 +2,7 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axiosInstance from "../../api/axiosInstance";
+import SubPageLogo from "../../logo/SubPageLogo";
 
 export default function AnalyzerNavbar() {
   const [user, setUser] = useState(null);
@@ -22,10 +23,10 @@ export default function AnalyzerNavbar() {
   };
 
   const navLinks = [
-    { label: "New Scan",     icon: "⚡", path: "/resume-analyzer" },
+    { label: "New Scan", icon: "⚡", path: "/resume-analyzer" },
     { label: "Scan History", icon: "📂", path: "/analyzer/history" },
     { label: "AI Interview", icon: "🎙️", path: "/ai-mock-interview" },
-    { label: "Pro Plans",    icon: "💎", path: "/pricing" },
+    { label: "Pro Plans", icon: "💎", path: "/pricing" },
   ];
 
   return (
@@ -44,21 +45,8 @@ export default function AnalyzerNavbar() {
               </svg>
             </button>
 
-            <Link to="/analyzer/upload" className="flex items-center gap-3">
-              <div className="relative">
-                <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-indigo-500 to-purple-600 flex items-center justify-center shadow-md">
-                  <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
-                  </svg>
-                </div>
-                <div className="absolute -top-1 -right-1 w-3 h-3 bg-emerald-400 rounded-full border-2 border-white"></div>
-              </div>
-              <div className="hidden md:block">
-                <h1 className="text-xl font-black bg-gradient-to-r from-indigo-600 to-purple-600 bg-clip-text text-transparent">
-                  AI Analyzer
-                </h1>
-                <p className="text-xs text-gray-500 font-bold tracking-wider uppercase">by MockCraft</p>
-              </div>
+            <Link to="/dashboard">
+              <SubPageLogo title="AI Analyzer" subtitle="by MockCraft" />
             </Link>
 
             {/* Desktop Nav */}
@@ -67,11 +55,10 @@ export default function AnalyzerNavbar() {
                 const isActive = location.pathname.includes(item.path);
                 return (
                   <Link key={item.label} to={item.path}
-                    className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-all ${
-                      isActive
+                    className={`flex items-center gap-2 px-4 py-2 text-sm font-bold rounded-lg transition-all ${isActive
                         ? "text-indigo-700 bg-indigo-50 shadow-sm"
                         : "text-gray-600 hover:text-indigo-600 hover:bg-indigo-50"
-                    }`}
+                      }`}
                   >
                     <span>{item.icon}</span>
                     {item.label}

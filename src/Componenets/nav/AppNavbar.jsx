@@ -1,16 +1,17 @@
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { useEffect, useState, useRef } from "react";
-import axios from "../../api/axiosInstance"; // 🛑 FIX: Switched to standard axios for Canvas environment
-import { 
-  LayoutDashboard, 
-  History, 
-  FolderOpen, 
-  Bell, 
-  ChevronDown, 
-  User, 
-  Settings, 
-  CreditCard, 
-  HelpCircle, 
+import axios from "../../api/axiosInstance";
+import MockCraftLogo from "../../logo/MockCraftLogo"; // 🛑 FIX: Switched to standard axios for Canvas environment
+import {
+  LayoutDashboard,
+  History,
+  FolderOpen,
+  Bell,
+  ChevronDown,
+  User,
+  Settings,
+  CreditCard,
+  HelpCircle,
   LogOut,
   Menu,
   X
@@ -20,7 +21,7 @@ export default function AppNavbar() {
   const [user, setUser] = useState(null);
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showMobileMenu, setShowMobileMenu] = useState(false);
-  
+
   const navigate = useNavigate();
   const location = useLocation();
   const menuRef = useRef(null);
@@ -63,7 +64,7 @@ export default function AppNavbar() {
     <nav className="sticky top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-200 shadow-sm transition-all duration-300">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex h-16 items-center justify-between">
-          
+
           {/* Left: Logo and Brand */}
           <div className="flex items-center gap-4">
             <button
@@ -73,19 +74,8 @@ export default function AppNavbar() {
               {showMobileMenu ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
             </button>
 
-            <Link to="/dashboard" className="flex items-center gap-3 group">
-              <div className="relative flex items-center justify-center w-10 h-10 rounded-xl bg-linear-to-br from-blue-600 to-indigo-600 shadow-md shadow-blue-500/20 group-hover:shadow-blue-500/40 transition-all">
-                <span className="text-white font-black tracking-tight">MC</span>
-                <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-emerald-500 rounded-full border-2 border-white shadow-sm"></div>
-              </div>
-              <div className="hidden md:block">
-                <h1 className="text-xl font-black bg-linear-to-r from-blue-700 to-indigo-600 bg-clip-text text-transparent tracking-tight">
-                  MockCraft
-                </h1>
-                <p className="text-[10px] font-bold text-slate-500 uppercase tracking-widest -mt-1">
-                  AI Interviewer
-                </p>
-              </div>
+            <Link to="/dashboard" className="flex items-center">
+              <MockCraftLogo size="md" />
             </Link>
 
             {/* Desktop Navigation */}
@@ -96,11 +86,10 @@ export default function AppNavbar() {
                   <Link
                     key={item.label}
                     to={item.path}
-                    className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all ${
-                      isActive 
-                        ? "bg-blue-50 text-blue-700" 
+                    className={`flex items-center gap-2 px-4 py-2 text-sm font-semibold rounded-lg transition-all ${isActive
+                        ? "bg-blue-50 text-blue-700"
                         : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"
-                    }`}
+                      }`}
                   >
                     <span className={isActive ? "text-blue-600" : "text-slate-400"}>{item.icon}</span>
                     {item.label}
@@ -112,7 +101,7 @@ export default function AppNavbar() {
 
           {/* Right: User Profile & Notifications */}
           <div className="flex items-center gap-3 sm:gap-5">
-            
+
             {/* Notification Bell */}
             <button className="relative p-2.5 rounded-full text-slate-500 hover:bg-slate-100 transition-colors">
               <Bell className="w-5 h-5" />
@@ -195,11 +184,10 @@ export default function AppNavbar() {
                 <Link
                   key={item.label}
                   to={item.path}
-                  className={`flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl transition-colors ${
-                    isActive 
-                      ? "bg-blue-50 text-blue-700" 
+                  className={`flex items-center gap-3 px-4 py-3 text-sm font-bold rounded-xl transition-colors ${isActive
+                      ? "bg-blue-50 text-blue-700"
                       : "text-slate-600 hover:bg-slate-50 hover:text-blue-600"
-                  }`}
+                    }`}
                 >
                   <span className={isActive ? "text-blue-600" : "text-slate-400"}>{item.icon}</span>
                   {item.label}

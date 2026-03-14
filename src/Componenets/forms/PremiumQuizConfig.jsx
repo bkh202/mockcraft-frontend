@@ -24,9 +24,9 @@ export default function QuizConfigForm({ context, onStart }) {
 
   // Available question counts based on mode
   const questionCounts = {
-    practice: [5, 10, 15, 20, 25],
-    revision: [10, 15, 20, 25],
-    mock: [15, 20, 25]
+    practice: [5, 7, 12, 15],
+    revision: [5, 7, 12, 15],
+    mock: [5, 7, 12, 15]
   };
 
   const handleChange = (field, value) => {
@@ -86,11 +86,10 @@ export default function QuizConfigForm({ context, onStart }) {
               key={count}
               type="button"
               onClick={() => handleChange('numberOfQuestions', count)}
-              className={`px-4 py-3 rounded-lg border text-sm font-medium transition-all ${
-                config.numberOfQuestions === count
+              className={`px-4 py-3 rounded-lg border text-sm font-medium transition-all ${config.numberOfQuestions === count
                   ? 'bg-blue-600 text-white border-blue-600'
                   : 'bg-white text-gray-700 border-gray-300 hover:border-blue-400 hover:bg-blue-50'
-              }`}
+                }`}
             >
               {count}
             </button>
@@ -114,11 +113,10 @@ export default function QuizConfigForm({ context, onStart }) {
               key={diff.value}
               type="button"
               onClick={() => handleChange('difficulty', diff.value)}
-              className={`px-4 py-3 rounded-lg border text-sm font-medium transition-all ${
-                config.difficulty === diff.value
+              className={`px-4 py-3 rounded-lg border text-sm font-medium transition-all ${config.difficulty === diff.value
                   ? `${diff.color} border-2`
                   : 'bg-white text-gray-700 border-gray-300 hover:border-gray-400'
-              }`}
+                }`}
             >
               {diff.label}
             </button>
@@ -155,11 +153,10 @@ export default function QuizConfigForm({ context, onStart }) {
             <div
               key={modeItem.value}
               onClick={() => handleChange('mode', modeItem.value)}
-              className={`p-4 rounded-xl border cursor-pointer transition-all ${
-                config.mode === modeItem.value
+              className={`p-4 rounded-xl border cursor-pointer transition-all ${config.mode === modeItem.value
                   ? 'border-blue-500 bg-blue-50'
                   : 'border-gray-200 hover:border-gray-300 hover:bg-gray-50'
-              }`}
+                }`}
             >
               <div className="flex items-center gap-3">
                 <div className="text-xl">{modeItem.icon}</div>
@@ -167,11 +164,10 @@ export default function QuizConfigForm({ context, onStart }) {
                   <div className="font-medium text-gray-900">{modeItem.label}</div>
                   <div className="text-sm text-gray-600">{modeItem.description}</div>
                 </div>
-                <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${
-                  config.mode === modeItem.value
+                <div className={`w-5 h-5 rounded-full border flex items-center justify-center ${config.mode === modeItem.value
                     ? 'bg-blue-500 border-blue-500'
                     : 'border-gray-400'
-                }`}>
+                  }`}>
                   {config.mode === modeItem.value && (
                     <div className="w-2 h-2 bg-white rounded-full"></div>
                   )}
@@ -196,7 +192,7 @@ export default function QuizConfigForm({ context, onStart }) {
               onChange={(checked) => handleChange('timeLimit', checked)}
             />
           </div>
-          
+
           {config.timeLimit && (
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-2">
@@ -208,11 +204,10 @@ export default function QuizConfigForm({ context, onStart }) {
                     key={seconds}
                     type="button"
                     onClick={() => handleChange('timePerQuestion', seconds)}
-                    className={`px-3 py-2 rounded-lg border text-sm ${
-                      config.timePerQuestion === seconds
+                    className={`px-3 py-2 rounded-lg border text-sm ${config.timePerQuestion === seconds
                         ? 'bg-blue-100 text-blue-700 border-blue-300'
                         : 'bg-gray-100 text-gray-700 border-gray-300'
-                    }`}
+                      }`}
                   >
                     {seconds}s
                   </button>
@@ -269,11 +264,10 @@ export default function QuizConfigForm({ context, onStart }) {
                     handleChange('questionTypes', [...currentTypes, type]);
                   }
                 }}
-                className={`px-4 py-2 rounded-full border text-sm ${
-                  config.questionTypes.includes(type)
+                className={`px-4 py-2 rounded-full border text-sm ${config.questionTypes.includes(type)
                     ? 'bg-blue-100 text-blue-700 border-blue-300'
                     : 'bg-gray-100 text-gray-700 border-gray-300'
-                }`}
+                  }`}
               >
                 {type}
               </button>
@@ -364,13 +358,11 @@ function Toggle({ checked, onChange }) {
       role="switch"
       aria-checked={checked}
       onClick={() => onChange(!checked)}
-      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${
-        checked ? 'bg-blue-600' : 'bg-gray-300'
-      }`}
+      className={`relative inline-flex h-6 w-11 items-center rounded-full transition-colors ${checked ? 'bg-blue-600' : 'bg-gray-300'
+        }`}
     >
-      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${
-        checked ? 'translate-x-6' : 'translate-x-1'
-      }`} />
+      <span className={`inline-block h-4 w-4 transform rounded-full bg-white transition-transform ${checked ? 'translate-x-6' : 'translate-x-1'
+        }`} />
     </button>
   );
 }
