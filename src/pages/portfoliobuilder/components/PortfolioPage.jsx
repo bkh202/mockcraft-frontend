@@ -15,6 +15,11 @@ import TemplateEditorial from "../templates/editorial/TemplateEditorial";
 import TemplateNeumorphic from "../templates/neumorphic/TemplateNeumorphic";
 import TemplateHolographic from "../templates/holographic/TemplateHolographic";
 import TemplateVibrant from "../templates/vibrant/TemplateVibrant";
+import TemplateBrutal from '../templates/brutal/TemplateBrutal';
+import TemplateLuxury from '../templates/luxury/TemplateLuxury';
+import TemplateMatrix from '../templates/matrix/TemplateMatrix';
+import TemplateSpace from '../templates/space/TemplateSpace';
+import TemplateSynthwave from '../templates/synthwave/TemplateSynthwave';
 
 // 2. THE REGISTRY
 const templateComponents = {
@@ -27,7 +32,12 @@ const templateComponents = {
   editorial: TemplateEditorial,
   neumorphic: TemplateNeumorphic,
   holographic: TemplateHolographic,
-  vibrant: TemplateVibrant
+  vibrant: TemplateVibrant,
+  brutal: TemplateBrutal,
+  luxury: TemplateLuxury,
+  matrix: TemplateMatrix,
+  space: TemplateSpace,
+  synthwave: TemplateSynthwave
 };
 
 export default function PortfolioPage() {

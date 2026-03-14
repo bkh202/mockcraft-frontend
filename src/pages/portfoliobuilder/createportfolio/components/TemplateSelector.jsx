@@ -9,6 +9,11 @@ const templates = [
   { id: 11, layout: "neumorphic", name: "Premium", description: "Vibrant gradient glass", thumbnail: "/images/neumorphic.png" },
   { id: 12, layout: "holographic", name: "Holographic", description: "Spatial Apple-vision UI", thumbnail: "/images/holographic.png" },
   { id: 13, layout: "vibrant", name: "Vibrant Startup", description: "Modern colorful gradients & premium glass UI", thumbnail: "/images/vibrant.png" },
+  { id: 14, layout: "synthwave", name: "Synthwave Retro", description: "80s neon grid, retro arcade vibes & glitch effects", thumbnail: "/images/synthwave.png" },
+{ id: 15, layout: "matrix", name: "Matrix Terminal", description: "Hacker green phosphor, CRT scanlines & typewriter UI", thumbnail: "/images/matrix.png" },
+{ id: 16, layout: "luxury", name: "Luxury Gold", description: "Dark editorial, shimmer gold accents & serif elegance", thumbnail: "/images/luxury.png" },
+{ id: 17, layout: "space", name: "Deep Space", description: "Live starfield canvas, nebula blobs & cosmic orbit UI", thumbnail: "/images/space.png" },
+{ id: 18, layout: "brutal", name: "Brutal Type", description: "Raw typographic brutalism, noise texture & bold contrasts", thumbnail: "/images/brutal.png" },
 ];
 
 export default function TemplateSelector({ selectedTemplate, onSelect }) {
