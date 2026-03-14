@@ -140,23 +140,7 @@ export default function AppNavbar() {
                     </p>
                   </div>
 
-                  <div className="py-2">
-                    {[
-                      { label: "My Profile", icon: <User className="w-4 h-4" /> },
-                      { label: "Settings", icon: <Settings className="w-4 h-4" /> },
-                      { label: "Billing", icon: <CreditCard className="w-4 h-4" /> },
-                      { label: "Help Center", icon: <HelpCircle className="w-4 h-4" /> },
-                    ].map((item) => (
-                      <a
-                        key={item.label}
-                        href="#"
-                        className="flex items-center gap-3 px-5 py-2.5 text-sm font-medium text-slate-600 hover:text-blue-600 hover:bg-blue-50 transition-colors"
-                      >
-                        <span className="text-slate-400">{item.icon}</span>
-                        {item.label}
-                      </a>
-                    ))}
-                  </div>
+                 
 
                   <div className="border-t border-slate-100 pt-2 pb-1">
                     <button

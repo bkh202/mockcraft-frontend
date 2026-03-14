@@ -46,7 +46,7 @@ export default function AnalyzerNavbar() {
             </button>
 
             <Link to="/dashboard">
-              <SubPageLogo title="AI Analyzer" subtitle="by MockCraft" />
+              <SubPageLogo  />
             </Link>
 
             {/* Desktop Nav */}
@@ -71,11 +71,7 @@ export default function AnalyzerNavbar() {
           {/* Right */}
           <div className="flex items-center gap-3">
 
-            {/* Scans Left */}
-            <div className="hidden md:flex items-center gap-2 px-3 py-1.5 bg-indigo-50 rounded-lg border border-indigo-100">
-              <span className="text-xs font-bold text-gray-500">Scans Left:</span>
-              <span className="text-sm font-black text-indigo-600">4/5</span>
-            </div>
+          
 
             {/* Profile */}
             <div className="relative">

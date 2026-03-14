@@ -45,7 +45,7 @@ export default function PortfolioNavbar() {
             </button>
 
             <Link to="/dashboard">
-              <SubPageLogo title="Portfolio Builder" subtitle="by MockCraft" />
+              <SubPageLogo />
             </Link>
 
             {/* Desktop Navigation */}
