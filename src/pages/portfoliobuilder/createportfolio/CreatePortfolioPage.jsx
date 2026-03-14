@@ -120,6 +120,12 @@ function CreatePortfolioPage() {
         { id: 11, layout: "neumorphic" },
         { id: 12, layout: "holographic" },
         { id: 13, layout: "vibrant" },
+        { id: 14, layout: "synthwave" },
+        { id: 15, layout: "matrix" },
+        { id: 16, layout: "luxury" },
+        { id: 17, layout: "space" },
+        { id: 18, layout: "brutal" }
+
       ];
       const selectedTplObj = templates.find(t => t.id === selectedTemplate);
       const layoutString = selectedTplObj ? selectedTplObj.layout : "modern";
