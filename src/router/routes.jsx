@@ -204,7 +204,7 @@ export const protectedRoutes = [
 
   { path: "/medical",                        element: <MedicalHome /> },
   { path: "/medical/neet",                   element: <NeetHome /> },
-  { path: "/neet/result/:attemptId",          element: <UniversalNEETResults /> },
+  { path: "/neet/result/:attemptId",         element: <UniversalNEETResults /> },
   { path: "/medical/neet/physics",           element: <PhysicsPage /> },
   { path: "/medical/neet/chemistry",         element: <ChemistryPage /> },
   { path: "/medical/neet/biology",           element: <BiologyPage /> },
