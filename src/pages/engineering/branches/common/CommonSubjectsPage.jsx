@@ -6,7 +6,7 @@ const config = {
   pageTitle: "Common Engineering Subjects",
   breadcrumb: "Common Subjects", description: "Practice common subjects with AI-generated personalized quizzes",
   parentPath: "/engineering", parentLabel: "Engineering",
-  resultPath: "/engineering/result", quizLabel: "AI Common Subjects Quiz", formIcon: "🧮",
+  resultPath: "/engineering/result/:attemptId", quizLabel: "AI Common Subjects Quiz", formIcon: "🧮",
   adaptiveSubject: "Engineering Mathematics",
   subjects: [
     { name: "Engineering Mathematics", questions: "AI-Based", difficulty: "Medium", color: "bg-blue-100", icon: "🧮", topics: ["Calculus", "Linear Algebra", "Probability", "Differential Equations", "Numerical Methods"] },

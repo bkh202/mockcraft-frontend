@@ -193,7 +193,7 @@ export const protectedRoutes = [
   { path: "/aptitude/computer",              element: <ComputerAptitude /> },
   { path: "/aptitude/di",                    element: <DataInterpretation /> },
   { path: "/aptitude/verbal",                element: <VerbalAbility /> },
-  { path: "/aptitude/result",                element: <UniversalAptitudeResults /> },
+  { path: "/aptitude/result/:attemptId",                element: <UniversalAptitudeResults /> },
 
   { path: "/government",                     element: <GovernmentHome /> },
   { path: "/government/quantitative",        element: <QuantitativeAptitudePage /> },
@@ -204,7 +204,7 @@ export const protectedRoutes = [
 
   { path: "/medical",                        element: <MedicalHome /> },
   { path: "/medical/neet",                   element: <NeetHome /> },
-  { path: "/neet/result",                    element: <UniversalNEETResults /> },
+  { path: "/neet/result:attemptId",          element: <UniversalNEETResults /> },
   { path: "/medical/neet/physics",           element: <PhysicsPage /> },
   { path: "/medical/neet/chemistry",         element: <ChemistryPage /> },
   { path: "/medical/neet/biology",           element: <BiologyPage /> },
