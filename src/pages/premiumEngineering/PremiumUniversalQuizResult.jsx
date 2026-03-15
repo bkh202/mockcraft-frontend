@@ -1,12 +1,11 @@
 import { useParams, useNavigate, Link } from "react-router-dom";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import axiosInstance from "../../api/axiosInstance";
 
-// Animated counter hook
 function useCounter(target, duration = 1500) {
   const [count, setCount] = useState(0);
   useEffect(() => {
-    if (target === 0) return;
+    if (!target) return;
     let start = 0;
     const step = target / (duration / 16);
     const timer = setInterval(() => {
@@ -15,35 +14,40 @@ function useCounter(target, duration = 1500) {
       else setCount(Math.floor(start));
     }, 16);
     return () => clearInterval(timer);
-  }, [target, duration]);
+  }, [target]);
   return count;
 }
 
 function formatTime(seconds) {
-  if (!seconds) return "N/A";
+  if (!seconds) return null;
   const m = Math.floor(seconds / 60);
   const s = seconds % 60;
   if (m === 0) return `${s}s`;
   return `${m}m ${s}s`;
 }
 
-function getGrade(percentage) {
-  if (percentage >= 90) return { label: "Outstanding", color: "#10b981", bg: "rgba(16,185,129,0.1)", emoji: "🏆" };
-  if (percentage >= 75) return { label: "Excellent",    color: "#3b82f6", bg: "rgba(59,130,246,0.1)", emoji: "🌟" };
-  if (percentage >= 60) return { label: "Good",         color: "#8b5cf6", bg: "rgba(139,92,246,0.1)", emoji: "👍" };
-  if (percentage >= 40) return { label: "Pass",         color: "#f59e0b", bg: "rgba(245,158,11,0.1)", emoji: "✅" };
-  return                       { label: "Needs Work",   color: "#ef4444", bg: "rgba(239,68,68,0.1)",  emoji: "📚" };
+function getGrade(pct) {
+  if (pct >= 90) return { label: "Outstanding", color: "#059669", light: "#ecfdf5", border: "#a7f3d0", emoji: "🏆" };
+  if (pct >= 75) return { label: "Excellent",   color: "#4f46e5", light: "#eef2ff", border: "#c7d2fe", emoji: "🌟" };
+  if (pct >= 60) return { label: "Good",        color: "#7c3aed", light: "#f5f3ff", border: "#ddd6fe", emoji: "👍" };
+  if (pct >= 40) return { label: "Pass",        color: "#d97706", light: "#fffbeb", border: "#fde68a", emoji: "✅" };
+  return               { label: "Needs Work",  color: "#dc2626", light: "#fef2f2", border: "#fecaca", emoji: "📚" };
 }
 
-export default function PremiumUniversalQuizResult() {
+export default function UniversalQuizResult() {
   const { attemptId } = useParams();
   const navigate = useNavigate();
-  const [resultData, setResultData] = useState(null);
+  const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const circleRef = useRef(null);
 
   useEffect(() => {
+    // ✅ localStorage se meta read karo
+    let meta = {};
+    try {
+      meta = JSON.parse(localStorage.getItem("quizMeta") || "{}");
+    } catch (_) {}
+
     axiosInstance
       .get(`/quiz/result/${attemptId}`)
       .then(res => {
@@ -54,398 +58,192 @@ export default function PremiumUniversalQuizResult() {
         const skipped  = d.skipped  || 0;
         const score    = parseFloat(((correct * 2) - (wrong * 0.5)).toFixed(2));
         const maxScore = total * 2;
-        const percentage = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
+        const pct      = maxScore > 0 ? Math.round((score / maxScore) * 100) : 0;
 
-        setResultData({
-          totalQuestions: total,
-          correctAnswers: correct,
-          wrongAnswers:   wrong,
-          skippedAnswers: skipped,
-          score,
-          maxScore,
-          percentage,
-          passed:    percentage >= 40,
-          timeTaken: d.timeTaken  || null,
-          category:  d.category   || null,
-          branch:    d.branch     || null,
-          subject:   d.subject    || null,
-          company:   d.company    || null,
+        setData({
+          total, correct, wrong, skipped,
+          score, maxScore, pct,
+          passed: pct >= 40,
+          // ✅ localStorage se meta — backend se nahi aata
+          timeTaken: meta.timeTaken || null,
+          category:  meta.category  || null,
+          branch:    meta.branch    || null,
+          subject:   meta.subject   || null,
+          company:   meta.company   || null,
         });
         setLoading(false);
       })
       .catch(err => {
         console.error(err);
-        setError("Failed to load results.");
+        setError("Could not load results.");
         setLoading(false);
       });
   }, [attemptId]);
 
-  // Animated percentage for circle
-  const animatedPct = useCounter(resultData?.percentage ?? 0, 1800);
+  const animPct = useCounter(data?.pct ?? 0, 1600);
 
-  if (loading) {
-    return (
-      <div style={styles.loadingWrap}>
-        <div style={styles.spinner} />
-        <p style={styles.loadingText}>Calculating your results...</p>
-      </div>
-    );
-  }
+  if (loading) return (
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center gap-4">
+      <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
+      <p className="text-gray-500 font-medium text-sm">Calculating your results...</p>
+    </div>
+  );
 
-  if (error || !resultData) {
-    return (
-      <div style={styles.loadingWrap}>
-        <p style={{ color: '#ef4444', fontWeight: 600 }}>{error || "Something went wrong."}</p>
-        <button onClick={() => navigate(-1)} style={styles.backBtn}>Go Back</button>
-      </div>
-    );
-  }
+  if (error || !data) return (
+    <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center gap-4">
+      <p className="text-red-500 font-semibold">{error || "Something went wrong."}</p>
+      <button onClick={() => navigate(-1)}
+        className="px-5 py-2 bg-indigo-600 text-white rounded-lg font-semibold hover:bg-indigo-700 transition-colors">
+        Go Back
+      </button>
+    </div>
+  );
 
-  const grade = getGrade(resultData.percentage);
-  const circumference = 2 * Math.PI * 54;
-  const strokeDash = circumference - (animatedPct / 100) * circumference;
-
-  const stats = [
-    { label: "Correct",  value: resultData.correctAnswers,  color: "#10b981", bg: "rgba(16,185,129,0.08)",  icon: "✓" },
-    { label: "Wrong",    value: resultData.wrongAnswers,    color: "#ef4444", bg: "rgba(239,68,68,0.08)",   icon: "✗" },
-    { label: "Skipped",  value: resultData.skippedAnswers,  color: "#f59e0b", bg: "rgba(245,158,11,0.08)",  icon: "→" },
-    { label: "Total",    value: resultData.totalQuestions,  color: "#6b7280", bg: "rgba(107,114,128,0.08)", icon: "#" },
-  ];
+  const grade = getGrade(data.pct);
+  const circumference = 2 * Math.PI * 52;
+  const strokeDash = circumference - (animPct / 100) * circumference;
 
   const meta = [
-    resultData.category && { label: "Category", value: resultData.category },
-    resultData.branch   && { label: "Branch",   value: resultData.branch   },
-    resultData.subject  && { label: "Subject",  value: resultData.subject  },
-    resultData.company  && { label: "Company",  value: resultData.company  },
-    resultData.timeTaken && { label: "Time Taken", value: formatTime(resultData.timeTaken) },
+    data.category  && { label: "Category",   value: data.category  },
+    data.branch    && { label: "Branch",      value: data.branch    },
+    data.subject   && { label: "Subject",     value: data.subject   },
+    data.company   && { label: "Company",     value: data.company   },
+    data.timeTaken && { label: "Time Taken",  value: formatTime(data.timeTaken) },
   ].filter(Boolean);
 
   return (
     <>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap');
-        @keyframes fadeUp { from { opacity:0; transform:translateY(24px); } to { opacity:1; transform:translateY(0); } }
-        @keyframes scaleIn { from { opacity:0; transform:scale(0.85); } to { opacity:1; transform:scale(1); } }
-        @keyframes gradientShift { 0%,100% { background-position:0% 50%; } 50% { background-position:100% 50%; } }
-        @keyframes spin { to { transform:rotate(360deg); } }
-        .rq-fadeup { animation: fadeUp 0.7s cubic-bezier(0.16,1,0.3,1) both; }
-        .rq-scalein { animation: scaleIn 0.6s cubic-bezier(0.16,1,0.3,1) both; }
-        .rq-stat:hover { transform: translateY(-3px) scale(1.02); }
-        .rq-btn-primary:hover { opacity:0.88; transform:translateY(-1px); }
-        .rq-btn-secondary:hover { background:rgba(255,255,255,0.08); transform:translateY(-1px); }
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+        .rq-wrap * { font-family: 'Plus Jakarta Sans', sans-serif; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(20px); } to { opacity:1; transform:translateY(0); } }
+        @keyframes scaleIn { from { opacity:0; transform:scale(0.88); } to { opacity:1; transform:scale(1); } }
+        .fu { animation: fadeUp 0.6s cubic-bezier(0.16,1,0.3,1) both; }
+        .si { animation: scaleIn 0.55s cubic-bezier(0.16,1,0.3,1) both; }
       `}</style>
 
-      <div style={styles.page}>
-        {/* Background */}
-        <div style={styles.bgGlow1} />
-        <div style={styles.bgGlow2} />
+      <div className="rq-wrap min-h-screen bg-gradient-to-br from-slate-50 via-white to-indigo-50/40 flex items-center justify-center p-4 relative overflow-hidden">
 
-        <div style={styles.container}>
+        {/* Bg blobs */}
+        <div className="fixed top-0 right-0 w-96 h-96 bg-indigo-100/50 rounded-full blur-3xl pointer-events-none -translate-y-1/2 translate-x-1/4" />
+        <div className="fixed bottom-0 left-0 w-80 h-80 bg-violet-100/40 rounded-full blur-3xl pointer-events-none translate-y-1/2 -translate-x-1/4" />
 
-          {/* Header Badge */}
-          <div className="rq-fadeup" style={{ textAlign:'center', marginBottom:'2rem', animationDelay:'0.05s' }}>
-            <span style={{ ...styles.badge, background: grade.bg, color: grade.color, border: `1px solid ${grade.color}40` }}>
-              {grade.emoji} {grade.label}
-            </span>
-          </div>
+        <div className="w-full max-w-md relative z-10">
 
-          {/* Score Circle + Title */}
-          <div className="rq-scalein" style={{ textAlign:'center', marginBottom:'2.5rem', animationDelay:'0.1s' }}>
-            <div style={styles.circleWrap}>
-              <svg width="128" height="128" viewBox="0 0 128 128">
-                <circle cx="64" cy="64" r="54" fill="none" stroke="rgba(255,255,255,0.06)" strokeWidth="10" />
-                <circle
-                  cx="64" cy="64" r="54"
-                  fill="none"
-                  stroke={grade.color}
-                  strokeWidth="10"
-                  strokeLinecap="round"
-                  strokeDasharray={circumference}
-                  strokeDashoffset={strokeDash}
-                  transform="rotate(-90 64 64)"
-                  style={{ transition:'stroke-dashoffset 0.05s linear', filter:`drop-shadow(0 0 8px ${grade.color}88)` }}
-                />
-              </svg>
-              <div style={styles.circleInner}>
-                <span style={{ ...styles.circlePct, color: grade.color }}>{animatedPct}%</span>
-                <span style={styles.circleLabel}>{resultData.passed ? "PASS" : "FAIL"}</span>
+          {/* Main card */}
+          <div className="bg-white rounded-3xl shadow-xl shadow-indigo-100/60 border border-gray-100 overflow-hidden">
+
+            {/* Top accent bar */}
+            <div className="h-1.5" style={{ background: 'linear-gradient(90deg, #6366f1, #8b5cf6, #06b6d4)' }} />
+
+            <div className="p-7">
+
+              {/* Grade badge */}
+              <div className="fu flex justify-center mb-6" style={{ animationDelay: '0.05s' }}>
+                <span className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-sm font-bold"
+                  style={{ background: grade.light, color: grade.color, border: `1.5px solid ${grade.border}` }}>
+                  {grade.emoji} {grade.label}
+                </span>
               </div>
-            </div>
 
-            <h1 style={styles.title}>Quiz Complete</h1>
-            <p style={styles.subtitle}>
-              Score: <strong style={{ color:'#f0f0f0' }}>{resultData.score}</strong> / {resultData.maxScore} points
-            </p>
-          </div>
-
-          {/* Stats Grid */}
-          <div className="rq-fadeup" style={{ ...styles.statsGrid, animationDelay:'0.2s' }}>
-            {stats.map((s, i) => (
-              <div
-                key={i}
-                className="rq-stat"
-                style={{ ...styles.statCard, background: s.bg, border: `1px solid ${s.color}25`, transition:'all 0.25s ease' }}
-              >
-                <span style={{ ...styles.statIcon, color: s.color }}>{s.icon}</span>
-                <span style={{ ...styles.statValue, color: s.color }}>{s.value}</span>
-                <span style={styles.statLabel}>{s.label}</span>
-              </div>
-            ))}
-          </div>
-
-          {/* Meta info — category, branch, time etc */}
-          {meta.length > 0 && (
-            <div className="rq-fadeup" style={{ ...styles.metaBox, animationDelay:'0.3s' }}>
-              {meta.map((m, i) => (
-                <div key={i} style={styles.metaRow}>
-                  <span style={styles.metaLabel}>{m.label}</span>
-                  <span style={styles.metaValue}>{m.value}</span>
+              {/* Circle + Title */}
+              <div className="si flex flex-col items-center mb-8" style={{ animationDelay: '0.1s' }}>
+                <div className="relative w-36 h-36 mb-5">
+                  <div className="absolute inset-2.5 rounded-full bg-white"
+                    style={{ boxShadow: `0 0 0 6px ${grade.light}` }} />
+                  <svg className="absolute inset-0" width="144" height="144" viewBox="0 0 144 144">
+                    <circle cx="72" cy="72" r="52" fill="none" stroke="#f1f5f9" strokeWidth="11" />
+                    <circle
+                      cx="72" cy="72" r="52"
+                      fill="none"
+                      stroke={grade.color}
+                      strokeWidth="11"
+                      strokeLinecap="round"
+                      strokeDasharray={circumference}
+                      strokeDashoffset={strokeDash}
+                      transform="rotate(-90 72 72)"
+                      style={{
+                        transition: 'stroke-dashoffset 0.03s linear',
+                        filter: `drop-shadow(0 0 5px ${grade.color}55)`
+                      }}
+                    />
+                  </svg>
+                  <div className="absolute inset-0 flex flex-col items-center justify-center">
+                    <span className="text-3xl font-extrabold" style={{ color: grade.color }}>
+                      {animPct}%
+                    </span>
+                    <span className={`text-xs font-bold tracking-widest mt-0.5 ${data.passed ? 'text-emerald-600' : 'text-red-500'}`}>
+                      {data.passed ? 'PASSED' : 'FAILED'}
+                    </span>
+                  </div>
                 </div>
-              ))}
-            </div>
-          )}
 
-          {/* Action Buttons */}
-          <div className="rq-fadeup" style={{ ...styles.btnGroup, animationDelay:'0.4s' }}>
-            <button
-              className="rq-btn-primary"
-              onClick={() => navigate(`/review/${attemptId}`)}
-              style={styles.btnPrimary}
-            >
-              📋 Review Answers
-            </button>
-            <Link
-              to="/dashboard"
-              className="rq-btn-secondary"
-              style={styles.btnSecondary}
-            >
-              🏠 Dashboard
-            </Link>
-            <button
-              className="rq-btn-secondary"
-              onClick={() => navigate(-2)}
-              style={styles.btnSecondary}
-            >
-              🔄 Try Again
-            </button>
+                <h1 className="text-2xl font-extrabold text-gray-900 mb-1.5">Quiz Complete!</h1>
+                <p className="text-gray-400 text-sm font-medium">
+                  Score: <span className="font-bold text-indigo-600">{data.score}</span>
+                  <span className="text-gray-300 mx-1">/</span>
+                  <span className="text-gray-600">{data.maxScore} pts</span>
+                </p>
+              </div>
+
+              {/* Stats */}
+              <div className="fu grid grid-cols-4 gap-2.5 mb-5" style={{ animationDelay: '0.2s' }}>
+                {[
+                  { label: "Correct",  value: data.correct,  textColor: "text-emerald-700", bg: "bg-emerald-50",  border: "border-emerald-100" },
+                  { label: "Wrong",    value: data.wrong,    textColor: "text-red-600",     bg: "bg-red-50",      border: "border-red-100"     },
+                  { label: "Skipped",  value: data.skipped,  textColor: "text-amber-600",   bg: "bg-amber-50",    border: "border-amber-100"   },
+                  { label: "Total",    value: data.total,    textColor: "text-indigo-700",  bg: "bg-indigo-50",   border: "border-indigo-100"  },
+                ].map((s, i) => (
+                  <div key={i} className={`${s.bg} border ${s.border} rounded-2xl p-3 text-center`}>
+                    <div className={`text-2xl font-extrabold ${s.textColor}`}>{s.value}</div>
+                    <div className="text-xs font-semibold text-gray-400 mt-0.5">{s.label}</div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Meta info */}
+              {meta.length > 0 && (
+                <div className="fu bg-gray-50 border border-gray-100 rounded-2xl px-5 py-4 mb-5 space-y-3"
+                  style={{ animationDelay: '0.3s' }}>
+                  {meta.map((m, i) => (
+                    <div key={i} className="flex justify-between items-center">
+                      <span className="text-xs font-semibold text-gray-400 uppercase tracking-wider">{m.label}</span>
+                      <span className="text-sm font-bold text-gray-700 capitalize">{m.value}</span>
+                    </div>
+                  ))}
+                </div>
+              )}
+
+              {/* Buttons */}
+              <div className="fu space-y-2.5" style={{ animationDelay: '0.4s' }}>
+                <button
+                  onClick={() => navigate(`/review/${attemptId}`)}
+                  className="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 active:scale-95 text-white font-bold rounded-2xl transition-all hover:shadow-lg hover:shadow-indigo-200 hover:-translate-y-0.5 text-sm"
+                >
+                  📋 Review Answers
+                </button>
+                <div className="grid grid-cols-2 gap-2.5">
+                  <button
+                    onClick={() => navigate(-2)}
+                    className="py-3 bg-gray-100 hover:bg-gray-200 active:scale-95 text-gray-700 font-bold rounded-2xl transition-all text-sm hover:-translate-y-0.5"
+                  >
+                    🔄 Try Again
+                  </button>
+                  <Link
+                    to="/dashboard"
+                    className="py-3 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-2xl transition-all text-sm text-center hover:-translate-y-0.5 block"
+                  >
+                    🏠 Dashboard
+                  </Link>
+                </div>
+              </div>
+
+            </div>
           </div>
 
+          <p className="text-center text-xs text-gray-300 mt-4 font-medium">Attempt #{attemptId}</p>
         </div>
       </div>
     </>
   );
 }
-
-const styles = {
-  page: {
-    minHeight: '100vh',
-    background: '#08090f',
-    display: 'flex',
-    alignItems: 'center',
-    justifyContent: 'center',
-    padding: '2rem 1rem',
-    fontFamily: "'DM Sans', sans-serif",
-    position: 'relative',
-    overflow: 'hidden',
-  },
-  bgGlow1: {
-    position: 'fixed', top: '-20%', left: '-10%',
-    width: '500px', height: '500px',
-    background: 'radial-gradient(circle, rgba(99,102,241,0.12) 0%, transparent 70%)',
-    pointerEvents: 'none', borderRadius: '50%',
-  },
-  bgGlow2: {
-    position: 'fixed', bottom: '-20%', right: '-10%',
-    width: '600px', height: '600px',
-    background: 'radial-gradient(circle, rgba(16,185,129,0.08) 0%, transparent 70%)',
-    pointerEvents: 'none', borderRadius: '50%',
-  },
-  container: {
-    width: '100%',
-    maxWidth: '480px',
-    background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.08)',
-    borderRadius: '24px',
-    padding: '2.5rem 2rem',
-    backdropFilter: 'blur(20px)',
-    position: 'relative',
-    zIndex: 1,
-  },
-  badge: {
-    display: 'inline-flex',
-    alignItems: 'center',
-    gap: '6px',
-    padding: '6px 16px',
-    borderRadius: '999px',
-    fontSize: '0.8rem',
-    fontWeight: 700,
-    letterSpacing: '0.05em',
-    fontFamily: "'Syne', sans-serif",
-  },
-  circleWrap: {
-    position: 'relative',
-    width: '128px',
-    height: '128px',
-    margin: '0 auto 1.5rem',
-  },
-  circleInner: {
-    position: 'absolute',
-    inset: 0,
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  circlePct: {
-    fontFamily: "'Syne', sans-serif",
-    fontSize: '1.6rem',
-    fontWeight: 800,
-    lineHeight: 1,
-  },
-  circleLabel: {
-    fontSize: '0.6rem',
-    fontWeight: 700,
-    color: 'rgba(255,255,255,0.4)',
-    letterSpacing: '0.15em',
-    marginTop: '2px',
-  },
-  title: {
-    fontFamily: "'Syne', sans-serif",
-    fontSize: '1.75rem',
-    fontWeight: 800,
-    color: '#f0f0f0',
-    margin: '0 0 0.5rem',
-    letterSpacing: '-0.02em',
-  },
-  subtitle: {
-    fontSize: '0.9rem',
-    color: 'rgba(255,255,255,0.45)',
-    margin: 0,
-  },
-  statsGrid: {
-    display: 'grid',
-    gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: '10px',
-    marginBottom: '1.25rem',
-  },
-  statCard: {
-    borderRadius: '14px',
-    padding: '1rem',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    gap: '4px',
-    cursor: 'default',
-  },
-  statIcon: {
-    fontSize: '1rem',
-    fontWeight: 700,
-    lineHeight: 1,
-  },
-  statValue: {
-    fontFamily: "'Syne', sans-serif",
-    fontSize: '1.8rem',
-    fontWeight: 800,
-    lineHeight: 1,
-  },
-  statLabel: {
-    fontSize: '0.72rem',
-    fontWeight: 600,
-    color: 'rgba(255,255,255,0.4)',
-    textTransform: 'uppercase',
-    letterSpacing: '0.08em',
-  },
-  metaBox: {
-    background: 'rgba(255,255,255,0.03)',
-    border: '1px solid rgba(255,255,255,0.07)',
-    borderRadius: '14px',
-    padding: '1rem 1.25rem',
-    marginBottom: '1.5rem',
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-  },
-  metaRow: {
-    display: 'flex',
-    justifyContent: 'space-between',
-    alignItems: 'center',
-  },
-  metaLabel: {
-    fontSize: '0.8rem',
-    color: 'rgba(255,255,255,0.35)',
-    fontWeight: 500,
-  },
-  metaValue: {
-    fontSize: '0.85rem',
-    color: 'rgba(255,255,255,0.75)',
-    fontWeight: 600,
-    fontFamily: "'Syne', sans-serif",
-    textTransform: 'capitalize',
-  },
-  btnGroup: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '10px',
-  },
-  btnPrimary: {
-    width: '100%',
-    padding: '14px',
-    borderRadius: '12px',
-    background: 'linear-gradient(135deg, #6366f1, #4f46e5)',
-    color: '#fff',
-    fontFamily: "'Syne', sans-serif",
-    fontSize: '0.9rem',
-    fontWeight: 700,
-    border: 'none',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    boxShadow: '0 4px 20px rgba(99,102,241,0.25)',
-  },
-  btnSecondary: {
-    width: '100%',
-    padding: '13px',
-    borderRadius: '12px',
-    background: 'rgba(255,255,255,0.05)',
-    color: 'rgba(255,255,255,0.65)',
-    fontFamily: "'Syne', sans-serif",
-    fontSize: '0.85rem',
-    fontWeight: 600,
-    border: '1px solid rgba(255,255,255,0.08)',
-    cursor: 'pointer',
-    transition: 'all 0.2s ease',
-    textDecoration: 'none',
-    display: 'block',
-    textAlign: 'center',
-    boxSizing: 'border-box',
-  },
-  loadingWrap: {
-    minHeight: '100vh',
-    background: '#08090f',
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'center',
-    justifyContent: 'center',
-    gap: '1rem',
-    fontFamily: "'DM Sans', sans-serif",
-  },
-  spinner: {
-    width: '40px', height: '40px',
-    border: '3px solid rgba(99,102,241,0.2)',
-    borderTop: '3px solid #6366f1',
-    borderRadius: '50%',
-    animation: 'spin 0.8s linear infinite',
-  },
-  loadingText: {
-    color: 'rgba(255,255,255,0.4)',
-    fontSize: '0.9rem',
-  },
-  backBtn: {
-    padding: '10px 24px',
-    background: '#6366f1',
-    color: '#fff',
-    border: 'none',
-    borderRadius: '8px',
-    cursor: 'pointer',
-    fontWeight: 600,
-  },
-};

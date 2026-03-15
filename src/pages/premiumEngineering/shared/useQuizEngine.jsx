@@ -1,21 +1,12 @@
-// shared/useQuizEngine.js
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axiosInstance";
 
+const indexToOption = (i) => ["A", "B", "C", "D"][i] ?? null;
+
 export function useQuizEngine(category, branch, resultPath) {
   const navigate = useNavigate();
 
-  // Helper to convert index to A/B/C/D
-  const indexToOption = (i) => {
-    if (i === 0) return "A";
-    if (i === 1) return "B";
-    if (i === 2) return "C";
-    if (i === 3) return "D";
-    return null;
-  };
-
-  // Views: "cards", "form", "quiz"
   const [view, setView] = useState("cards");
   const [selectedSubject, setSelectedSubject] = useState(null);
   const [selectedSubtopic, setSelectedSubtopic] = useState("");
@@ -39,7 +30,6 @@ export function useQuizEngine(category, branch, resultPath) {
     return () => clearInterval(interval);
   }, [quizStartTime]);
 
-  // Reset to cards view (e.g., when leaving quiz)
   const resetToCards = () => {
     setView("cards");
     setQuizData(null);
@@ -48,17 +38,17 @@ export function useQuizEngine(category, branch, resultPath) {
     setUserAnswers([]);
     setSelectedSubtopic("");
     setSkippedQuestions([]);
-    setSelectedCompany(null); // optional
+    setSelectedCompany(null);
+    setQuizStartTime(null);
+    setElapsedTime(0);
   };
 
-  // Handle subject selection from cards view
   const handleSelectSubject = (subjectName) => {
     setSelectedSubject(subjectName);
     setSelectedSubtopic("");
     setView("form");
   };
 
-  // Start quiz generation
   const handleStartQuiz = async (config) => {
     setIsGeneratingQuiz(true);
     const companyValue = selectedCompany === "GENERAL" ? null : selectedCompany;
@@ -76,7 +66,7 @@ export function useQuizEngine(category, branch, resultPath) {
 
       const aiQuestions = res.data;
 
-      const formattedQuiz = {
+      setQuizData({
         topic: selectedSubject,
         subtopic: selectedSubtopic || "All Subtopics",
         difficulty: config.difficulty,
@@ -91,23 +81,21 @@ export function useQuizEngine(category, branch, resultPath) {
           aiTip: "",
           learningObjective: "",
         })),
-      };
+      });
 
-      setQuizData(formattedQuiz);
       setQuizStartTime(Date.now());
       setElapsedTime(0);
       setUserAnswers(new Array(aiQuestions.length).fill(null));
       setSkippedQuestions([]);
       setView("quiz");
     } catch (err) {
-      console.error(err);
-      alert("Failed to generate quiz");
+      console.error("Generate failed:", err);
+      alert("Failed to generate quiz. Please try again.");
     } finally {
       setIsGeneratingQuiz(false);
     }
   };
 
-  // Handle option selection
   const handleOptionSelect = (optionIndex) => {
     setSelectedOption(optionIndex);
     const updatedAnswers = [...userAnswers];
@@ -115,7 +103,47 @@ export function useQuizEngine(category, branch, resultPath) {
     setUserAnswers(updatedAnswers);
   };
 
-  // Move to next question or submit
+  // ✅ Alag submitQuiz function — duplicate code nahi
+  const submitQuiz = async (finalAnswers) => {
+    const companyValue = selectedCompany === "GENERAL" ? null : selectedCompany;
+    const timeTaken = quizStartTime
+      ? Math.floor((Date.now() - quizStartTime) / 1000)
+      : null;
+
+    // ✅ localStorage mein meta save karo result page ke liye
+    localStorage.setItem("quizMeta", JSON.stringify({
+      category,
+      branch,
+      subject:   selectedSubject,
+      company:   companyValue  || null,
+      timeTaken: timeTaken     || null,
+    }));
+
+    try {
+      const res = await axios.post("/quiz/submit", {
+        category,
+        branch,
+        subject:    selectedSubject,
+        unit:       selectedSubtopic || "General",
+        subtopic:   selectedSubtopic || null,
+        difficulty: quizData.difficulty,
+        mode:       "practice",
+        timeTaken,
+        company:    companyValue,
+        answers: finalAnswers.map((ans, index) => ({
+          questionId:     quizData.questions[index].id,
+          selectedOption: indexToOption(ans),
+        })),
+      });
+
+      console.log("Submit response:", res.data);
+      navigate(resultPath.replace(":attemptId", res.data.attemptId));
+    } catch (err) {
+      console.error("Submit failed:", err.response?.data || err.message);
+      alert("Failed to submit quiz: " + (err.response?.data?.message || err.message));
+    }
+  };
+
   const handleNextQuestion = () => {
     const updatedAnswers = [...userAnswers];
     updatedAnswers[currentQuestionIndex] = selectedOption;
@@ -123,48 +151,25 @@ export function useQuizEngine(category, branch, resultPath) {
     setIsLoadingNextQuestion(true);
 
     setTimeout(async () => {
-      if (currentQuestionIndex + 1 < quizData.questions.length) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setSelectedOption(userAnswers[currentQuestionIndex + 1]);
+      try {
+        if (currentQuestionIndex + 1 < quizData.questions.length) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setSelectedOption(userAnswers[currentQuestionIndex + 1]);
+        } else {
+          const finalAnswers = [...updatedAnswers];
+          if (selectedOption !== null && finalAnswers[currentQuestionIndex] === null) {
+            finalAnswers[currentQuestionIndex] = selectedOption;
+          }
+          await submitQuiz(finalAnswers);
+        }
+      } catch (err) {
+        console.error("Next question error:", err);
+      } finally {
         setIsLoadingNextQuestion(false);
-      } else {
-        // Final submission
-        const finalAnswers = [...updatedAnswers];
-        if (selectedOption !== null && finalAnswers[currentQuestionIndex] === null) {
-          finalAnswers[currentQuestionIndex] = selectedOption;
-        }
-
-        const companyValue = selectedCompany === "GENERAL" ? null : selectedCompany;
-
-        try {
-          const res = await axios.post("/quiz/submit", {
-            category,
-            branch,
-            subject: selectedSubject,
-            unit: selectedSubtopic || "General",
-            subtopic: selectedSubtopic || null,
-            difficulty: quizData.difficulty,
-            mode: "practice",
-            timeTaken: Math.floor((Date.now() - quizStartTime) / 1000),
-            company: companyValue,
-            answers: finalAnswers.map((ans, index) => ({
-              questionId: quizData.questions[index].id,
-              selectedOption: indexToOption(ans),
-            })),
-          });
-
-          navigate(resultPath.replace(":attemptId", res.data.attemptId));
-        } catch (err) {
-          console.error(err);
-          alert("Failed to submit quiz");
-        } finally {
-          setIsLoadingNextQuestion(false);
-        }
       }
     }, 500);
   };
 
-  // Skip current question
   const handleSkipQuestion = () => {
     const updatedAnswers = [...userAnswers];
     updatedAnswers[currentQuestionIndex] = null;
@@ -173,43 +178,22 @@ export function useQuizEngine(category, branch, resultPath) {
     setIsLoadingNextQuestion(true);
 
     setTimeout(async () => {
-      if (currentQuestionIndex + 1 < quizData.questions.length) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setSelectedOption(userAnswers[currentQuestionIndex + 1]);
-        setIsLoadingNextQuestion(false);
-      } else {
-        const companyValue = selectedCompany === "GENERAL" ? null : selectedCompany;
-
-        try {
-          const res = await axios.post("/quiz/submit", {
-            category,
-            branch,
-            subject: selectedSubject,
-            unit: selectedSubtopic || "General",
-            subtopic: selectedSubtopic || null,
-            difficulty: quizData.difficulty,
-            mode: "practice",
-            timeTaken: Math.floor((Date.now() - quizStartTime) / 1000),
-            company: companyValue,
-            answers: updatedAnswers.map((ans, index) => ({
-              questionId: quizData.questions[index].id,
-              selectedOption: indexToOption(ans),
-            })),
-          });
-
-          navigate(resultPath.replace(":attemptId", res.data.attemptId));
-        } catch (err) {
-          console.error(err);
-          alert("Failed to submit quiz");
-        } finally {
-          setIsLoadingNextQuestion(false);
+      try {
+        if (currentQuestionIndex + 1 < quizData.questions.length) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setSelectedOption(userAnswers[currentQuestionIndex + 1]);
+        } else {
+          await submitQuiz(updatedAnswers);
         }
+      } catch (err) {
+        console.error("Skip question error:", err);
+      } finally {
+        setIsLoadingNextQuestion(false);
       }
     }, 500);
   };
 
   return {
-    // State
     view,
     selectedSubject,
     selectedSubtopic,
@@ -223,12 +207,8 @@ export function useQuizEngine(category, branch, resultPath) {
     skippedQuestions,
     quizStartTime,
     elapsedTime,
-
-    // Setters (exposed for form view)
     setSelectedSubtopic,
     setSelectedCompany,
-
-    // Actions
     handleSelectSubject,
     handleStartQuiz,
     handleOptionSelect,
