@@ -69,6 +69,7 @@ export function useQuizEngine(category, branch, resultPath) {
   };
 
   const submitQuiz = async (finalAnswers) => {
+  try {
     const res = await axios.post("/quiz/submit", {
       category,
       branch,
@@ -83,43 +84,58 @@ export function useQuizEngine(category, branch, resultPath) {
         selectedOption: indexToOption(ans)
       }))
     });
-    navigate(`${resultPath}/${res.data.attemptId}`);
-  };
+    console.log("Submit response:", res.data);
+    navigate(`/engineering/result/${res.data.attemptId}`);
+  } catch (err) {
+    console.error("Submit failed:", err.response?.data);
+    alert("Submit failed: " + (err.response?.data?.message || err.message));
+  }
+};
 
-  const handleNextQuestion = () => {
-    const updatedAnswers = [...userAnswers];
-    updatedAnswers[currentQuestionIndex] = selectedOption;
-    setUserAnswers(updatedAnswers);
-    setIsLoadingNextQuestion(true);
+ const handleNextQuestion = () => {
+  const updatedAnswers = [...userAnswers];
+  updatedAnswers[currentQuestionIndex] = selectedOption;
+  setUserAnswers(updatedAnswers);
+  setIsLoadingNextQuestion(true);
 
-    setTimeout(async () => {
+  setTimeout(async () => {
+    try {
       if (currentQuestionIndex + 1 < quizData.questions.length) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
         setSelectedOption(userAnswers[currentQuestionIndex + 1]);
       } else {
-        await submitQuiz(updatedAnswers);
+        await submitQuiz(updatedAnswers); // ✅ await properly
       }
-      setIsLoadingNextQuestion(false);
-    }, 500);
-  };
+    } catch (err) {
+      console.error("Next question error:", err);
+    } finally {
+      setIsLoadingNextQuestion(false); // ✅ hamesha false hoga
+    }
+  }, 500);
+};
 
-  const handleSkipQuestion = () => {
-    const updatedAnswers = [...userAnswers];
-    updatedAnswers[currentQuestionIndex] = null;
-    setUserAnswers(updatedAnswers);
-    setSkippedQuestions((prev) => [...prev, currentQuestionIndex]);
-    setIsLoadingNextQuestion(true);
+const handleSkipQuestion = () => {
+  const updatedAnswers = [...userAnswers];
+  updatedAnswers[currentQuestionIndex] = null;
+  setUserAnswers(updatedAnswers);
+  setSkippedQuestions((prev) => [...prev, currentQuestionIndex]);
+  setIsLoadingNextQuestion(true);
 
-    setTimeout(async () => {
+  setTimeout(async () => {
+    try {
       if (currentQuestionIndex + 1 < quizData.questions.length) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
         setSelectedOption(userAnswers[currentQuestionIndex + 1]);
       } else {
-        await submitQuiz(updatedAnswers);
+        await submitQuiz(updatedAnswers); // ✅ await properly
       }
-      setIsLoadingNextQuestion(false);
-    }, 500);
-  };
+    } catch (err) {
+      console.error("Skip question error:", err);
+    } finally {
+      setIsLoadingNextQuestion(false); // ✅ hamesha false hoga
+    }
+  }, 500);
+};
 
   const handleOptionSelect = (optionIndex) => {
     setSelectedOption(optionIndex);
