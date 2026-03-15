@@ -3,7 +3,7 @@ import EngineeringBranchPage from "../shared/EngineeringBranchPage";
 const config = {
   category: "ENGINEERING",
   branch: "ELECTRONICS",
-  resultPath: "/engineering/result",
+  resultPath: "/engineering/result/:attemptId",
   pageTitle: "Electronics Engineering",
   breadcrumb: "Electronics",
   description: "Master core EC subjects with AI‑generated personalized quizzes",

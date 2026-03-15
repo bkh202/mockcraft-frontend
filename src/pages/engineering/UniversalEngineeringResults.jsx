@@ -62,7 +62,7 @@ export default function UniversalEngineeringResults() {
     <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 flex items-center justify-center p-4">
       <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8">
         <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900 mb-2">🎯 Engineering Result</h1>
+          <h1 className="text-3xl font-bold text-gray-900 mb-2">🎯 Quiz Result</h1>
           <div className={`inline-flex items-center px-4 py-2 rounded-full ${resultData.passed ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'
             }`}>
             {resultData.passed ? <CheckCircle className="w-5 h-5 mr-2" /> : <XCircle className="w-5 h-5 mr-2" />}

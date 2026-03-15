@@ -3,7 +3,7 @@ import EngineeringBranchPage from "../shared/EngineeringBranchPage";
 const config = {
   category: "ENGINEERING",
   branch: "CIVIL",
-  resultPath: "/engineering/result",
+  resultPath: "/engineering/result/:attemptId",
   pageTitle: "Civil Engineering",
   breadcrumb: "Civil",
   description: "Master core Civil subjects with AI‑generated personalized quizzes",

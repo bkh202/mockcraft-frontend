@@ -3,7 +3,7 @@ import AptitudeBranchPage from "./shared/AptitudeBranchPage";
 
 const config = {
   branch: "QUANTATIVE",
-  resultPath: "/engineering/result",
+  resultPath: "/aptitude/result/:attemptId",
   pageTitle: "Quantitative Aptitude",
   breadcrumb: "Quantitative",
   description: "Master mathematical concepts with AI-generated personalized quizzes",

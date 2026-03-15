@@ -6,7 +6,7 @@ const config = {
   pageTitle: "Mechanical Engineering",
   breadcrumb: "Mechanical", description: "Master core ME subjects with AI-generated personalized quizzes",
   parentPath: "/engineering", parentLabel: "Engineering",
-  resultPath: "/engineering/result", quizLabel: "AI Mechanical Quiz", formIcon: "⚙️",
+  resultPath: "/engineering/result/:attemptId", quizLabel: "AI Mechanical Quiz", formIcon: "⚙️",
   adaptiveSubject: "Thermodynamics",
   subjects: [
     { name: "Thermodynamics", questions: "AI-Based", difficulty: "Medium", color: "bg-blue-100", icon: "🔥", topics: ["Laws of TD", "Heat Transfer", "Entropy", "Refrigeration", "Power Cycles"] },

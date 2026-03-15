@@ -3,7 +3,7 @@ import EngineeringBranchPage from "../shared/EngineeringBranchPage";
 const config = {
   category: "ENGINEERING",
   branch: "CSE",
-  resultPath: "/engineering/result",
+  resultPath: "/engineering/result/:attemptId",
   pageTitle: "Computer Science Engineering",
   breadcrumb: "Computer Science",
   description: "Master core CS subjects with AI‑generated personalized quizzes",

@@ -2,7 +2,7 @@ import AptitudeBranchPage from "./shared/AptitudeBranchPage";
 
 const config = {
   branch: "DATA_INTERPRETATION",
-  resultPath: "/engineering/result",
+  resultPath: "/aptitude/result/:attemptId",
   pageTitle: "Data Interpretation",
   breadcrumb: "Data Interpretation",
   description: "Master data analysis skills with AI-generated personalized quizzes",

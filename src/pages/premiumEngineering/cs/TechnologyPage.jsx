@@ -3,7 +3,7 @@ import EngineeringBranchPage from "../shared/EngineeringBranchPage";
 const config = {
   category: "TECHNOLOGY",
   branch: "CSE", // as used in original
-  resultPath: "/engineering/result",
+  resultPath: "/engineering/result/:attemptId",
   pageTitle: "Technology Specializations",
   breadcrumb: "Specializations",
   description: "Master in‑demand tech domains with AI‑generated personalized quizzes",

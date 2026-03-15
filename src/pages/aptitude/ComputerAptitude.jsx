@@ -2,7 +2,7 @@ import AptitudeBranchPage from "./shared/AptitudeBranchPage";
 
 const config = {
   branch: "COMPUTER",
-  resultPath: "/engineering/result",
+  resultPath: "/aptitude/result/:attemptId",
   pageTitle: "Computer Aptitude",
   breadcrumb: "Computer Aptitude",
   description: "Master computer fundamentals with AI-generated personalized quizzes",

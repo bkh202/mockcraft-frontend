@@ -2,7 +2,7 @@ import AptitudeBranchPage from "./shared/AptitudeBranchPage";
 
 const config = {
   branch: "GENERAL_KNOWLEDGE",
-  resultPath: "/engineering/result",
+  resultPath: "/aptitude/result/:attemptId",
   pageTitle: "General Knowledge",
   breadcrumb: "General Knowledge",
   description: "Comprehensive GK with AI-generated personalized quizzes",

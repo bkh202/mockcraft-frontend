@@ -41,11 +41,7 @@ export default function UniversalAptitudeResults() {
   }, [attemptId, navigate]);
 
 
-  const formatTime = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}m ${secs}s`;
-  };
+ 
 
   if (loading || !resultData) {
     return (
@@ -99,13 +95,7 @@ export default function UniversalAptitudeResults() {
             <span className="text-gray-700">Percentage</span>
             <span className="text-2xl font-bold">{resultData.percentage}%</span>
           </div>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center text-gray-700">
-              <Clock className="w-5 h-5 mr-2" />
-              Time Taken
-            </div>
-            <span className="font-medium">{formatTime(resultData.timeTaken)}</span>
-          </div>
+        
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">

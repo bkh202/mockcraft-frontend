@@ -6,7 +6,7 @@ const config = {
   pageTitle: "Electrical Engineering",
   breadcrumb: "Electrical", description: "Master core EE subjects with AI-generated personalized quizzes",
   parentPath: "/engineering", parentLabel: "Engineering",
-  resultPath: "/engineering/result", quizLabel: "AI Electrical Quiz", formIcon: "⚡",
+  resultPath: "/engineering/result/:attemptId", quizLabel: "AI Electrical Quiz", formIcon: "⚡",
   adaptiveSubject: "Power Systems",
   subjects: [
     { name: "Power Systems", questions: "AI-Based", difficulty: "Medium", color: "bg-blue-100", icon: "⚡", topics: ["Generation", "Transmission", "Distribution", "Protection", "Stability"] },

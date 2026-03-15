@@ -6,7 +6,7 @@ const config = {
   pageTitle: "Civil Engineering",
   breadcrumb: "Civil", description: "Master core Civil subjects with AI-generated personalized quizzes",
   parentPath: "/engineering", parentLabel: "Engineering",
-  resultPath: "/engineering/result", quizLabel: "AI Civil Quiz", formIcon: "🏗️",
+  resultPath: "/engineering/result/:attemptId", quizLabel: "AI Civil Quiz", formIcon: "🏗️",
   adaptiveSubject: "Structural Analysis",
   subjects: [
     { name: "Structural Analysis", questions: "AI-Based", difficulty: "Hard", color: "bg-blue-100", icon: "🏗️", topics: ["Beams", "Frames", "Trusses", "Deflection", "Stiffness"] },

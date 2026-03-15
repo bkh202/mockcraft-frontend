@@ -2,7 +2,7 @@ import AptitudeBranchPage from "./shared/AptitudeBranchPage";
 
 const config = {
   branch: "VERBAL",
-  resultPath: "/engineering/result",
+  resultPath: "/aptitude/result/:attemptId",
   pageTitle: "Verbal Ability",
   breadcrumb: "Verbal Ability",
   description: "Master English language skills with AI-generated personalized quizzes",

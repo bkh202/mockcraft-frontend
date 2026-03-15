@@ -2,7 +2,7 @@ import AptitudeBranchPage from "./shared/AptitudeBranchPage";
 
 const config = {
   branch: "LOGICAL_REASONING",
-  resultPath: "/engineering/result",
+  resultPath: "/aptitude/result/:attemptId",
   pageTitle: "Logical Reasoning",
   breadcrumb: "Logical Reasoning",
   description: "Develop analytical thinking with AI-generated personalized quizzes",
