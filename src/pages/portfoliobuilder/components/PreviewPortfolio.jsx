@@ -42,9 +42,9 @@ const templateComponents = {
   space: TemplateSpace,
   synthwave: TemplateSynthwave,
   aurora: TemplateAurora,
-  tokyo: TemplateTokyoNeon,
+  tokyoneon: TemplateTokyoNeon,
   paper: TemplatePaper,
-  deco: TemplateArtDeco,
+  artdeco: TemplateArtDeco,
   quantum: TemplateQuantum
 };
 
