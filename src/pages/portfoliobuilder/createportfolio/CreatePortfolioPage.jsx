@@ -124,7 +124,13 @@ function CreatePortfolioPage() {
         { id: 15, layout: "matrix" },
         { id: 16, layout: "luxury" },
         { id: 17, layout: "space" },
-        { id: 18, layout: "brutal" }
+        { id: 18, layout: "brutal" },
+        { id: 19, layout: "aurora" },
+        { id: 20, layout: "tokyoneon" },
+        { id: 21, layout: "paper" },
+        { id: 22, layout: "artdeco" },
+        { id: 23, layout: "quantum" }
+
 
       ];
       const selectedTplObj = templates.find(t => t.id === selectedTemplate);
