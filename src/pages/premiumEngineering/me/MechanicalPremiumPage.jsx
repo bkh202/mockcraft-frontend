@@ -3,7 +3,7 @@ import EngineeringBranchPage from "../shared/EngineeringBranchPage";
 const config = {
   category: "ENGINEERING",
   branch: "MECHANICAL",
-  resultPath: "/engineering/result/:attemptId",
+  resultPath: "/premium/engineering/result/:attemptId",
   pageTitle: "Mechanical Engineering",
   breadcrumb: "Mechanical",
   description: "Master core Mechanical subjects with AI‑generated personalized quizzes",

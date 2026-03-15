@@ -1,11 +1,17 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axiosInstance";
 
-const indexToOption = (i) => ["A", "B", "C", "D"][i] ?? null;
-
-export function useAptitudeQuizEngine(branch, resultPath) {
+export function useGovernmentQuizEngine(branch, resultPath) {
   const navigate = useNavigate();
+
+  const indexToOption = (i) => {
+    if (i === 0) return "A";
+    if (i === 1) return "B";
+    if (i === 2) return "C";
+    if (i === 3) return "D";
+    return null;
+  };
 
   const [view, setView] = useState("cards");
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -17,6 +23,17 @@ export function useAptitudeQuizEngine(branch, resultPath) {
   const [isLoadingNextQuestion, setIsLoadingNextQuestion] = useState(false);
   const [userAnswers, setUserAnswers] = useState([]);
   const [skippedQuestions, setSkippedQuestions] = useState([]);
+  const [quizStartTime, setQuizStartTime] = useState(null);
+  const [elapsedTime, setElapsedTime] = useState(0);
+
+  // Timer
+  useEffect(() => {
+    if (!quizStartTime) return;
+    const interval = setInterval(() => {
+      setElapsedTime(Math.floor((Date.now() - quizStartTime) / 1000));
+    }, 1000);
+    return () => clearInterval(interval);
+  }, [quizStartTime]);
 
   const resetToCards = () => {
     setView("cards");
@@ -26,6 +43,8 @@ export function useAptitudeQuizEngine(branch, resultPath) {
     setUserAnswers([]);
     setSelectedSubtopic("");
     setSkippedQuestions([]);
+    setQuizStartTime(null);
+    setElapsedTime(0);
   };
 
   const handleSelectSubject = (subjectName) => {
@@ -38,7 +57,7 @@ export function useAptitudeQuizEngine(branch, resultPath) {
     setIsGeneratingQuiz(true);
     try {
       const res = await axios.post("/quiz/generate", {
-        category: "APTITUDE",
+        category: "GOVERNMENT",
         branch,
         subject: selectedSubject,
         unit: selectedSubtopic || "General",
@@ -60,11 +79,11 @@ export function useAptitudeQuizEngine(branch, resultPath) {
           options: q.options,
           correctAnswer: null,
           explanation: "",
-          aiTip: "",
-          learningObjective: "",
         })),
       });
 
+      setQuizStartTime(Date.now());
+      setElapsedTime(0);
       setUserAnswers(new Array(aiQuestions.length).fill(null));
       setSkippedQuestions([]);
       setView("quiz");
@@ -83,18 +102,17 @@ export function useAptitudeQuizEngine(branch, resultPath) {
     setUserAnswers(updatedAnswers);
   };
 
-  // ✅ Alag submitQuiz function — duplicate code nahi
   const submitQuiz = async (finalAnswers) => {
     try {
       const res = await axios.post("/quiz/submit", {
-        category: "APTITUDE",
+        category: "GOVERNMENT",
         branch,
         subject: selectedSubject,
         unit: selectedSubtopic || "General",
         subtopic: selectedSubtopic || null,
         difficulty: quizData.difficulty,
         mode: "practice",
-        timeTaken: null,
+        timeTaken: Math.floor((Date.now() - quizStartTime) / 1000),
         answers: finalAnswers.map((ans, index) => ({
           questionId: quizData.questions[index].id,
           selectedOption: indexToOption(ans),
@@ -169,6 +187,7 @@ export function useAptitudeQuizEngine(branch, resultPath) {
     isLoadingNextQuestion,
     userAnswers,
     skippedQuestions,
+    elapsedTime,
     setSelectedSubtopic,
     handleSelectSubject,
     handleStartQuiz,

@@ -1,17 +1,11 @@
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axiosInstance";
 
+const indexToOption = (i) => ["A", "B", "C", "D"][i] ?? null;
+
 export function useNEETQuizEngine(branch, resultPath) {
   const navigate = useNavigate();
-
-  const indexToOption = (i) => {
-    if (i === 0) return "A";
-    if (i === 1) return "B";
-    if (i === 2) return "C";
-    if (i === 3) return "D";
-    return null;
-  };
 
   const [view, setView] = useState("cards");
   const [selectedSubject, setSelectedSubject] = useState(null);
@@ -42,7 +36,6 @@ export function useNEETQuizEngine(branch, resultPath) {
 
   const handleStartQuiz = async (config) => {
     setIsGeneratingQuiz(true);
-
     try {
       const res = await axios.post("/quiz/generate", {
         category: "MEDICAL",
@@ -55,7 +48,7 @@ export function useNEETQuizEngine(branch, resultPath) {
 
       const aiQuestions = res.data;
 
-      const formattedQuiz = {
+      setQuizData({
         topic: selectedSubject,
         subtopic: selectedSubtopic || "All Subtopics",
         difficulty: config.difficulty,
@@ -70,15 +63,14 @@ export function useNEETQuizEngine(branch, resultPath) {
           aiTip: "",
           learningObjective: "",
         })),
-      };
+      });
 
-      setQuizData(formattedQuiz);
       setUserAnswers(new Array(aiQuestions.length).fill(null));
       setSkippedQuestions([]);
       setView("quiz");
     } catch (err) {
-      console.error(err);
-      alert("Failed to generate quiz");
+      console.error("Generate failed:", err);
+      alert("Failed to generate quiz. Please try again.");
     } finally {
       setIsGeneratingQuiz(false);
     }
@@ -91,6 +83,32 @@ export function useNEETQuizEngine(branch, resultPath) {
     setUserAnswers(updatedAnswers);
   };
 
+  // ✅ Alag submitQuiz function — duplicate code nahi
+  const submitQuiz = async (finalAnswers) => {
+    try {
+      const res = await axios.post("/quiz/submit", {
+        category: "MEDICAL",
+        branch,
+        subject: selectedSubject,
+        unit: selectedSubtopic || "General",
+        subtopic: selectedSubtopic || null,
+        difficulty: quizData.difficulty,
+        mode: "practice",
+        timeTaken: null,
+        answers: finalAnswers.map((ans, index) => ({
+          questionId: quizData.questions[index].id,
+          selectedOption: indexToOption(ans),
+        })),
+      });
+
+      console.log("Submit response:", res.data);
+      navigate(resultPath.replace(":attemptId", res.data.attemptId));
+    } catch (err) {
+      console.error("Submit failed:", err.response?.data || err.message);
+      alert("Failed to submit quiz: " + (err.response?.data?.message || err.message));
+    }
+  };
+
   const handleNextQuestion = () => {
     const updatedAnswers = [...userAnswers];
     updatedAnswers[currentQuestionIndex] = selectedOption;
@@ -98,38 +116,21 @@ export function useNEETQuizEngine(branch, resultPath) {
     setIsLoadingNextQuestion(true);
 
     setTimeout(async () => {
-      if (currentQuestionIndex + 1 < quizData.questions.length) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setSelectedOption(userAnswers[currentQuestionIndex + 1]);
+      try {
+        if (currentQuestionIndex + 1 < quizData.questions.length) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setSelectedOption(userAnswers[currentQuestionIndex + 1]);
+        } else {
+          const finalAnswers = [...updatedAnswers];
+          if (selectedOption !== null && finalAnswers[currentQuestionIndex] === null) {
+            finalAnswers[currentQuestionIndex] = selectedOption;
+          }
+          await submitQuiz(finalAnswers);
+        }
+      } catch (err) {
+        console.error("Next question error:", err);
+      } finally {
         setIsLoadingNextQuestion(false);
-      } else {
-        const finalAnswers = [...updatedAnswers];
-        if (selectedOption !== null && finalAnswers[currentQuestionIndex] === null) {
-          finalAnswers[currentQuestionIndex] = selectedOption;
-        }
-
-        try {
-          const res = await axios.post("/quiz/submit", {
-            category: "MEDICAL",
-            branch,
-            subject: selectedSubject,
-            unit: selectedSubtopic || "General",
-            subtopic: selectedSubtopic || null,
-            difficulty: quizData.difficulty,
-            mode: "practice",
-            answers: finalAnswers.map((ans, index) => ({
-              questionId: quizData.questions[index].id,
-              selectedOption: indexToOption(ans),
-            })),
-          });
-
-          navigate(`${resultPath}/${res.data.attemptId}`);
-        } catch (err) {
-          console.error(err);
-          alert("Failed to submit quiz");
-        } finally {
-          setIsLoadingNextQuestion(false);
-        }
       }
     }, 500);
   };
@@ -142,33 +143,17 @@ export function useNEETQuizEngine(branch, resultPath) {
     setIsLoadingNextQuestion(true);
 
     setTimeout(async () => {
-      if (currentQuestionIndex + 1 < quizData.questions.length) {
-        setCurrentQuestionIndex(currentQuestionIndex + 1);
-        setSelectedOption(userAnswers[currentQuestionIndex + 1]);
-        setIsLoadingNextQuestion(false);
-      } else {
-        try {
-          const res = await axios.post("/quiz/submit", {
-            category: "MEDICAL",
-            branch,
-            subject: selectedSubject,
-            unit: selectedSubtopic || "General",
-            subtopic: selectedSubtopic || null,
-            difficulty: quizData.difficulty,
-            mode: "practice",
-            answers: updatedAnswers.map((ans, index) => ({
-              questionId: quizData.questions[index].id,
-              selectedOption: indexToOption(ans),
-            })),
-          });
-
-          navigate(`${resultPath}/${res.data.attemptId}`);
-        } catch (err) {
-          console.error(err);
-          alert("Failed to submit quiz");
-        } finally {
-          setIsLoadingNextQuestion(false);
+      try {
+        if (currentQuestionIndex + 1 < quizData.questions.length) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setSelectedOption(userAnswers[currentQuestionIndex + 1]);
+        } else {
+          await submitQuiz(updatedAnswers);
         }
+      } catch (err) {
+        console.error("Skip question error:", err);
+      } finally {
+        setIsLoadingNextQuestion(false);
       }
     }, 500);
   };

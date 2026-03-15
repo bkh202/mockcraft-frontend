@@ -153,7 +153,7 @@ export function useQuizEngine(category, branch, resultPath) {
             })),
           });
 
-          navigate(`${resultPath}/${res.data.attemptId}`);
+          navigate(resultPath.replace(":attemptId", res.data.attemptId));
         } catch (err) {
           console.error(err);
           alert("Failed to submit quiz");
@@ -197,7 +197,7 @@ export function useQuizEngine(category, branch, resultPath) {
             })),
           });
 
-          navigate(`${resultPath}/${res.data.attemptId}`);
+          navigate(resultPath.replace(":attemptId", res.data.attemptId));
         } catch (err) {
           console.error(err);
           alert("Failed to submit quiz");

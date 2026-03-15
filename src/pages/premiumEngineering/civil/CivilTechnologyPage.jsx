@@ -3,7 +3,7 @@ import EngineeringBranchPage from "../shared/EngineeringBranchPage";
 const config = {
   category: "TECHNOLOGY",
   branch: "CIVIL_TECH",
-  resultPath: "/engineering/result/:attemptId",
+  resultPath: "/premium/engineering/result/:attemptId",
   pageTitle: "Civil Technology Specializations",
   breadcrumb: "Technology Specializations",
   description: "Master modern civil tech domains with AI‑generated personalized quizzes",

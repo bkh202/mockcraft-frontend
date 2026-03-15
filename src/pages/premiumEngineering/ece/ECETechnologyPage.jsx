@@ -3,7 +3,7 @@ import EngineeringBranchPage from "../shared/EngineeringBranchPage";
 const config = {
   category: "TECHNOLOGY",
   branch: "ELECTRONICS_TECH",
-  resultPath: "/engineering/result/:attemptId",
+  resultPath: "/premium/engineering/result/:attemptId",
   pageTitle: "Electronics Technology Specializations",
   breadcrumb: "Technology Specializations",
   description: "Master modern electronics tech domains with AI‑generated personalized quizzes",

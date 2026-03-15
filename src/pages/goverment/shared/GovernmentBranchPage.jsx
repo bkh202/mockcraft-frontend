@@ -1,4 +1,4 @@
-import { useQuizEngine } from "../../engineering/shared/useQuizEngine";
+import { useGovernmentQuizEngine } from "../branches/general/components/useGovernmentQuizEngine";
 
 import GovernmentFormView from "./GovernmentFormView";
 import GovernmentCardsView from "./GovernmentCardsView";
@@ -27,7 +27,7 @@ import QuizView from "../branches/general/components/QuizView";
  * @param {string} config.tipsLink        - "/government/english/tips"
  */
 export default function GovernmentBranchPage({ config }) {
-  const engine = useQuizEngine(config.category, config.branch, config.resultPath);
+  const engine = useGovernmentQuizEngine(config.category, config.branch, config.resultPath);
 
   if (engine.view === "quiz" && engine.quizData) {
     return (

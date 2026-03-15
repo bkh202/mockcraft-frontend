@@ -21,7 +21,6 @@ export default function UniversalGovernmentResults() {
         const score = (correct * 2) - (wrong * 0.5);
         const maxScore = total * 2;
         const percentage = Math.round((score / maxScore) * 100);
-        const timeTaken = data.timeTaken || Math.floor(Math.random() * 1200) + 600;
         const passed = percentage >= 40;
 
         setResultData({
@@ -40,14 +39,7 @@ export default function UniversalGovernmentResults() {
       .catch(() => navigate("/government"));
   }, [attemptId, navigate]);
 
-  const formatTime = (seconds) => {
-    const hrs = Math.floor(seconds / 3600);
-    const mins = Math.floor((seconds % 3600) / 60);
-    const secs = seconds % 60;
-    if (hrs > 0) return `${hrs}h ${mins}m ${secs}s`;
-    if (mins > 0) return `${mins}m ${secs}s`;
-    return `${secs}s`;
-  };
+  
 
   if (loading || !resultData) {
     return (
@@ -102,13 +94,7 @@ export default function UniversalGovernmentResults() {
             <span className="text-gray-700">Percentage</span>
             <span className="text-2xl font-bold">{resultData.percentage}%</span>
           </div>
-          <div className="flex justify-between items-center">
-            <div className="flex items-center text-gray-700">
-              <Clock className="w-5 h-5 mr-2" />
-              Time Taken
-            </div>
-            <span className="font-medium">{formatTime(resultData.timeTaken)}</span>
-          </div>
+         
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">

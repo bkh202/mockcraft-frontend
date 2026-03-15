@@ -80,6 +80,7 @@ import EditPortfolioPage from "../pages/portfoliobuilder/edit/EditPortfolioPage"
 import CreatePortfolioPage from "../pages/portfoliobuilder/createportfolio/CreatePortfolioPage";
 import ForgotPassword from "../pages/auth/ForgotPassword";
 import TermsAndConditions from "../pages/auth/TermsAndConditions";
+import PremiumUniversalQuizResult from "../pages/premiumEngineering/PremiumUniversalQuizResult";
 
 
 // ─── Public Routes ────────────────────────────────────────────────────────────
@@ -176,6 +177,7 @@ export const protectedRoutes = [
   { path: "/premium/engineering/medash/metechnology",       element: <METechnologyPage /> },
   { path: "/premium/engineering/attempted-quiz",            element: <Attemped /> },
   { path: "/premium/engineering/recommended-quiz",          element: <FocusedQuizPage /> },
+  { path: "/premium/engineering/result/:attemptId",          element: <PremiumUniversalQuizResult /> },
 
   { path: "/engineering",                    element: <EngineeringHome /> },
   { path: "/engineering/cse",                element: <CSEPage /> },

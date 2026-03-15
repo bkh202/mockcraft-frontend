@@ -4,7 +4,7 @@ import EngineeringBranchPage from "../shared/EngineeringBranchPage";
 const config = {
   category: "ENGINEERING",
   branch: "COMMON",
-  resultPath: "/engineering/result/:attemptId",
+  resultPath: "/premium/engineering/result/:attemptId",
   pageTitle: "Common Engineering Subjects",
   breadcrumb: "Common Subjects",
   description: "Practice common subjects with AI‑generated personalized quizzes",

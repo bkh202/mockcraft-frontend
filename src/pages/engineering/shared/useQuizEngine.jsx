@@ -84,7 +84,7 @@ export function useQuizEngine(category, branch, resultPath) {
         selectedOption: indexToOption(ans)
       }))
     });
-    console.log("Submit response:", res.data);
+ 
     navigate(resultPath.replace(":attemptId", res.data.attemptId));
   } catch (err) {
     console.error("Submit failed:", err.response?.data);
