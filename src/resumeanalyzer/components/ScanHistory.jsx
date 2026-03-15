@@ -17,7 +17,13 @@ export default function ScanHistory() {
   const fetchHistory = async () => {
     try {
       const response = await axiosInstance.get('/resume/all-resumes');
-      setResumes(response.data.data || response.data);
+      const allResumes = response.data.data || response.data;
+
+      // ✅ Deduplicate by fileName — sirf latest ek dikhega
+      const unique = allResumes.filter((resume, index, self) =>
+        index === self.findIndex(r => r.fileName === resume.fileName)
+      );
+      setResumes(unique);
     } catch (err) {
       setError("Failed to load history. " + (err.response?.data?.message || err.message));
     } finally {

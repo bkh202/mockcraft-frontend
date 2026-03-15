@@ -15,7 +15,7 @@ import {
   LayoutDashboard,
   Clock,
   Globe, // Naye icons Live/Unlive ke liye
-  EyeOff 
+  EyeOff
 } from "lucide-react";
 
 function PortfolioDashboard() {
@@ -37,7 +37,13 @@ function PortfolioDashboard() {
         axios.get("/resume/all-resumes")
       ]);
       setPortfolios(portfolioRes.data);
-      setResumes(resumeRes.data);
+
+      // ✅ Deduplicate by fileName — sirf latest ek dikhega
+      const allResumes = resumeRes.data;
+      const unique = allResumes.filter((resume, index, self) =>
+        index === self.findIndex(r => r.fileName === resume.fileName)
+      );
+      setResumes(unique);
     } catch (err) {
       console.error("Failed to fetch data", err);
     } finally {
@@ -69,11 +75,11 @@ function PortfolioDashboard() {
   const handleTogglePublish = async (portfolio) => {
     // Backend SpringBoot default "isPublished" ko json me "published" kar deta hai
     const isCurrentlyLive = portfolio.isPublished === true || portfolio.published === true;
-    
+
     try {
       // Backend api call (Tere existing endpoint pe)
       await axios.put(`/portfolio/publish/${portfolio.id}`);
-      
+
       // Local state update karega taaki UI bina refresh huye change ho jaye
       setPortfolios(prev => prev.map(p => {
         if (p.id === portfolio.id) {
@@ -105,7 +111,7 @@ function PortfolioDashboard() {
               </p>
             </div>
           </div>
-          
+
           <button
             onClick={() => navigate("/create")}
             className="flex items-center justify-center gap-2 px-6 py-3 bg-gray-900 text-white font-semibold rounded-xl hover:bg-gray-800 shadow-md hover:shadow-xl hover:-translate-y-0.5 transition-all duration-200 focus:ring-4 focus:ring-gray-200"
@@ -138,7 +144,7 @@ function PortfolioDashboard() {
                 </div>
                 <div className="text-4xl font-black text-gray-900">{portfolios.length}</div>
               </div>
-              
+
               <div className="bg-white rounded-2xl p-6 border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
                 <div className="flex items-center justify-between mb-4">
                   <h3 className="text-gray-500 font-semibold text-sm tracking-wide uppercase">Resumes Uploaded</h3>
@@ -158,7 +164,7 @@ function PortfolioDashboard() {
                   </div>
                 </div>
                 <div className="text-xl font-bold relative z-10 mt-2">
-                  All Systems<br/>Operational
+                  All Systems<br />Operational
                 </div>
               </div>
             </div>
@@ -193,108 +199,109 @@ function PortfolioDashboard() {
                     const isLive = p.isPublished === true || p.published === true;
 
                     return (
-                    <div
-                      key={p.id}
-                      className="group bg-white rounded-3xl border border-gray-100 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] transition-all duration-300 flex flex-col overflow-hidden"
-                    >
-                      {/* Abstract Premium Thumbnail */}
-                      <div className="h-32 w-full bg-linear-to-r from-gray-100 to-gray-50 relative overflow-hidden flex items-center justify-center border-b border-gray-100">
-                         <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
-                         <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl"></div>
-                         <span className="relative z-10 px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-bold text-gray-600 tracking-wider shadow-sm">
-                           {p.templateConfig?.layout?.toUpperCase() || "STANDARD"} THEME
-                         </span>
-                      </div>
-                      
-                      <div className="p-6 grow flex flex-col">
-                        <div className="flex justify-between items-start mb-2">
-                          <h3 className="text-xl font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
-                            {p.title}
-                          </h3>
-                          
-                          {/* 🚀 DYNAMIC BADGE */}
-                          {isLive ? (
-                            <span className="px-2 py-1 bg-green-50 text-green-700 text-[10px] font-bold uppercase rounded-md tracking-wider border border-green-200">Live</span>
-                          ) : (
-                            <span className="px-2 py-1 bg-amber-50 text-amber-700 text-[10px] font-bold uppercase rounded-md tracking-wider border border-amber-200">Draft</span>
-                          )}
+                      <div
+                        key={p.id}
+                        className="group bg-white rounded-3xl border border-gray-100 shadow-[0_2px_12px_-4px_rgba(0,0,0,0.05)] hover:shadow-[0_10px_40px_-10px_rgba(0,0,0,0.1)] transition-all duration-300 flex flex-col overflow-hidden"
+                      >
+                        {/* Abstract Premium Thumbnail */}
+                        <div className="h-32 w-full bg-linear-to-r from-gray-100 to-gray-50 relative overflow-hidden flex items-center justify-center border-b border-gray-100">
+                          <div className="absolute inset-0 opacity-20" style={{ backgroundImage: 'radial-gradient(#CBD5E1 1px, transparent 1px)', backgroundSize: '16px 16px' }}></div>
+                          <div className="absolute -bottom-6 -right-6 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl"></div>
+                          <span className="relative z-10 px-3 py-1 bg-white/80 backdrop-blur-sm rounded-full text-xs font-bold text-gray-600 tracking-wider shadow-sm">
+                            {p.templateConfig?.layout?.toUpperCase() || "STANDARD"} THEME
+                          </span>
                         </div>
-                        
-                        {/* 🚀 DYNAMIC PUBLIC LINK */}
-                        {isLive ? (
-                          <a 
-                            href={`/p/${p.slug}`} 
-                            target="_blank" 
-                            rel="noreferrer"
-                            className="inline-flex items-center gap-1.5 text-sm font-medium text-indigo-500 hover:text-indigo-700 transition-colors mb-6 w-fit bg-indigo-50/50 px-2.5 py-1 rounded-md"
-                          >
-                            <LinkIcon className="h-3.5 w-3.5" />
-                            /{p.slug}
-                          </a>
-                        ) : (
-                          <div className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 mb-6 w-fit bg-gray-50 px-2.5 py-1 rounded-md cursor-not-allowed">
-                            <EyeOff className="h-3.5 w-3.5" />
-                            Not published yet
-                          </div>
-                        )}
-                        
-                        <div className="mt-auto pt-5 border-t border-gray-100 flex items-center justify-between">
-                          <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-400">
-                            <Calendar className="h-3.5 w-3.5" />
-                            {new Date(p.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
-                          </div>
-                          
-                          <div className="flex items-center gap-2">
-                            {/* 🚀 SMART TOGGLE BUTTON (LIVE / UNLIVE) */}
-                            <button
-                              onClick={() => handleTogglePublish(p)}
-                              className={`p-2 rounded-lg transition-colors tooltip-trigger ${isLive ? 'text-green-600 bg-green-50 hover:bg-green-100' : 'text-gray-400 hover:text-indigo-600 hover:bg-indigo-50'}`}
-                              title={isLive ? "Unpublish (Make Draft)" : "Go Live"}
-                            >
-                              {isLive ? <Globe className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
-                            </button>
 
-                            {/* View Live / Preview link icon */}
+                        <div className="p-6 grow flex flex-col">
+                          <div className="flex justify-between items-start mb-2">
+                            <h3 className="text-xl font-bold text-gray-900 line-clamp-1 group-hover:text-indigo-600 transition-colors">
+                              {p.title}
+                            </h3>
+
+                            {/* 🚀 DYNAMIC BADGE */}
                             {isLive ? (
-                              <a
-                                href={`/p/${p.slug}`}
-                                target="_blank"
-                                rel="noreferrer"
-                                className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors tooltip-trigger block"
-                                title="View Live"
-                              >
-                                <ExternalLink className="h-4 w-4" />
-                              </a>
+                              <span className="px-2 py-1 bg-green-50 text-green-700 text-[10px] font-bold uppercase rounded-md tracking-wider border border-green-200">Live</span>
                             ) : (
-                              <button
-                                onClick={() => window.open(`/preview/${p.id}`, '_blank')}
-                                className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors tooltip-trigger"
-                                title="Preview Design"
-                              >
-                                <Eye className="h-4 w-4" />
-                              </button>
+                              <span className="px-2 py-1 bg-amber-50 text-amber-700 text-[10px] font-bold uppercase rounded-md tracking-wider border border-amber-200">Draft</span>
                             )}
+                          </div>
 
-                            <button
-                              onClick={() => navigate(`/edit/${p.id}`)}
-                              className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors tooltip-trigger"
-                              title="Edit Portfolio"
+                          {/* 🚀 DYNAMIC PUBLIC LINK */}
+                          {isLive ? (
+                            <a
+                              href={`/p/${p.slug}`}
+                              target="_blank"
+                              rel="noreferrer"
+                              className="inline-flex items-center gap-1.5 text-sm font-medium text-indigo-500 hover:text-indigo-700 transition-colors mb-6 w-fit bg-indigo-50/50 px-2.5 py-1 rounded-md"
                             >
-                              <Edit3 className="h-4 w-4" />
-                            </button>
-                            
-                            <button
-                              onClick={() => handleDeletePortfolio(p.id)}
-                              className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors tooltip-trigger"
-                              title="Delete"
-                            >
-                              <Trash2 className="h-4 w-4" />
-                            </button>
+                              <LinkIcon className="h-3.5 w-3.5" />
+                              /{p.slug}
+                            </a>
+                          ) : (
+                            <div className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-400 mb-6 w-fit bg-gray-50 px-2.5 py-1 rounded-md cursor-not-allowed">
+                              <EyeOff className="h-3.5 w-3.5" />
+                              Not published yet
+                            </div>
+                          )}
+
+                          <div className="mt-auto pt-5 border-t border-gray-100 flex items-center justify-between">
+                            <div className="flex items-center gap-1.5 text-xs font-semibold text-gray-400">
+                              <Calendar className="h-3.5 w-3.5" />
+                              {new Date(p.createdAt).toLocaleDateString(undefined, { month: 'short', day: 'numeric', year: 'numeric' })}
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              {/* 🚀 SMART TOGGLE BUTTON (LIVE / UNLIVE) */}
+                              <button
+                                onClick={() => handleTogglePublish(p)}
+                                className={`p-2 rounded-lg transition-colors tooltip-trigger ${isLive ? 'text-green-600 bg-green-50 hover:bg-green-100' : 'text-gray-400 hover:text-indigo-600 hover:bg-indigo-50'}`}
+                                title={isLive ? "Unpublish (Make Draft)" : "Go Live"}
+                              >
+                                {isLive ? <Globe className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
+                              </button>
+
+                              {/* View Live / Preview link icon */}
+                              {isLive ? (
+                                <a
+                                  href={`/p/${p.slug}`}
+                                  target="_blank"
+                                  rel="noreferrer"
+                                  className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors tooltip-trigger block"
+                                  title="View Live"
+                                >
+                                  <ExternalLink className="h-4 w-4" />
+                                </a>
+                              ) : (
+                                <button
+                                  onClick={() => window.open(`/preview/${p.id}`, '_blank')}
+                                  className="p-2 text-gray-400 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition-colors tooltip-trigger"
+                                  title="Preview Design"
+                                >
+                                  <Eye className="h-4 w-4" />
+                                </button>
+                              )}
+
+                              <button
+                                onClick={() => navigate(`/edit/${p.id}`)}
+                                className="p-2 text-gray-400 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors tooltip-trigger"
+                                title="Edit Portfolio"
+                              >
+                                <Edit3 className="h-4 w-4" />
+                              </button>
+
+                              <button
+                                onClick={() => handleDeletePortfolio(p.id)}
+                                className="p-2 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors tooltip-trigger"
+                                title="Delete"
+                              >
+                                <Trash2 className="h-4 w-4" />
+                              </button>
+                            </div>
                           </div>
                         </div>
                       </div>
-                    </div>
-                  )})}
+                    )
+                  })}
                 </div>
               )}
             </section>
@@ -340,7 +347,7 @@ function PortfolioDashboard() {
                           </p>
                         </div>
                       </div>
-                      
+
                       <button
                         onClick={() => handleDeleteResume(r.id)}
                         className="opacity-0 group-hover:opacity-100 p-2 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg transition-all shrink-0"
