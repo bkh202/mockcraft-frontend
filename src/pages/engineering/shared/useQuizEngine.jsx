@@ -83,9 +83,7 @@ export function useQuizEngine(category, branch, resultPath) {
         selectedOption: indexToOption(ans)
       }))
     });
-     console.log("Submit response:", res.data); 
-    // ✅ Ya hardcode karo agar path fixed hai
-    navigate(`/engineering/result/${res.data.attemptId}`);
+    navigate(`${resultPath}/${res.data.attemptId}`);
   };
 
   const handleNextQuestion = () => {
