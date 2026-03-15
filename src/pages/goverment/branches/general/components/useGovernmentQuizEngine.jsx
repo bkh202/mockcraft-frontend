@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import axios from "../../../api/axiosInstance";
+import axios from "../../../../../api/axiosInstance";
 
 export function useGovernmentQuizEngine(branch, resultPath) {
   const navigate = useNavigate();
