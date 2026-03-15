@@ -21,7 +21,6 @@ export default function UniversalAptitudeResults() {
         const score = (correct * 2) - (wrong * 0.5);
         const maxScore = total * 2;
         const percentage = Math.round((score / maxScore) * 100);
-        const timeTaken = data.timeTaken || Math.floor(Math.random() * 1200) + 600;
         const passed = percentage >= 40;
 
         setResultData({
@@ -32,7 +31,6 @@ export default function UniversalAptitudeResults() {
           score: score.toFixed(2),
           maxScore,
           percentage,
-          timeTaken,
           passed
         });
         setLoading(false);
