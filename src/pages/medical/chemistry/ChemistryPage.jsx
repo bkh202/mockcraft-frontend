@@ -2,7 +2,7 @@ import NEETBranchPage from "../shared/NEETBranchPage";
 
 const config = {
   branch: "CHEMISTRY",
-  resultPath: "/engineering/result",
+  resultPath: "/neet/result/:attemptId",
   pageTitle: "Chemistry for NEET UG",
   breadcrumb: "Chemistry",
   description: "Master Chemistry concepts with AI-generated personalized quizzes (NEET Pattern: +4/-1)",

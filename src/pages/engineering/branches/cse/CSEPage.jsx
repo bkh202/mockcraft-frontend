@@ -6,7 +6,7 @@ const config = {
   pageTitle: "Computer Science Engineering",
   breadcrumb: "Computer Science", description: "Master core CS subjects with AI-generated personalized quizzes",
   parentPath: "/engineering", parentLabel: "Engineering",
-  resultPath: "/engineering/result", quizLabel: "AI CSE Quiz", formIcon: "💻",
+  resultPath: "/engineering/result/:attemptId", quizLabel: "AI CSE Quiz", formIcon: "💻",
   adaptiveSubject: "Data Structures",
   subjects: [
     { name: "Data Structures", questions: "AI-Based", difficulty: "Medium", color: "bg-blue-100", icon: "📊", topics: ["Arrays", "Linked Lists", "Trees", "Graphs", "Sorting"] },

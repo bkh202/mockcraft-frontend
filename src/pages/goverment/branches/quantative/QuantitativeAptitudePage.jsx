@@ -9,7 +9,7 @@ const config = {
   pageTitle: "Quantitative Aptitude", breadcrumb: "Quantitative Aptitude",
   description: "Master maths concepts with AI-generated personalized quizzes for government exams",
   parentPath: "/government", parentLabel: "Government Exams",
-  resultPath: "/government/result", quizLabel: "AI Quantitative Aptitude Quiz",
+  resultPath: "/government/result/:attemptId", quizLabel: "AI Quantitative Aptitude Quiz",
   formIcon: "🧮", accentColor: "blue", cardAccent: "blue",
   headerStats: [
     { value: "🤖 AI", label: "Powered Quizzes", color: "text-blue-600" },

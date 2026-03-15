@@ -2,7 +2,7 @@ import NEETBranchPage from "../shared/NEETBranchPage";
 
 const config = {
   branch: "PHYSICS",
-  resultPath: "/engineering/result",
+  resultPath: "/neet/result/:attemptId",
   pageTitle: "Physics for NEET UG",
   breadcrumb: "Physics",
   description: "Master Physics concepts with AI-generated personalized quizzes (NEET Pattern: +4/-1)",

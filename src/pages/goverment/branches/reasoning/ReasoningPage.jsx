@@ -6,7 +6,7 @@ const config = {
   pageTitle: "Logical Reasoning", breadcrumb: "Logical Reasoning",
   description: "Master reasoning concepts with AI-generated personalized quizzes for government exams",
   parentPath: "/government", parentLabel: "Government Exams",
-  resultPath: "/government/result", quizLabel: "AI Reasoning Quiz",
+  resultPath: "/government/result/:attemptId", quizLabel: "AI Reasoning Quiz",
   formIcon: "🧠", accentColor: "green", cardAccent: "green",
   headerStats: [
     { value: "🤖 AI", label: "Powered Quizzes", color: "text-green-600" },

@@ -6,7 +6,7 @@ const config = {
   pageTitle: "English Language", breadcrumb: "English Language",
   description: "Master English concepts with AI-generated personalized quizzes for government exams",
   parentPath: "/government", parentLabel: "Government Exams",
-  resultPath: "/government/result", quizLabel: "AI English Quiz",
+  resultPath: "/government/result/:attemptId", quizLabel: "AI English Quiz",
   formIcon: "📚", accentColor: "cyan", cardAccent: "blue",
   headerStats: [
     { value: "🤖 AI", label: "Powered Quizzes", color: "text-blue-600" },
