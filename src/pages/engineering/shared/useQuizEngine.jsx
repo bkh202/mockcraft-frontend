@@ -85,7 +85,7 @@ export function useQuizEngine(category, branch, resultPath) {
       }))
     });
     console.log("Submit response:", res.data);
-    navigate(`/engineering/result/${res.data.attemptId}`);
+    navigate(resultPath.replace(":attemptId", res.data.attemptId));
   } catch (err) {
     console.error("Submit failed:", err.response?.data);
     alert("Submit failed: " + (err.response?.data?.message || err.message));
