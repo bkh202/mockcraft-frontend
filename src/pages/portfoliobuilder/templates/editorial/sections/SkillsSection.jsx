@@ -2,37 +2,22 @@ import { categorizeSkills, getSkillLogo } from "../../../components/categorizeSk
 
 function SkillsSection({ data }) {
   return (
-    <section id="skills" className="mb-14 pt-6">
-      <div className="mb-8 border-b border-gray-100 pb-4">
-        <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-          <span className="text-2xl">⚡</span> Technical Expertise
-        </h2>
-      </div>
+    <section id="skills" className="mb-16 ed-reveal">
+      <p className="ed-section-label">Stack</p>
+      <h2 className="ed-serif text-3xl md:text-4xl text-[#111] mb-10">Technical Expertise</h2>
 
-      <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
+      <div className="columns-1 md:columns-2 lg:columns-3 gap-5 space-y-5">
         {Object.entries(categorizeSkills(data.skills)).map(([category, skills]) => (
-          <div
-            key={category}
-            className="break-inside-avoid bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow"
-          >
-            <h3 className="text-base font-bold mb-4 text-gray-800 flex items-center gap-2">
+          <div key={category} className="ed-card p-5 break-inside-avoid">
+            <h3 className="ed-mono text-xs text-stone-400 uppercase tracking-widest mb-4 pb-3 border-b border-stone-100">
               {category}
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {skills.map((skill, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 text-gray-700 font-medium text-sm rounded-full border border-gray-200/80 hover:bg-gray-100 hover:border-gray-300 transition-all cursor-default shadow-sm"
-                >
-                  <img
-                    src={getSkillLogo(skill)}
-                    alt={skill}
-                    className="w-4 h-4 object-contain"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://cdn-icons-png.flaticon.com/512/814/814820.png";
-                    }}
-                  />
+                <span key={i} className="ed-tag">
+                  <img src={getSkillLogo(skill)} alt={skill}
+                    className="w-3.5 h-3.5 object-contain"
+                    onError={(e) => { e.target.style.display = 'none'; }} />
                   {skill}
                 </span>
               ))}
@@ -40,18 +25,15 @@ function SkillsSection({ data }) {
           </div>
         ))}
 
-        {data.languages && data.languages.length > 0 && (
-          <div className="break-inside-avoid bg-white p-6 rounded-2xl border border-gray-100 shadow-sm hover:shadow-md transition-shadow">
-            <h3 className="text-base font-bold mb-4 text-gray-800 flex items-center gap-2">
-              🌍 Languages
+        {data.languages?.length > 0 && (
+          <div className="ed-card p-5 break-inside-avoid">
+            <h3 className="ed-mono text-xs text-stone-400 uppercase tracking-widest mb-4 pb-3 border-b border-stone-100">
+              Languages
             </h3>
-            <div className="flex flex-wrap gap-2">
+            <div className="flex flex-wrap gap-1.5">
               {data.languages.map((lang, i) => (
-                <span
-                  key={i}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-gray-50 text-gray-700 font-medium text-sm rounded-full border border-gray-200/80 hover:bg-gray-100 hover:border-gray-300 transition-all cursor-default shadow-sm"
-                >
-                  <span className="text-gray-400 text-sm">🗣</span> {lang}
+                <span key={i} className="ed-tag">
+                  🗣 {lang}
                 </span>
               ))}
             </div>

@@ -2,24 +2,36 @@ function ExperienceSection({ data }) {
   if (!data.experience?.length) return null;
 
   return (
-    <section id="experience" className="mb-14 pt-6">
-      <h2 className="text-2xl font-bold mb-8 text-gray-900 flex items-center gap-2 border-b border-gray-100 pb-4">
-        <span className="text-2xl">💼</span> Work Experience
-      </h2>
-      <div className="space-y-8 pl-2">
+    <section id="experience" className="mb-16 ed-reveal">
+      <p className="ed-section-label">Career</p>
+      <h2 className="ed-serif text-3xl md:text-4xl text-[#111] mb-10">Work Experience</h2>
+
+      <div className="space-y-0">
         {data.experience.map((exp, i) => (
-          <div key={i} className="group relative pl-8 pb-2 transition-all hover:pl-9">
-            <div className="absolute -left-1.25 top-1.5 w-3 h-3 rounded-full bg-gray-300 group-hover:bg-gray-800 transition-all ring-4 ring-white"></div>
-            <div className="flex flex-col md:flex-row md:items-baseline justify-between mb-1">
-              <h3 className="text-lg font-bold text-gray-900">{exp.role}</h3>
-              <span className="text-xs text-gray-500 font-medium bg-gray-100 px-3 py-1 rounded-full">{exp.duration}</span>
+          <div key={i} className="ed-timeline-item group flex gap-6 pb-10 relative">
+            {/* Left: timeline line */}
+            <div className="flex flex-col items-center pt-1.5">
+              <div className="ed-timeline-dot mt-0.5" />
+              {i < data.experience.length - 1 && (
+                <div className="w-px flex-1 mt-2 bg-stone-200 group-hover:bg-stone-300 transition-colors" />
+              )}
             </div>
-            <div className="text-gray-600 font-medium mb-3 flex items-center gap-2">
-              <span className="text-gray-400">🏢</span> {exp.company}
+
+            {/* Right: content */}
+            <div className="flex-1 pb-2">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-3">
+                <div>
+                  <h3 className="text-lg font-semibold text-[#111] leading-tight">{exp.role}</h3>
+                  <div className="flex items-center gap-2 mt-1 text-stone-500 text-sm font-medium">
+                    <span>🏢</span> {exp.company}
+                  </div>
+                </div>
+                <span className="ed-mono text-xs text-stone-400 bg-stone-100 border border-stone-200 px-3 py-1 rounded-full self-start whitespace-nowrap">
+                  {exp.duration}
+                </span>
+              </div>
+              <p className="text-stone-500 text-sm leading-relaxed">{exp.description}</p>
             </div>
-            <p className="text-gray-600 leading-relaxed text-sm/relaxed">
-              {exp.description}
-            </p>
           </div>
         ))}
       </div>
