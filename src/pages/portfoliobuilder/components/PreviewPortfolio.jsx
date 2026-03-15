@@ -18,6 +18,11 @@ import TemplateLuxury from '../templates/luxury/TemplateLuxury';
 import TemplateMatrix from '../templates/matrix/TemplateMatrix';
 import TemplateSpace from '../templates/space/TemplateSpace';
 import TemplateSynthwave from '../templates/synthwave/TemplateSynthwave';
+import TemplateAurora from '../templates/aurora/TemplateAurora';
+import TemplateTokyoNeon from '../templates/tokyo/TemplateTokyoNeon';
+import TemplatePaper from '../templates/paper/TemplatePaper';
+import TemplateArtDeco from '../templates/deco/TemplateArtDeco';
+import TemplateQuantum from '../templates/quantum/TemplateQuantum';
 
 // 2. THE REGISTRY
 const templateComponents = {
@@ -35,13 +40,18 @@ const templateComponents = {
   luxury: TemplateLuxury,
   matrix: TemplateMatrix,
   space: TemplateSpace,
-  synthwave: TemplateSynthwave
+  synthwave: TemplateSynthwave,
+  aurora: TemplateAurora,
+  tokyo: TemplateTokyoNeon,
+  paper: TemplatePaper,
+  deco: TemplateArtDeco,
+  quantum: TemplateQuantum
 };
 
 function PreviewPortfolio() {
   const { id } = useParams(); // Yeh actually slug aa raha hai URL se
   const navigate = useNavigate();
-  
+
   const [portfolio, setPortfolio] = useState(null);
   const [loading, setLoading] = useState(true);
   const [publishing, setPublishing] = useState(false);
@@ -51,32 +61,32 @@ function PreviewPortfolio() {
     if (!id || id === 'undefined') {
       console.warn("🛑 DEBUG: Portfolio ID is undefined. API call aborted.");
       setLoading(false);
-      return; 
+      return;
     }
 
     const fetchMyPortfolio = async () => {
       try {
-        const token = localStorage.getItem('token'); 
-        
+        const token = localStorage.getItem('token');
+
         // 🛑 THE BRUTAL FIX: Backend ke naye PREVIEW endpoint ko hit karo jahan Slug accept hota hai
         const response = await axios.get(`/portfolio/preview/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-        
+
         const data = response.data;
-        
+
         // 🛑 SAFETY CHECK: Safe JSON parsing
         let parsedCustomData = {};
         if (data.customData) {
-            try {
-                parsedCustomData = typeof data.customData === 'string' 
-                    ? JSON.parse(data.customData) 
-                    : data.customData;
-            } catch (parseErr) {
-                console.error("JSON parse failed for customData:", parseErr);
-            }
+          try {
+            parsedCustomData = typeof data.customData === 'string'
+              ? JSON.parse(data.customData)
+              : data.customData;
+          } catch (parseErr) {
+            console.error("JSON parse failed for customData:", parseErr);
+          }
         }
-        
+
         setPortfolio({
           ...data,
           parsedData: parsedCustomData
@@ -96,15 +106,15 @@ function PreviewPortfolio() {
     setPublishing(true);
     try {
       const token = localStorage.getItem('token');
-      
+
       // Asli numeric ID bhej rahe hain Publish karne ke liye
       await axios.put(`/portfolio/publish/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
-      
+
       setPortfolio(prev => ({ ...prev, isPublished: true }));
       alert("🎉 Portfolio Successfully Published!");
-      
+
     } catch (error) {
       console.error("Error publishing", error);
       alert("Failed to publish. Check console logs.");
@@ -130,7 +140,7 @@ function PreviewPortfolio() {
 
   // Get layout name
   const templateName = configObj?.layout || portfolio.parsedData?.layout || "modern";
-  
+
   // Find component from registry
   const TemplateComponent = templateComponents[templateName] || ModernTemplate;
 
@@ -142,7 +152,7 @@ function PreviewPortfolio() {
       {/* Floating Control Bar */}
       <div className="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] p-4 z-50">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-          
+
           <div>
             <h3 className="font-bold text-gray-800 text-lg">Preview Mode 👀</h3>
             <p className="text-sm text-gray-500">Check how your portfolio looks before making it live.</p>
@@ -154,9 +164,9 @@ function PreviewPortfolio() {
                 <span className="px-3 py-1 bg-green-100 text-green-700 font-bold text-sm rounded-full flex items-center gap-2">
                   <span className="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span> LIVE
                 </span>
-                <a 
-                  href={`/p/${portfolio.slug}`} 
-                  target="_blank" 
+                <a
+                  href={`/p/${portfolio.slug}`}
+                  target="_blank"
                   rel="noreferrer"
                   className="px-6 py-2 bg-gray-900 hover:bg-black text-white font-bold rounded-lg transition-colors"
                 >
@@ -164,7 +174,7 @@ function PreviewPortfolio() {
                 </a>
               </div>
             ) : (
-              <button 
+              <button
                 onClick={handlePublish}
                 disabled={publishing}
                 // FIXED TAILWIND CLASS: bg-gradient-to-r

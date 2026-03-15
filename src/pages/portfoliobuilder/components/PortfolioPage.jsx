@@ -20,6 +20,11 @@ import TemplateLuxury from '../templates/luxury/TemplateLuxury';
 import TemplateMatrix from '../templates/matrix/TemplateMatrix';
 import TemplateSpace from '../templates/space/TemplateSpace';
 import TemplateSynthwave from '../templates/synthwave/TemplateSynthwave';
+import TemplateAurora from '../templates/aurora/TemplateAurora';
+import TemplateTokyoNeon from '../templates/tokyo/TemplateTokyoNeon';
+import TemplatePaper from '../templates/paper/TemplatePaper';
+import TemplateArtDeco from '../templates/deco/TemplateArtDeco';
+import TemplateQuantum from '../templates/quantum/TemplateQuantum';
 
 // 2. THE REGISTRY
 const templateComponents = {
@@ -37,7 +42,12 @@ const templateComponents = {
   luxury: TemplateLuxury,
   matrix: TemplateMatrix,
   space: TemplateSpace,
-  synthwave: TemplateSynthwave
+  synthwave: TemplateSynthwave,
+  aurora: TemplateAurora,
+  tokyo: TemplateTokyoNeon,
+  paper: TemplatePaper,
+  deco: TemplateArtDeco,
+  quantum: TemplateQuantum
 };
 
 export default function PortfolioPage() {

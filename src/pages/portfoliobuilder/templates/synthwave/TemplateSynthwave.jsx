@@ -1,6 +1,11 @@
 import Layout from "../../components/Layout";
-import ContactForm from "../../components/ContactForm";
-import { categorizeSkills, getSkillLogo } from "../../components/categorizeSkills";
+import SynthwaveBackground from "./sections/SynthwaveBackground";
+import HeroSection from "./sections/HeroSection";
+import SkillsSection from "./sections/SkillsSection";
+import ExperienceSection from "./sections/ExperienceSection";
+import ProjectsSection from "./sections/ProjectsSection";
+import EducationSection from "./sections/EducationSection";
+import ContactSection from "./sections/ContactSection";
 
 function TemplateSynthwave({ data }) {
   return (
@@ -205,170 +210,15 @@ function TemplateSynthwave({ data }) {
       `}</style>
 
       <div className="sw-bg sw-body text-gray-200">
-        <div className="sw-scanlines" />
-        <div className="sw-sun" />
-        <div className="sw-horizon" />
-        <div className="sw-grid" />
+        <SynthwaveBackground />
 
         <div className="max-w-5xl mx-auto px-6 relative z-10">
-
-          {/* HERO */}
-          <section className="min-h-screen flex flex-col items-center justify-center text-center pt-10">
-            <div className="sw-pixel text-sm tracking-[0.5em] text-pink-400 mb-6 sw-reveal" style={{animationDelay:'0.2s'}}>
-              &gt; LOADING PROFILE...
-            </div>
-
-            <div className="relative mb-8 sw-reveal" style={{animationDelay:'0.3s'}}>
-              <div className="w-36 h-36 rounded-full mx-auto border-2 border-pink-500 p-1" style={{boxShadow:'0 0 30px rgba(255,60,120,0.4)'}}>
-                <img
-                  src={data.profileImage || "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=500&auto=format&fit=crop"}
-                  alt="Profile"
-                  className="w-full h-full rounded-full object-cover"
-                />
-              </div>
-            </div>
-
-            <h1 className="text-6xl md:text-8xl font-bold tracking-wider uppercase sw-neon sw-chroma sw-reveal" style={{animationDelay:'0.5s'}}>
-              {data.name}
-            </h1>
-
-            <h2 className="sw-pixel text-2xl md:text-3xl text-cyan-400 mt-4 mb-6 tracking-widest sw-reveal" style={{animationDelay:'0.7s'}}>
-              {data.title}
-            </h2>
-
-            <p className="max-w-2xl text-gray-400 text-lg leading-relaxed sw-reveal" style={{animationDelay:'0.9s'}}>
-              {data.summary}
-            </p>
-
-            <div className="flex flex-wrap justify-center gap-4 mt-10 sw-reveal" style={{animationDelay:'1.1s'}}>
-              {data.links && Object.entries(data.links).map(([platform, url]) => {
-                if (!url) return null;
-                return (
-                  <a key={platform} href={url} target="_blank" rel="noreferrer"
-                    className="sw-btn px-6 py-3 rounded-sm font-semibold flex items-center gap-2">
-                    <img src={getSkillLogo(platform)} alt={platform} className="w-4 h-4 object-contain invert"
-                      onError={(e) => { e.target.style.display='none'; }} />
-                    {platform}
-                  </a>
-                );
-              })}
-            </div>
-          </section>
-
-          {/* SKILLS */}
-          <section className="py-24">
-            <div className="sw-section-title text-center mb-16">// TECH STACK</div>
-            <div className="columns-1 md:columns-2 lg:columns-3 gap-6 space-y-6">
-              {Object.entries(categorizeSkills(data.skills)).map(([cat, skills]) => (
-                <div key={cat} className="sw-card p-6 rounded-sm break-inside-avoid">
-                  <h4 className="sw-pixel text-lg text-pink-400 mb-4 tracking-wider border-b border-pink-500/20 pb-2">{cat}</h4>
-                  <div className="flex flex-wrap gap-2">
-                    {skills.map((s, i) => (
-                      <div key={i} className="sw-tag flex items-center gap-1.5 px-3 py-1.5 rounded-sm text-sm font-semibold cursor-default">
-                        <img src={getSkillLogo(s)} alt={s} className="w-3.5 h-3.5 object-contain"
-                          onError={(e)=>{e.target.style.display='none';}} />
-                        {s}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* EXPERIENCE */}
-          {data.experience?.length > 0 && (
-            <section className="py-24">
-              <div className="sw-section-title text-center mb-16">// EXPERIENCE LOG</div>
-              <div className="relative pl-8 sw-timeline space-y-12">
-                {data.experience.map((exp, i) => (
-                  <div key={i} className="sw-card p-8 rounded-sm relative">
-                    <div className="absolute left-0 top-8 w-3 h-3 bg-pink-500 rounded-full -translate-x-[calc(2rem+1px)]"
-                      style={{boxShadow:'0 0 10px #ff3c78'}} />
-                    <span className="sw-pixel text-cyan-400 text-sm tracking-widest">{exp.duration}</span>
-                    <h4 className="text-2xl font-bold text-white mt-1">{exp.role}</h4>
-                    <h5 className="text-pink-400 font-semibold mb-3">{exp.company}</h5>
-                    <p className="text-gray-400 leading-relaxed">{exp.description}</p>
-                  </div>
-                ))}
-              </div>
-            </section>
-          )}
-
-          {/* PROJECTS */}
-          <section className="py-24">
-            <div className="sw-section-title text-center mb-16">// PROJECTS.DB</div>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {data.projects?.map((p, i) => (
-                <div key={i} className="sw-card p-8 rounded-sm">
-                  <div className="flex justify-between items-start mb-4">
-                    <span className="sw-pixel text-cyan-400 text-sm">{p.duration}</span>
-                    {p.link && (
-                      <a href={p.link} target="_blank" rel="noreferrer"
-                        className="sw-pixel text-pink-400 hover:text-pink-300 text-sm tracking-wider">
-                        [LAUNCH ↗]
-                      </a>
-                    )}
-                  </div>
-                  <h4 className="text-2xl font-bold text-white mb-3">{p.title}</h4>
-                  <p className="text-gray-400 text-sm leading-relaxed mb-6">{p.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {p.techStack?.map((tech, idx) => (
-                      <div key={idx} className="sw-tag flex items-center gap-1.5 px-2.5 py-1 rounded-sm text-xs font-semibold">
-                        <img src={getSkillLogo(tech)} alt={tech} className="w-3 h-3 object-contain"
-                          onError={(e)=>{e.target.style.display='none';}} />
-                        {tech}
-                      </div>
-                    ))}
-                  </div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* EDUCATION */}
-          <section className="py-24">
-            <div className="sw-section-title text-center mb-16">// EDUCATION.EXE</div>
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
-              {data.education?.map((ed, i) => (
-                <div key={i} className="sw-card p-8 rounded-sm text-center">
-                  <div className="sw-pixel text-4xl text-pink-500 mb-4">EDU</div>
-                  <h4 className="font-bold text-white text-lg mb-2">{ed.degree}</h4>
-                  <p className="text-gray-400 text-sm mb-3">{ed.college}</p>
-                  <div className="sw-pixel text-cyan-400">{ed.year} · {ed.score}</div>
-                </div>
-              ))}
-            </div>
-          </section>
-
-          {/* CONTACT */}
-          <section className="py-24">
-            <div className="sw-section-title text-center mb-16">// CONTACT.SYS</div>
-            <div className="sw-card p-10 rounded-sm text-center mb-8">
-              <p className="sw-pixel text-2xl text-gray-300 mb-8 tracking-wider">
-                READY TO COLLABORATE? INITIATE TRANSMISSION.
-              </p>
-              <div className="flex flex-wrap justify-center gap-4">
-                {data.email && (
-                  <a href={`mailto:${data.email}`}
-                    className="sw-btn px-8 py-3 rounded-sm flex items-center gap-2">
-                    ✉ {data.email}
-                  </a>
-                )}
-                {data.phone && (
-                  <a href={`tel:${data.phone}`}
-                    className="sw-btn px-8 py-3 rounded-sm flex items-center gap-2">
-                    📞 {data.phone}
-                  </a>
-                )}
-              </div>
-              {data.location && <p className="sw-pixel text-gray-500 mt-6 tracking-widest">📍 {data.location}</p>}
-            </div>
-            <div className="sw-card p-4 rounded-sm">
-              <ContactForm data={data} />
-            </div>
-          </section>
-
+          <HeroSection data={data} />
+          <SkillsSection data={data} />
+          {data.experience?.length > 0 && <ExperienceSection data={data} />}
+          {data.projects?.length > 0 && <ProjectsSection data={data} />}
+          {data.education?.length > 0 && <EducationSection data={data} />}
+          <ContactSection data={data} />
         </div>
       </div>
     </Layout>

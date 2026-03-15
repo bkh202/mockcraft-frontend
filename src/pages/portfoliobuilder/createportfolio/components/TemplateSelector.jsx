@@ -14,6 +14,11 @@ const templates = [
 { id: 16, layout: "luxury", name: "Luxury Gold", description: "Dark editorial, shimmer gold accents & serif elegance", thumbnail: "/images/luxury.png" },
 { id: 17, layout: "space", name: "Deep Space", description: "Live starfield canvas, nebula blobs & cosmic orbit UI", thumbnail: "/images/space.png" },
 { id: 18, layout: "brutal", name: "Brutal Type", description: "Raw typographic brutalism, noise texture & bold contrasts", thumbnail: "/images/brutal.png" },
+{ id: 19, layout: "aurora", name: "Aurora Lights", description: "Northern lights animated blobs & conic gradient glow", thumbnail: "/images/aurora.png" },
+{ id: 20, layout: "tokyoneon", name: "Tokyo Neon", description: "Japanese street neon, kanji decor & rain drop effects", thumbnail: "/images/tokyoneon.png" },
+{ id: 21, layout: "paper", name: "Paper Craft", description: "Warm paper texture, sticky notes & handwritten fonts", thumbnail: "/images/paper.png" },
+{ id: 22, layout: "artdeco", name: "Art Deco", description: "1920s geometric luxury, gold diamonds & spinning ornaments", thumbnail: "/images/artdeco.png" },
+{ id: 23, layout: "quantum", name: "Quantum", description: "Live particle canvas, physics connections & scan line UI", thumbnail: "/images/quantum.png" },
 ];
 
 export default function TemplateSelector({ selectedTemplate, onSelect }) {
