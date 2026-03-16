@@ -3,7 +3,7 @@ import { getInsightSummary } from "../../../../services/premiumAnalyticsApi";
 
 const InsightsSummary = ({ range }) => {
   const [data, setData] = useState(null);
-console.log("InsightsPanel mounted");
+
 
   useEffect(() => {
     if (!range) return;
