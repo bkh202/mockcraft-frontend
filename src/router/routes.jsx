@@ -81,6 +81,7 @@ import CreatePortfolioPage from "../pages/portfoliobuilder/createportfolio/Creat
 import ForgotPassword from "../pages/auth/ForgotPassword";
 import TermsAndConditions from "../pages/auth/TermsAndConditions";
 import PremiumUniversalQuizResult from "../pages/premiumEngineering/PremiumUniversalQuizResult";
+import PaymentStatusPage from "../payment/PaymentStatusPage";
 
 
 // ─── Public Routes ────────────────────────────────────────────────────────────
@@ -91,7 +92,8 @@ export const publicRoutes = [
   { path: "/unauthorized", element: <Unauthorized /> },
   { path: "/p/:slug",      element: <PortfolioPage /> },
   { path: "/forgot-password",      element: <ForgotPassword /> },
-  { path: "/terms",      element: <TermsAndConditions /> }
+  { path: "/terms",      element: <TermsAndConditions /> },
+  { path: "/payment/status",      element: <PaymentStatusPage /> }
 
 ];
 

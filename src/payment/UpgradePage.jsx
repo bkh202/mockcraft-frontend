@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import axios from "../api/axiosInstance";
 import { useAuth } from "../context/AuthContext";
+import { load } from "@cashfreepayments/cashfree-js";
 
 const FEATURES = [
   { icon: "🎤", title: "AI Mock Interview",   desc: "Practice with real company questions" },
@@ -34,44 +35,39 @@ export default function UpgradePage() {
     setLoading(true);
     setError(null);
     setStep(0);
+
     try {
-      const orderRes = await axios.post("/api/payment/create-order");
-      const order = orderRes.data;
-      setStep(1);
-      await new Promise((r) => setTimeout(r, 600));
+        // Step 1 — Order create
+        const orderRes = await axios.post("/api/payment/create-order");
+        const order = orderRes.data;
+        setStep(1);
 
-      const verifyRes = await axios.post("/api/payment/verify", { 
-        orderId: order.orderId 
-      });
-      const result = verifyRes.data;
-      if (!result.success) throw new Error(result.error || "Verification failed");
+        // Step 2 — Cashfree load + checkout
+        const cashfree = await load({ mode: "sandbox" }); // production mein "production"
 
-      setStep(2);
+        await cashfree.checkout({
+            paymentSessionId: order.paymentSessionId,
+            returnUrl: `https://mockcraft-frontend.vercel.app/payment/status?orderId=${order.orderId}`,
+        });
 
-      // ✅ ADD: Backend mein tier update karo
-      const upgradeRes = await axios.post("/auth/upgrade-to-premium");
-      
-      // ✅ Naya access token save karo (PREMIUM tier embedded hai)
-      if (upgradeRes.data.accessToken) {
-        const storage = localStorage.getItem("accessToken") 
-          ? localStorage 
-          : sessionStorage;
-        storage.setItem("accessToken", upgradeRes.data.accessToken);
-      }
+        // Yeh tab chalega jab user return karega
+        setStep(2);
+        const verifyRes = await axios.post("/api/payment/verify", {
+            orderId: order.orderId
+        });
 
-      localStorage.setItem("userTier",         "PREMIUM");
-      localStorage.setItem("hasPremiumAccess", "true");
-      localStorage.setItem("trialActive",      "false");
-      
-      // ✅ AuthContext refresh karo
-      await loadUser();
-      
-      setSuccess(true);
+        if (!verifyRes.data.success) throw new Error(verifyRes.data.error);
+
+        localStorage.setItem("userTier", "PREMIUM");
+        localStorage.setItem("hasPremiumAccess", "true");
+        await loadUser();
+        setSuccess(true);
+
     } catch (err) {
-      setError(err.response?.data?.error || err.message || "Something went wrong");
-      setStep(null);
+        setError(err.message || "Something went wrong");
+        setStep(null);
     } finally {
-      setLoading(false);
+        setLoading(false);
     }
 };
 
