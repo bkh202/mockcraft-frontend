@@ -15,11 +15,20 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  // ✅ Trial expired check
+  const isPremiumOrTrial = (userData) => {
+    const u = userData || user;
+    if (!u) return false;
+    if (u.tier === "PREMIUM") return true;
+    if (u.tier === "TRIAL" && u.trialEndDate) {
+      return new Date(u.trialEndDate) > new Date();
+    }
+    return false;
+  };
+
   const loadUser = async () => {
-    // ✅ FIX: Sirf localStorage — sessionStorage nahi
-    // Pehle dono check karta tha — inconsistency hoti thi
-    const token = localStorage.getItem("accessToken") 
-             || sessionStorage.getItem("accessToken"); // ← ADD sessionStorage
+    const token = localStorage.getItem("accessToken")
+               || sessionStorage.getItem("accessToken");
 
     if (!token) {
       setUser(null);
@@ -30,48 +39,56 @@ export const AuthProvider = ({ children }) => {
 
     try {
       const res = await axios.get("/user/me");
-      setUser(res.data);
-      return res.data;
+      const userData = res.data;
+
+      // ✅ Trial expired — locally downgrade to FREE
+      if (userData.tier === "TRIAL" && userData.trialEndDate) {
+        if (new Date(userData.trialEndDate) < new Date()) {
+          userData.tier = "FREE";
+        }
+      }
+
+      setUser(userData);
+      return userData;
     } catch {
       setUser(null);
       return null;
     }
   };
 
- const login = async (token, email, role, refreshToken, rememberMe = false) => {
-  
-  // ✅ Pehle dono storage clear karo
-  localStorage.removeItem("accessToken");
-  localStorage.removeItem("refreshToken");
-  localStorage.removeItem("email");
-  localStorage.removeItem("role");
-  localStorage.removeItem("userTier");
-  sessionStorage.removeItem("accessToken");
-  sessionStorage.removeItem("refreshToken");
-  sessionStorage.removeItem("email");
-  sessionStorage.removeItem("role");
+  const login = async (token, email, role, refreshToken, rememberMe = false) => {
+    // ✅ Pehle dono storage clear karo
+    localStorage.removeItem("accessToken");
+    localStorage.removeItem("refreshToken");
+    localStorage.removeItem("email");
+    localStorage.removeItem("role");
+    localStorage.removeItem("userTier");
+    sessionStorage.removeItem("accessToken");
+    sessionStorage.removeItem("refreshToken");
+    sessionStorage.removeItem("email");
+    sessionStorage.removeItem("role");
 
-  // ✅ Ab naya token save karo
-  const storage = localStorage;
-  storage.setItem("accessToken", token);
-  storage.setItem("email", email);
-  storage.setItem("role", role);
-  if (refreshToken) storage.setItem("refreshToken", refreshToken);
+    // ✅ Ab naya token save karo
+    const storage = localStorage;
+    storage.setItem("accessToken", token);
+    storage.setItem("email", email);
+    storage.setItem("role", role);
+    if (refreshToken) storage.setItem("refreshToken", refreshToken);
 
-  setAuthToken(token);
-  await loadUser();
-};
+    setAuthToken(token);
+    await loadUser();
+  };
 
   const logout = () => {
     localStorage.removeItem("accessToken");
     localStorage.removeItem("refreshToken");
     localStorage.removeItem("email");
     localStorage.removeItem("role");
-    // ✅ FIX: userTier bhi clear karo
-    // Warna logged out user bhi premium access le sakta tha!
     localStorage.removeItem("userTier");
+    localStorage.removeItem("hasPremiumAccess");
+    localStorage.removeItem("trialActive");
 
-    sessionStorage.clear(); // sab clear karo
+    sessionStorage.clear();
 
     setAuthToken(null);
     setUser(null);
@@ -82,7 +99,14 @@ export const AuthProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, setUser, loadUser, login, logout }}>
+    <AuthContext.Provider value={{
+      user,
+      setUser,
+      loadUser,
+      login,
+      logout,
+      isPremiumOrTrial,   // ✅ exposed
+    }}>
       {!loading && children}
     </AuthContext.Provider>
   );
