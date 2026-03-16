@@ -15,27 +15,77 @@ import InsightsSummary from "../history/components/premium/InsightsSummary";
 const BRANCH_DATA = {
   CSE: {
     label: "Computer Science (CSE)",
-    topics: ["Data Structures", "Algorithms", "Operating Systems", "DBMS", "Computer Networks", "System Design", "JavaScript", "React", "Python", "Java", "Arrays", "Trees", "Graphs","General"],
+    subjects: {
+      "Data Structures":    ["Arrays", "Linked Lists", "Trees", "Graphs", "Sorting", "Stacks", "Queues"],
+      "Algorithms":         ["Dynamic Programming", "Greedy", "Backtracking", "Searching", "Divide & Conquer"],
+      "Operating Systems":  ["Processes", "Memory Management", "File Systems", "Scheduling", "Deadlock"],
+      "DBMS":               ["SQL", "Normalization", "Transactions", "Indexing", "ER Model"],
+      "Computer Networks":  ["TCP/IP", "Routing", "Security", "Wireless", "HTTP", "DNS"],
+      "System Design":      ["Load Balancing", "Caching", "Microservices", "Databases", "API Design"],
+      "JavaScript":         ["Closures", "Promises", "Event Loop", "ES6+", "DOM"],
+      "React":              ["Hooks", "State Management", "Context", "Redux", "Performance"],
+      "Python":             ["OOP", "Decorators", "Generators", "Libraries", "Django"],
+      "Java":               ["OOP", "Collections", "Multithreading", "Spring", "JVM"],
+      "General":            ["Mixed Topics"],
+    },
     companies: ["Google", "Microsoft", "Amazon", "TCS", "Infosys", "Wipro", "HCL", "Tech Mahindra", "Flipkart", "Zoho"],
   },
   EE: {
     label: "Electrical Engineering (EE)",
-    topics: ["Circuit Theory", "Power Systems", "Electrical Machines", "Control Systems", "Power Electronics", "Signals & Systems", "Renewable Energy", "Smart Grids"],
+    subjects: {
+      "Circuit Theory":      ["KVL/KCL", "Thevenin", "Norton", "AC Circuits", "Resonance"],
+      "Power Systems":       ["Generation", "Transmission", "Distribution", "Faults", "Protection"],
+      "Electrical Machines": ["DC Motors", "Transformers", "Induction Motor", "Synchronous Machine"],
+      "Control Systems":     ["Transfer Function", "Bode Plot", "Root Locus", "PID", "Stability"],
+      "Power Electronics":   ["Rectifiers", "Inverters", "Choppers", "MOSFET", "IGBT"],
+      "Signals & Systems":   ["Fourier", "Laplace", "Z-Transform", "Sampling", "Convolution"],
+      "Renewable Energy":    ["Solar", "Wind", "Hydro", "Energy Storage", "Grid Integration"],
+      "Smart Grids":         ["AMI", "SCADA", "Demand Response", "EV Integration"],
+    },
     companies: ["NTPC", "BHEL", "Power Grid", "Siemens", "ABB", "L&T", "TATA Power", "Adani Power"],
   },
   ECE: {
     label: "Electronics & Communication (ECE)",
-    topics: ["Analog Electronics", "Digital Electronics", "Communication Systems", "VLSI Design", "Microprocessors", "Embedded Systems", "Signals & Systems", "IoT", "Antenna Theory"],
+    subjects: {
+      "Analog Electronics":      ["Amplifiers", "Op-Amps", "Oscillators", "Filters", "Diodes"],
+      "Digital Electronics":     ["Logic Gates", "Flip Flops", "Counters", "ADC/DAC", "Multiplexers"],
+      "Communication Systems":   ["AM/FM", "Digital Modulation", "Noise", "Antennas", "Satellite"],
+      "VLSI Design":             ["CMOS", "Logic Synthesis", "Timing", "Layout", "DFT"],
+      "Microprocessors":         ["8085", "8086", "ARM", "Interfacing", "Interrupts"],
+      "Embedded Systems":        ["RTOS", "GPIO", "UART", "SPI", "I2C"],
+      "Signals & Systems":       ["Fourier", "Laplace", "Z-Transform", "Sampling", "Filters"],
+      "IoT":                     ["Sensors", "Protocols", "Cloud", "Edge Computing", "Security"],
+      "Antenna Theory":          ["Radiation", "Arrays", "Propagation", "Microstrip", "Gain"],
+    },
     companies: ["Intel", "NVIDIA", "Qualcomm", "ISRO", "DRDO", "BEL", "Samsung", "Texas Instruments"],
   },
   MECH: {
     label: "Mechanical Engineering",
-    topics: ["Thermodynamics", "Fluid Mechanics", "Strength of Materials", "Manufacturing", "Theory of Machines", "Heat Transfer", "CAD/CAM", "Robotics", "Industrial Engineering"],
+    subjects: {
+      "Thermodynamics":        ["Laws", "Cycles", "Heat Engines", "Refrigeration", "Properties"],
+      "Fluid Mechanics":       ["Bernoulli", "Flow Types", "Pumps", "Turbines", "Drag"],
+      "Strength of Materials": ["Stress/Strain", "Bending", "Torsion", "Columns", "Fatigue"],
+      "Manufacturing":         ["Casting", "Welding", "Machining", "Forming", "Metrology"],
+      "Theory of Machines":    ["Mechanisms", "Gears", "Cams", "Governors", "Vibrations"],
+      "Heat Transfer":         ["Conduction", "Convection", "Radiation", "Heat Exchangers"],
+      "CAD/CAM":               ["Modeling", "CNC", "FEA", "Simulation", "GD&T"],
+      "Robotics":              ["Kinematics", "Actuators", "Sensors", "Control", "Path Planning"],
+      "Industrial Engineering":["Operations Research", "Quality", "Ergonomics", "Lean", "Six Sigma"],
+    },
     companies: ["TATA Motors", "Mahindra", "L&T", "JSW", "Bosch", "Cummins", "Maruti Suzuki", "BHEL"],
   },
   CIVIL: {
     label: "Civil Engineering",
-    topics: ["Structural Analysis", "Geotechnical Engineering", "Fluid Mechanics", "Environmental Engineering", "Construction Materials", "Transportation", "Surveying", "BIM"],
+    subjects: {
+      "Structural Analysis":        ["Beams", "Frames", "Trusses", "Deflection", "Stiffness"],
+      "Geotechnical Engineering":   ["Soil Mechanics", "Foundations", "Slope Stability", "Earth Pressure"],
+      "Fluid Mechanics":            ["Flow", "Pipes", "Open Channels", "Pumps", "Hydraulic Machines"],
+      "Environmental Engineering":  ["Water Treatment", "Waste Management", "Air Pollution", "EIA"],
+      "Construction Materials":     ["Concrete", "Steel", "Timber", "Bricks", "Composites"],
+      "Transportation":             ["Highway Design", "Traffic Flow", "Pavement", "Intersections"],
+      "Surveying":                  ["Levelling", "Theodolite", "GPS", "Remote Sensing", "GIS"],
+      "BIM":                        ["Revit", "AutoCAD", "Navisworks", "Cost Estimation", "4D BIM"],
+    },
     companies: ["L&T Construction", "AFCONS", "Shapoorji Pallonji", "NBCC", "IRCON", "DLF", "Gammon India"],
   },
 };
@@ -52,6 +102,7 @@ const PremiumDashboard = () => {
 
   const handleBranchChange = (branch) => {
     setSelectedBranch(branch);
+    setSelectedSubject("");
     setSelectedTopic("");
     setSelectedCompany("");
   };
