@@ -8,10 +8,14 @@ import {
 const DifficultyChart = ({ range }) => {
   const [data, setData] = useState([]);
 
-  useEffect(() => {
-    if (!range) return;
-    getDifficulty(range).then(res => setData(res.data || []));
-  }, [range]);
+ useEffect(() => {
+  if (!range) return;
+  getDifficulty(range).then(res => {
+    console.log("Difficulty API response:", res);      // full response
+    console.log("Difficulty data:", res.data);         // data field
+    setData(res.data || []);
+  });
+}, [range]);
 
   return (
     <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">

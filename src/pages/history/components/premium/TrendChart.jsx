@@ -18,6 +18,8 @@ const TrendChart = ({ topic, range }) => {
 
     getTopicTrend(topic, range)
       .then(res => {
+          console.log("Topic API response:", res);
+         console.log("Topic data:", res.data);
         const formatted = (res.data || []).map(item => ({
           ...item,
           dateLabel: new Date(item.date).toLocaleDateString()
