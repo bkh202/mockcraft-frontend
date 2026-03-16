@@ -11,111 +11,162 @@ function TemplateVibrant({ data }) {
   return (
     <Layout>
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
-        
-        .font-vibrant { font-family: 'Inter', sans-serif; }
-        
-        /* Custom animations */
-        @keyframes float {
-          0%, 100% { transform: translateY(0); }
-          50% { transform: translateY(-10px); }
+        @import url('https://fonts.googleapis.com/css2?family=Cabinet+Grotesk:wght@400;500;700;800;900&family=Satoshi:wght@300;400;500;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap');
+
+        .vb-body  { font-family: 'Plus Jakarta Sans', sans-serif; }
+
+        @keyframes vb-float {
+          0%,100% { transform: translateY(0px) rotate(0deg); }
+          50%      { transform: translateY(-12px) rotate(1deg); }
         }
-        @keyframes pulse-glow {
-          0%, 100% { box-shadow: 0 0 0 0 rgba(236, 72, 153, 0.3); }
-          50% { box-shadow: 0 0 20px 5px rgba(236, 72, 153, 0.2); }
+        @keyframes vb-blob {
+          0%,100% { border-radius: 60% 40% 30% 70% / 60% 30% 70% 40%; }
+          50%      { border-radius: 30% 60% 70% 40% / 50% 60% 30% 60%; }
         }
-        @keyframes fade-up {
-          0% { opacity: 0; transform: translateY(20px); }
-          100% { opacity: 1; transform: translateY(0); }
+        @keyframes vb-up {
+          from { opacity:0; transform:translateY(24px); }
+          to   { opacity:1; transform:translateY(0); }
         }
-        
-        .animate-float {
-          animation: float 6s ease-in-out infinite;
+        @keyframes vb-glow {
+          0%,100% { box-shadow: 0 0 20px 2px rgba(236,72,153,0.25); }
+          50%      { box-shadow: 0 0 40px 8px rgba(139,92,246,0.3); }
         }
-        .animate-pulse-glow {
-          animation: pulse-glow 3s ease-in-out infinite;
+        @keyframes vb-shine {
+          from { background-position: -200% center; }
+          to   { background-position:  200% center; }
         }
-        .animate-fade-up {
-          animation: fade-up 0.6s ease-out forwards;
-        }
-        .animate-fade-up-delay-1 {
-          animation: fade-up 0.6s ease-out 0.2s forwards;
-          opacity: 0;
-        }
-        .animate-fade-up-delay-2 {
-          animation: fade-up 0.6s ease-out 0.4s forwards;
-          opacity: 0;
-        }
-        
-        /* Card styles */
-        .vibrant-card {
-          background: rgba(255, 255, 255, 0.9);
-          backdrop-filter: blur(10px);
+
+        .vb-float  { animation: vb-float 7s ease-in-out infinite; }
+        .vb-reveal { animation: vb-up 0.7s cubic-bezier(0.16,1,0.3,1) both; }
+
+        /* Card */
+        .vb-card {
+          background: rgba(255,255,255,0.88);
+          backdrop-filter: blur(16px);
+          -webkit-backdrop-filter: blur(16px);
           border-radius: 24px;
-          border: 1px solid rgba(255,255,255,0.3);
-          box-shadow: 0 20px 40px -15px rgba(0,0,0,0.2);
-          transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+          border: 1px solid rgba(255,255,255,0.7);
+          box-shadow:
+            0 1px 0 rgba(255,255,255,0.8) inset,
+            0 24px 48px -16px rgba(139,92,246,0.12),
+            0 4px 16px -4px rgba(0,0,0,0.06);
+          transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
         }
-        .vibrant-card:hover {
-          transform: scale(1.02) translateY(-4px);
-          box-shadow: 0 30px 50px -20px rgba(236, 72, 153, 0.4);
-          border-color: rgba(236, 72, 153, 0.3);
-          background: white;
+        .vb-card:hover {
+          transform: translateY(-5px) scale(1.005);
+          box-shadow:
+            0 1px 0 rgba(255,255,255,0.8) inset,
+            0 32px 60px -16px rgba(236,72,153,0.2),
+            0 8px 24px -4px rgba(0,0,0,0.08);
+          border-color: rgba(236,72,153,0.25);
         }
-        
+
         /* Gradient text */
-        .gradient-text {
-          background: linear-gradient(135deg, #ec4899, #8b5cf6);
+        .vb-grad {
+          background: linear-gradient(135deg, #ec4899 0%, #8b5cf6 60%, #6366f1 100%);
           -webkit-background-clip: text;
           -webkit-text-fill-color: transparent;
           background-clip: text;
         }
-        
-        /* Skill chips upgraded */
-        .chip-vibrant {
+
+        /* Chip */
+        .vb-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 5px;
+          padding: 5px 13px;
+          border-radius: 999px;
+          font-size: 12.5px;
+          font-weight: 600;
+          background: linear-gradient(145deg, #fdf2f8, #f5f3ff);
+          color: #7c3aed;
+          border: 1px solid rgba(139,92,246,0.15);
+          box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+          transition: all 0.2s ease;
+          cursor: default;
+        }
+        .vb-chip:hover {
+          background: linear-gradient(145deg, #fce7f3, #ede9fe);
+          border-color: rgba(236,72,153,0.3);
+          box-shadow: 0 6px 16px rgba(236,72,153,0.15);
+          transform: translateY(-2px);
+          color: #be185d;
+        }
+
+        /* Social pill */
+        .vb-pill {
           display: inline-flex;
           align-items: center;
           gap: 6px;
-          padding: 0.4rem 1.2rem;
-          border-radius: 40px;
-          font-size: 0.85rem;
+          padding: 8px 16px;
+          border-radius: 999px;
+          font-size: 13px;
           font-weight: 600;
-          background: linear-gradient(145deg, #fce7f3, #f3e8ff);
-          color: #6b21a8;
-          border: 1px solid rgba(255,255,255,0.5);
-          box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+          background: linear-gradient(135deg, #ec4899, #8b5cf6);
+          color: white;
+          text-decoration: none;
+          box-shadow: 0 4px 16px rgba(236,72,153,0.3);
+          transition: all 0.25s ease;
+        }
+        .vb-pill:hover {
+          transform: translateY(-2px) scale(1.04);
+          box-shadow: 0 8px 24px rgba(236,72,153,0.4);
+          filter: brightness(1.05);
+        }
+
+        /* Section label */
+        .vb-label {
+          font-size: 10.5px;
+          font-weight: 700;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          background: linear-gradient(90deg, #ec4899, #8b5cf6);
+          -webkit-background-clip: text;
+          -webkit-text-fill-color: transparent;
+          background-clip: text;
+        }
+
+        /* Timeline dot */
+        .vb-dot {
+          width: 12px; height: 12px;
+          border-radius: 50%;
+          background: linear-gradient(135deg, #ec4899, #8b5cf6);
+          box-shadow: 0 0 0 3px rgba(236,72,153,0.15);
+          flex-shrink: 0;
           transition: all 0.2s;
         }
-        .chip-vibrant:hover {
-          transform: scale(1.05);
-          background: linear-gradient(145deg, #fbcfe8, #ede9fe);
-          box-shadow: 0 8px 15px rgba(236, 72, 153, 0.2);
+        .vb-timeline-item:hover .vb-dot {
+          box-shadow: 0 0 0 5px rgba(236,72,153,0.2), 0 0 14px rgba(236,72,153,0.3);
+          transform: scale(1.2);
         }
-        
-        /* Background pattern */
-        .bg-pattern {
-          background-color: #f5f3ff;
-          background-image: radial-gradient(at 30% 30%, rgba(236, 72, 153, 0.1) 0px, transparent 50%),
-                            radial-gradient(at 70% 80%, rgba(139, 92, 246, 0.1) 0px, transparent 50%);
+
+        /* Bg */
+        .vb-bg {
+          background:
+            radial-gradient(ellipse at 15% 25%, rgba(236,72,153,0.08) 0%, transparent 55%),
+            radial-gradient(ellipse at 80% 70%, rgba(139,92,246,0.09) 0%, transparent 55%),
+            radial-gradient(ellipse at 50% 50%, rgba(99,102,241,0.04) 0%, transparent 70%),
+            #faf5ff;
         }
       `}</style>
 
-      <div className="font-vibrant bg-pattern min-h-screen text-gray-800 antialiased pb-24">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 lg:py-16">
+      <div className="vb-bg vb-body min-h-screen text-gray-800 antialiased pb-24">
+        {/* Fixed bg blobs */}
+        <div className="fixed top-[-10%] left-[-5%] w-96 h-96 rounded-full opacity-20 pointer-events-none"
+          style={{ background: 'radial-gradient(circle, #ec4899 0%, transparent 70%)', filter: 'blur(60px)', animation: 'vb-blob 12s ease-in-out infinite' }} />
+        <div className="fixed bottom-[-10%] right-[-5%] w-[500px] h-[500px] rounded-full opacity-15 pointer-events-none"
+          style={{ background: 'radial-gradient(circle, #8b5cf6 0%, transparent 70%)', filter: 'blur(80px)', animation: 'vb-blob 15s ease-in-out infinite reverse' }} />
 
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-12 lg:py-16 relative z-10">
           <AboutSection data={data} />
 
-          {/* MAIN GRID */}
-          <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-
-            {/* LEFT COLUMN */}
-            <div className="lg:col-span-1 space-y-8">
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-7">
+            <div className="lg:col-span-1 space-y-7">
               <SkillsSection data={data} />
               <CertificatesSection data={data} />
             </div>
-
-            {/* RIGHT COLUMN */}
-            <div className="lg:col-span-2 space-y-8">
+            <div className="lg:col-span-2 space-y-7">
               <ExperienceSection data={data} />
               <ProjectsSection data={data} />
               <EducationSection data={data} />
@@ -123,7 +174,6 @@ function TemplateVibrant({ data }) {
           </div>
 
           <ContactSection data={data} />
-
         </div>
       </div>
     </Layout>

@@ -2,76 +2,89 @@ import { getSkillLogo } from "../../../components/categorizeSkills";
 
 function AboutSection({ data }) {
   return (
-    <section id="about" className="stripe-card p-8 md:p-12 relative overflow-hidden animate-reveal">
-      <div className="absolute -top-24 -right-24 w-64 h-64 bg-linear-to-br from-indigo-200/40 to-purple-200/40 rounded-full blur-3xl pointer-events-none"></div>
+    <section id="about" className="nm-card p-8 md:p-12 relative overflow-hidden nm-reveal">
+      {/* Top gradient accent */}
+      <div className="absolute top-0 left-0 right-0 h-1 rounded-t-[20px]"
+        style={{ background: 'linear-gradient(90deg, #6366f1, #a855f7, #06b6d4)' }} />
 
-      <div className="relative flex flex-col md:flex-row gap-10 items-center">
-        <div className="shrink-0">
-          <div className="relative group cursor-pointer">
-            <div className="absolute -inset-1 bg-linear-to-r from-indigo-500 to-purple-500 rounded-full blur opacity-20 group-hover:opacity-60 transition duration-500"></div>
+      {/* Background decoration */}
+      <div className="absolute -top-20 -right-20 w-72 h-72 rounded-full pointer-events-none"
+        style={{ background: 'radial-gradient(circle, rgba(99,102,241,0.07) 0%, transparent 70%)' }} />
+
+      <div className="relative flex flex-col md:flex-row gap-10 items-center md:items-start">
+        {/* Avatar */}
+        <div className="shrink-0 group">
+          <div className="relative">
+            {/* Spinning ring */}
+            <div className="absolute -inset-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+              style={{
+                background: 'conic-gradient(from 0deg, #6366f1, #a855f7, #06b6d4, #6366f1)',
+                animation: 'nm-spin-slow 4s linear infinite',
+                borderRadius: '50%',
+                padding: '2px',
+                WebkitMask: 'linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0)',
+                WebkitMaskComposite: 'xor',
+              }} />
             <img
               src={data.profileImage || "https://images.unsplash.com/photo-1599566150163-29194dcaad36?auto=format&fit=crop&w=500&q=80"}
               alt="Profile"
-              className="relative w-32 h-32 md:w-48 md:h-48 rounded-full object-cover ring-4 ring-white shadow-xl"
+              className="relative w-32 h-32 md:w-44 md:h-44 rounded-full object-cover"
+              style={{ border: '3px solid white', boxShadow: '0 8px 32px rgba(99,102,241,0.2)' }}
             />
-            <div className="absolute -bottom-1 -right-1 w-8 h-8 bg-green-400 border-4 border-white rounded-full animate-bounce"></div>
+            <div className="absolute -bottom-1 -right-1 w-7 h-7 bg-emerald-400 border-[3px] border-white rounded-full"
+              style={{ animation: 'nm-pulse 2.5s ease-in-out infinite' }} />
           </div>
         </div>
 
+        {/* Info */}
         <div className="flex-1 text-center md:text-left">
-          <h1 className="text-4xl md:text-6xl font-extrabold text-gray-900 tracking-tight mb-3">
+          <div className="nm-mono text-xs text-indigo-400 tracking-[0.2em] uppercase mb-3">Portfolio</div>
+
+          <h1 className="text-4xl md:text-5xl font-extrabold text-slate-900 tracking-tight mb-2 leading-tight">
             {data.name}
           </h1>
-          <h2 className="text-xl md:text-2xl text-indigo-600 font-semibold mb-4">
+          <h2 className="text-lg md:text-xl font-semibold mb-4"
+            style={{ background: 'linear-gradient(90deg, #6366f1, #a855f7)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent' }}>
             {data.title}
           </h2>
-          <p className="text-gray-600 leading-relaxed max-w-3xl mb-6 text-lg">
+          <p className="text-slate-500 leading-relaxed max-w-2xl mb-7 text-base font-light">
             {data.summary}
           </p>
 
-          <div className="flex flex-wrap justify-center md:justify-start gap-4 items-center">
+          {/* Contact icons + links */}
+          <div className="flex flex-wrap justify-center md:justify-start items-center gap-3">
             {data.email && (
-              <a href={`mailto:${data.email}`} className="contact-icon" title={data.email}>
-                <span className="text-lg">✉️</span>
+              <a href={`mailto:${data.email}`} className="nm-icon-circle" title={data.email}>
+                <span>✉</span>
               </a>
             )}
             {data.phone && (
-              <a href={`tel:${data.phone}`} className="contact-icon" title={data.phone}>
-                <span className="text-lg">📞</span>
+              <a href={`tel:${data.phone}`} className="nm-icon-circle" title={data.phone}>
+                <span>☎</span>
               </a>
             )}
             {data.location && (
-              <span className="contact-icon" title={data.location}>
-                <span className="text-lg">📍</span>
+              <span className="nm-icon-circle" title={data.location}>
+                <span>📍</span>
               </span>
             )}
 
-            <div className="w-px h-6 bg-gray-300 mx-2 hidden sm:block"></div>
+            {(data.email || data.phone || data.location) && data.links &&
+              Object.values(data.links).some(Boolean) && (
+              <div className="w-px h-6 bg-slate-200 hidden sm:block mx-1" />
+            )}
 
             {data.links && Object.entries(data.links).map(([platform, url]) => (
-              url && (
-                <a
-                  key={platform}
-                  href={url}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="group px-4 py-2 bg-white/80 backdrop-blur-sm rounded-full text-sm font-medium text-gray-700 border border-gray-200 hover:border-indigo-300 hover:bg-white hover:text-indigo-600 transition-all shadow-sm flex items-center gap-2 capitalize"
-                >
-                  <img
-                    src={getSkillLogo(platform)}
-                    alt={platform}
-                    className="w-4 h-4 object-contain opacity-80 group-hover:opacity-100 group-hover:scale-110 transition-all"
-                    onError={(e) => {
-                      e.target.onerror = null;
-                      e.target.src = "https://cdn-icons-png.flaticon.com/512/814/814820.png";
-                    }}
-                  />
-                  <span>{platform}</span>
-                  <span className="text-xs text-gray-400 group-hover:text-indigo-500 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform">
-                    ↗
-                  </span>
+              url ? (
+                <a key={platform} href={url} target="_blank" rel="noreferrer"
+                  className="nm-pill capitalize">
+                  <img src={getSkillLogo(platform)} alt={platform}
+                    className="w-4 h-4 object-contain"
+                    onError={(e) => { e.target.style.display = 'none'; }} />
+                  {platform}
+                  <span className="text-slate-300 text-xs">↗</span>
                 </a>
-              )
+              ) : null
             ))}
           </div>
         </div>

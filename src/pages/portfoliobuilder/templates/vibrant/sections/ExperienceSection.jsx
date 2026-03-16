@@ -2,26 +2,38 @@ function ExperienceSection({ data }) {
   if (!data.experience?.length) return null;
 
   return (
-    <div className="vibrant-card p-8 md:p-10">
-      <h2 className="text-2xl font-bold text-gray-900 mb-8 flex items-center gap-2">
-        <span className="text-3xl">💼</span> Experience
+    <div className="vb-card p-7 md:p-9 vb-reveal" style={{ animationDelay: '0.15s' }}>
+      <div className="vb-label mb-1">Career</div>
+      <h2 className="text-xl font-bold text-gray-900 mb-7 pb-4 border-b border-pink-100/60">
+        💼 Experience
       </h2>
-      <div className="space-y-8">
+
+      <div className="space-y-0">
         {data.experience.map((exp, i) => (
-          <div key={i} className="relative pl-8 group">
-            <div className="absolute left-0 top-2 w-4 h-4 bg-linear-to-br from-pink-400 to-purple-500 rounded-full shadow-lg group-hover:scale-125 transition-transform"></div>
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-2 gap-2">
-              <h3 className="text-xl font-bold text-gray-900 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-linear-to-r group-hover:from-pink-600 group-hover:to-purple-600 transition-all">
-                {exp.role}
-              </h3>
-              <span className="text-sm font-medium bg-gray-100 text-gray-600 px-4 py-1.5 rounded-full shadow-inner">
-                {exp.duration}
-              </span>
+          <div key={i} className="vb-timeline-item group flex gap-5 pb-8 last:pb-0">
+            {/* Timeline */}
+            <div className="flex flex-col items-center pt-1.5">
+              <div className="vb-dot" />
+              {i < data.experience.length - 1 && (
+                <div className="w-px flex-1 mt-2 bg-gradient-to-b from-pink-200 to-purple-100 group-hover:from-pink-300 group-hover:to-purple-200 transition-colors" />
+              )}
             </div>
-            <p className="text-purple-600 font-semibold mb-3">{exp.company}</p>
-            <p className="text-gray-600 leading-relaxed text-sm md:text-base">
-              {exp.description}
-            </p>
+
+            {/* Content */}
+            <div className="flex-1">
+              <div className="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-2 mb-2">
+                <h3 className="text-base font-bold text-gray-900 group-hover:vb-grad transition-all leading-snug">
+                  {exp.role}
+                </h3>
+                <span className="text-xs font-semibold text-purple-600 bg-purple-50 border border-purple-100 px-3 py-1 rounded-full self-start whitespace-nowrap">
+                  {exp.duration}
+                </span>
+              </div>
+              <p className="text-sm font-semibold text-pink-500 mb-3 flex items-center gap-1.5">
+                🏢 {exp.company}
+              </p>
+              <p className="text-gray-500 text-sm leading-relaxed">{exp.description}</p>
+            </div>
           </div>
         ))}
       </div>

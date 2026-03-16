@@ -2,23 +2,36 @@ function EducationSection({ data }) {
   if (!data.education?.length) return null;
 
   return (
-    <div className="space-y-6 pt-4">
-      <h2 className="text-2xl font-bold text-gray-900 flex items-center gap-2">
-        <span className="text-3xl">🎓</span> Education
-      </h2>
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+    <div className="vb-reveal" style={{ animationDelay: '0.3s' }}>
+      <div className="vb-label mb-1 pl-1">Background</div>
+      <h2 className="text-xl font-bold text-gray-900 mb-6 pl-1">🎓 Education</h2>
+
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {data.education.map((ed, i) => (
-          <div key={i} className="vibrant-card p-6 hover:border-purple-300 transition-colors h-full">
+          <div key={i} className="vb-card p-6 group">
             <div className="flex items-start gap-4">
-              <div className="w-12 h-12 rounded-2xl bg-linear-to-br from-pink-100 to-purple-100 flex items-center justify-center text-purple-600 shrink-0 shadow-sm border border-white">
+              <div className="w-12 h-12 rounded-2xl flex items-center justify-center text-lg shrink-0"
+                style={{
+                  background: 'linear-gradient(135deg, #fce7f3, #f3e8ff)',
+                  border: '1px solid rgba(236,72,153,0.12)',
+                  boxShadow: '0 4px 12px rgba(139,92,246,0.1)'
+                }}>
                 🎓
               </div>
-              <div>
-                <h3 className="font-bold text-gray-900 leading-tight mb-1">{ed.degree}</h3>
-                <p className="text-sm font-medium text-gray-500 mb-3">{ed.college}</p>
+              <div className="flex-1">
+                <h3 className="font-bold text-gray-900 leading-snug mb-1.5 group-hover:text-purple-700 transition-colors">
+                  {ed.degree}
+                </h3>
+                <p className="text-sm text-gray-500 mb-3">{ed.college}</p>
                 <div className="flex flex-wrap gap-2">
-                  <span className="text-xs font-medium bg-gray-100 px-2.5 py-1 rounded-md text-gray-600 shadow-inner">{ed.year}</span>
-                  {ed.score && <span className="text-xs font-bold bg-purple-100 px-2.5 py-1 rounded-md text-purple-700 border border-purple-200">{ed.score}</span>}
+                  <span className="text-xs font-semibold bg-gray-100 text-gray-600 px-2.5 py-1 rounded-lg">
+                    {ed.year}
+                  </span>
+                  {ed.score && (
+                    <span className="text-xs font-bold bg-purple-50 text-purple-700 border border-purple-100 px-2.5 py-1 rounded-lg">
+                      {ed.score}
+                    </span>
+                  )}
                 </div>
               </div>
             </div>

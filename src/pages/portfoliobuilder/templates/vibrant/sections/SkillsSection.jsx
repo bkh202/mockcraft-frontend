@@ -2,29 +2,23 @@ import { categorizeSkills, getSkillLogo } from "../../../components/categorizeSk
 
 function SkillsSection({ data }) {
   return (
-    <div className="space-y-8">
-      {/* Skills Card */}
-      <div className="vibrant-card p-8">
-        <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
-          <span className="text-2xl">⚡</span> Skills
-        </h2>
+    <div className="space-y-5 vb-reveal" style={{ animationDelay: '0.1s' }}>
 
-        <div className="space-y-6">
-          {Object.entries(categorizeSkills(data.skills)).map(([category, skills]) => (
-            <div key={category}>
-              <h3 className="text-sm font-bold text-pink-500 mb-3 tracking-wide uppercase">{category}</h3>
+      <div className="vb-card p-7">
+        <div className="vb-label mb-1">Expertise</div>
+        <h2 className="text-lg font-bold text-gray-900 mb-5 pb-4 border-b border-pink-100/60">
+          ⚡ Skills
+        </h2>
+        <div className="space-y-5">
+          {Object.entries(categorizeSkills(data.skills)).map(([category, skills], idx) => (
+            <div key={category} className={idx !== 0 ? 'pt-4 border-t border-gray-50' : ''}>
+              <p className="text-xs font-bold text-pink-500 uppercase tracking-widest mb-3">{category}</p>
               <div className="flex flex-wrap gap-2">
                 {skills.map((skill, i) => (
-                  <span key={i} className="chip-vibrant">
-                    <img
-                      src={getSkillLogo(skill)}
-                      alt={skill}
+                  <span key={i} className="vb-chip">
+                    <img src={getSkillLogo(skill)} alt={skill}
                       className="w-3.5 h-3.5 object-contain"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "https://cdn-icons-png.flaticon.com/512/711/711280.png";
-                      }}
-                    />
+                      onError={(e) => { e.target.style.display = 'none'; }} />
                     {skill}
                   </span>
                 ))}
@@ -34,15 +28,16 @@ function SkillsSection({ data }) {
         </div>
       </div>
 
-      {/* Languages Card */}
-      {data.languages && data.languages.length > 0 && (
-        <div className="vibrant-card p-8">
-          <h2 className="text-xl font-bold text-gray-900 mb-6 flex items-center gap-2 border-b border-gray-100 pb-4">
-            <span className="text-2xl">🌍</span> Languages
+      {data.languages?.length > 0 && (
+        <div className="vb-card p-7">
+          <div className="vb-label mb-1">Communication</div>
+          <h2 className="text-lg font-bold text-gray-900 mb-5 pb-4 border-b border-pink-100/60">
+            🌍 Languages
           </h2>
           <div className="flex flex-wrap gap-2">
             {data.languages.map((lang, i) => (
-              <span key={i} className="chip-vibrant bg-linear-to-r from-emerald-100 to-teal-100 text-teal-800 border-teal-200">
+              <span key={i} className="vb-chip"
+                style={{ background: 'linear-gradient(145deg, #ecfdf5, #f0fdfa)', color: '#065f46', borderColor: 'rgba(16,185,129,0.15)' }}>
                 🗣 {lang}
               </span>
             ))}

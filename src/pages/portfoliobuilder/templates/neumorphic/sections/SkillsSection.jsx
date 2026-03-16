@@ -2,35 +2,29 @@ import { categorizeSkills, getSkillLogo } from "../../../components/categorizeSk
 
 function SkillsSection({ data }) {
   return (
-    <section id="skills" className="animate-reveal space-y-6" style={{ animationDelay: "0.1s" }}>
-      {/* Technical Skills Card */}
-      <div className="stripe-card p-8">
-        <h3 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-          <div className="w-1.5 h-7 bg-indigo-500 rounded-full"></div> Core Expertise
-        </h3>
-        <div className="gradient-line mb-8"></div>
+    <section id="skills" className="space-y-5 nm-reveal" style={{ animationDelay: '0.1s' }}>
 
-        <div className="space-y-8">
+      {/* Skills card */}
+      <div className="nm-card p-7">
+        <div className="nm-section-head">
+          <div className="nm-accent-bar h-7 bg-indigo-500" />
+          <h3 className="text-lg font-bold text-slate-900">Core Expertise</h3>
+        </div>
+        <div className="h-0.5 w-12 rounded-full mb-6"
+          style={{ background: 'linear-gradient(90deg, #6366f1, #a855f7)' }} />
+
+        <div className="space-y-6">
           {Object.entries(categorizeSkills(data.skills)).map(([category, skills], idx) => (
-            <div key={category} className={idx !== 0 ? "pt-6 border-t border-gray-100" : ""}>
-              <h4 className="text-xs font-bold text-gray-500 tracking-widest uppercase mb-4">
+            <div key={category} className={idx !== 0 ? 'pt-5 border-t border-slate-100' : ''}>
+              <p className="nm-mono text-[10px] font-bold text-slate-400 uppercase tracking-[0.18em] mb-3">
                 {category}
-              </h4>
-              <div className="flex flex-wrap gap-2.5">
+              </p>
+              <div className="flex flex-wrap gap-2">
                 {skills.map((skill, i) => (
-                  <span
-                    key={i}
-                    className="skill-tag inline-flex items-center gap-1.5 hover:shadow-md transition-shadow"
-                  >
-                    <img
-                      src={getSkillLogo(skill)}
-                      alt={skill}
-                      className="w-4 h-4 object-contain drop-shadow-sm"
-                      onError={(e) => {
-                        e.target.onerror = null;
-                        e.target.src = "https://cdn-icons-png.flaticon.com/512/814/814820.png";
-                      }}
-                    />
+                  <span key={i} className="nm-tag">
+                    <img src={getSkillLogo(skill)} alt={skill}
+                      className="w-3.5 h-3.5 object-contain"
+                      onError={(e) => { e.target.style.display = 'none'; }} />
                     {skill}
                   </span>
                 ))}
@@ -40,18 +34,19 @@ function SkillsSection({ data }) {
         </div>
       </div>
 
-      {/* Languages Card */}
-      {data.languages && data.languages.length > 0 && (
-        <div className="stripe-card p-8">
-          <h3 className="text-xl font-bold text-gray-900 mb-2 flex items-center gap-3">
-            <div className="w-1.5 h-7 bg-teal-500 rounded-full"></div> Languages
-          </h3>
-          <div className="gradient-line mb-6 opacity-60"></div>
-          <div className="flex flex-wrap gap-2.5">
+      {/* Languages card */}
+      {data.languages?.length > 0 && (
+        <div className="nm-card p-7">
+          <div className="nm-section-head">
+            <div className="nm-accent-bar h-7 bg-teal-500" />
+            <h3 className="text-lg font-bold text-slate-900">Languages</h3>
+          </div>
+          <div className="h-0.5 w-12 rounded-full mb-5"
+            style={{ background: 'linear-gradient(90deg, #14b8a6, #06b6d4)' }} />
+          <div className="flex flex-wrap gap-2">
             {data.languages.map((lang, i) => (
-              <span key={i} className="skill-tag inline-flex items-center gap-1.5 hover:shadow-md transition-shadow">
-                <span className="text-gray-400 opacity-70">🌐</span>
-                {lang}
+              <span key={i} className="nm-tag">
+                🌐 {lang}
               </span>
             ))}
           </div>
