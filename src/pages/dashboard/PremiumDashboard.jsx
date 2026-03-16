@@ -15,7 +15,7 @@ import InsightsSummary from "../history/components/premium/InsightsSummary";
 const BRANCH_DATA = {
   CSE: {
     label: "Computer Science (CSE)",
-    topics: ["Data Structures", "Algorithms", "Operating Systems", "DBMS", "Computer Networks", "System Design", "JavaScript", "React", "Python", "Java", "Arrays", "Trees", "Graphs"],
+    topics: ["Data Structures", "Algorithms", "Operating Systems", "DBMS", "Computer Networks", "System Design", "JavaScript", "React", "Python", "Java", "Arrays", "Trees", "Graphs","General"],
     companies: ["Google", "Microsoft", "Amazon", "TCS", "Infosys", "Wipro", "HCL", "Tech Mahindra", "Flipkart", "Zoho"],
   },
   EE: {

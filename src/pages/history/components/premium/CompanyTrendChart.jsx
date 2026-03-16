@@ -18,8 +18,6 @@ const CompanyTrendChart = ({ company, range }) => {
 
     getCompanyTrend(company, range)
       .then(res => {
-          console.log("Company API response:", res);
-          console.log("Company data:", res.data);
         const formatted = (res.data || []).map(item => ({
           ...item,
           dateLabel: new Date(item.date).toLocaleDateString()
