@@ -2,6 +2,8 @@ function LanguagesSection({ languages }) {
   if (!languages?.length) return null;
 
   return (
+    <section  className="py-24 relative">
+        <div className="pp-section-num">06</div>
     <div className="pp-card p-6 rounded-sm mt-6">
       <h4 className="pp-serif text-sm pp-brown font-semibold italic mb-4 pb-3 border-b border-black/5 flex items-center gap-2">
         <span className="text-lg">🌐</span> Languages
@@ -17,6 +19,7 @@ function LanguagesSection({ languages }) {
         ))}
       </div>
     </div>
+    </section>
   );
 }
 
