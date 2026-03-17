@@ -3,7 +3,7 @@ function LanguagesSection({ languages }) {
 
   return (
     <section  className="py-24 relative">
-        <div className="pp-section-num">06</div>
+        <div className="pp-section-num">05</div>
         <h3 className="pp-serif text-4xl pp-dark font-bold mb-3">Langauges</h3>
         <div className="pp-line-brown w-32 mb-12" />
     <div className="pp-card p-6 rounded-sm mt-6">

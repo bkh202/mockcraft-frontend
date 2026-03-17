@@ -2,25 +2,32 @@ function CertificationsSection({ certificates }) {
   if (!certificates?.length) return null;
 
   return (
-    <div className="mx-card p-6 rounded-sm">
-      <div className="mx-dim text-xs mb-3">// certifications</div>
+    <section className="py-20">
+      <div className="mx-section-header mb-2">certifications.list</div>
+      <div className="mx-progress mb-12">
+        <div className="mx-progress-bar" style={{ animationDelay: "1.0s" }} />
+      </div>
       <div className="space-y-3">
         {certificates.map((cert, i) => (
-          <div key={i} className="border-b border-green-500/10 pb-3 last:border-0 last:pb-0">
-            <div className="flex justify-between">
-              <span className="mx-bright text-sm font-bold">{cert.name}</span>
-              <span className="mx-dim text-xs">{cert.date}</span>
+          <div key={i} className="mx-card p-5 rounded-sm">
+            <div className="flex justify-between items-start">
+              <div>
+                <h4 className="font-bold mx-bright">{cert.name}</h4>
+                <p className="mx-dim text-xs mt-1">{cert.issuer}</p>
+              </div>
+              <span className="mx-mono text-xs mx-dim">{cert.date}</span>
             </div>
-            <p className="mx-dim text-xs mt-1">{cert.issuer}</p>
             {cert.link && (
-              <a href={cert.link} target="_blank" rel="noreferrer" className="mx-btn text-xs inline-block mt-2 px-2 py-1">
-                [VERIFY]
-              </a>
+              <div className="mt-2">
+                <a href={cert.link} target="_blank" rel="noreferrer" className="mx-btn text-xs px-3 py-1 inline-block">
+                  [VERIFY]
+                </a>
+              </div>
             )}
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

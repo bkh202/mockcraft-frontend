@@ -12,6 +12,7 @@ import ProjectsSection from "./sections/ProjectsSection";
 import EducationSection from "./sections/EducationSection";
 import CertificationsSection from "./sections/CertificationsSection";
 import ContactSection from "./sections/ContactSection";
+import LanguagesSection from "./sections/LanguagesSection";
 
 const CreativeTemplate = ({ data }) => {
   const [isDark, setIsDark] = useState(false);
@@ -76,6 +77,7 @@ const CreativeTemplate = ({ data }) => {
             {/* Education & Certifications side by side */}
             <div className="grid md:grid-cols-2 gap-12">
               <EducationSection education={data.education} />
+              <LanguagesSection languages={data.languages} />
               {data.certificates?.length > 0 && (
                 <CertificationsSection certificates={data.certificates} />
               )}

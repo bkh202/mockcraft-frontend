@@ -6,7 +6,7 @@ import ProjectsSection from "./sections/ProjectsSection";
 import EducationSection from "./sections/EducationSection";
 import ContactSection from "./sections/ContactSection";
 import LanguagesSection from "./sections/LanguagesSection";
-import CertificationsSection from "./sections/CertificationsSection";
+
 
 function TemplateNeumorphic({ data }) {
   return (
@@ -188,7 +188,6 @@ function TemplateNeumorphic({ data }) {
           </div>
             <div>
               <LanguagesSection languages={data.languages} />
-               <CertificationsSection certificates={data.certificates} />
             </div>
           <ContactSection data={data} />
         </div>

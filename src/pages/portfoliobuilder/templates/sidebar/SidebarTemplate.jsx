@@ -45,7 +45,6 @@ function SidebarTemplate({ data }) {
           {data.projects?.length > 0 && <ProjectsSection data={data} />}
           <EducationSection data={data} />
           <LanguagesSection languages={data.languages} />
-          <CertificationsSection certificates={data.certificates} />
           <ContactSection data={data} />
         </main>
       </div>

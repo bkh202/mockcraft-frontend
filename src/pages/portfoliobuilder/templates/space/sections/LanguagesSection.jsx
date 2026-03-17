@@ -2,18 +2,24 @@ function LanguagesSection({ languages }) {
   if (!languages?.length) return null;
 
   return (
-    <div className="sp-card p-6 rounded-2xl">
-      <h4 className="sp-display text-xs tracking-widest sp-blue mb-4 pb-3 border-b border-blue-500/10">
-        LINGUISTIC SYSTEMS
-      </h4>
-      <div className="flex flex-wrap gap-2">
+    <section className="py-24">
+      <div className="text-center mb-16">
+        <div className="sp-display text-xs tracking-[0.4em] sp-dim mb-4">SECTOR 05</div>
+        <h3 className="sp-section-title text-3xl">LINGUISTIC SYSTEMS</h3>
+        <div
+          className="h-px w-48 mx-auto mt-4"
+          style={{ background: "linear-gradient(90deg,transparent,rgba(100,160,255,0.4),transparent)" }}
+        />
+      </div>
+      <div className="flex flex-wrap justify-center gap-4">
         {languages.map((lang, i) => (
-          <span key={i} className="sp-tag flex items-center gap-1.5 px-3 py-1.5 rounded-lg text-xs cursor-default">
-            <span className="text-blue-400">🌐</span> {lang}
-          </span>
+          <div key={i} className="sp-card p-4 rounded-2xl flex items-center gap-3">
+            <span className="text-blue-400 text-lg">🌐</span>
+            <span className="sp-white font-bold">{lang}</span>
+          </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

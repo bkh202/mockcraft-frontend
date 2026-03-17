@@ -2,16 +2,20 @@ function LanguagesSection({ languages }) {
   if (!languages?.length) return null;
 
   return (
-    <div className="mx-card p-6 rounded-sm">
-      <div className="mx-dim text-xs mb-3">// languages</div>
-      <div className="flex flex-wrap gap-2">
+    <section className="py-20">
+      <div className="mx-section-header mb-2">languages.list</div>
+      <div className="mx-progress mb-12">
+        <div className="mx-progress-bar" style={{ animationDelay: "0.8s" }} />
+      </div>
+      <div className="flex flex-wrap gap-3 justify-center">
         {languages.map((lang, i) => (
-          <span key={i} className="mx-tag flex items-center gap-1.5 px-3 py-1 rounded-sm text-xs font-mono cursor-default">
-            <span className="text-green-500">🗣</span> {lang}
-          </span>
+          <div key={i} className="mx-card p-4 rounded-sm flex items-center gap-2">
+            <span className="mx-mono text-2xl mx-dim">🗣</span>
+            <span className="mx-bright font-bold">{lang}</span>
+          </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 

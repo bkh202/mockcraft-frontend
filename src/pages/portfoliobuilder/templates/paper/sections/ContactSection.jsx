@@ -3,7 +3,7 @@ import ContactForm from "../../../components/ContactForm";
 function ContactSection({ data }) {
   return (
     <section id="contact" className="py-24 pb-40 relative">
-      <div className="pp-section-num">05</div>
+      <div className="pp-section-num">07</div>
       <h3 className="pp-serif text-4xl pp-dark font-bold mb-3">Get In Touch</h3>
       <div className="pp-line-brown w-32 mb-12" />
       <div className="pp-card p-12 rounded-sm mb-6 text-center">

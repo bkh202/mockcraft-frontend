@@ -2,27 +2,33 @@ function CertificationsSection({ certificates }) {
   if (!certificates?.length) return null;
 
   return (
-    <div className="qm-card p-6 rounded-xl">
-      <div className="qm-mono text-xs qm-cyan/50 mb-4 pb-3 border-b border-cyan-500/10">
-        {'/* certifications */'}
+    <section className="py-24">
+      <div className="qm-section-label mb-2">module.certifications</div>
+      <div className="qm-progress mb-12">
+        <div className="qm-progress-bar" style={{ animationDelay: "1.0s" }} />
       </div>
-      <div className="space-y-3">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {certificates.map((cert, i) => (
-          <div key={i} className="border-b border-cyan-500/10 pb-3 last:border-0 last:pb-0">
-            <div className="flex justify-between items-start">
-              <span className="qm-mono text-sm font-bold qm-white">{cert.name}</span>
+          <div key={i} className="qm-card p-6 rounded-xl">
+            <div className="flex justify-between items-start mb-3">
+              <h4 className="qm-mono font-bold qm-white">{cert.name}</h4>
               <span className="qm-mono text-xs qm-dim">{cert.date}</span>
             </div>
-            <p className="qm-mono text-xs qm-dim mt-1">{cert.issuer}</p>
+            <p className="qm-mono text-xs qm-dim mb-3">{cert.issuer}</p>
             {cert.link && (
-              <a href={cert.link} target="_blank" rel="noreferrer" className="qm-btn text-xs inline-block mt-2 px-3 py-1 rounded">
+              <a
+                href={cert.link}
+                target="_blank"
+                rel="noreferrer"
+                className="qm-btn text-xs inline-block px-3 py-1 rounded"
+              >
                 verify ↗
               </a>
             )}
           </div>
         ))}
       </div>
-    </div>
+    </section>
   );
 }
 
