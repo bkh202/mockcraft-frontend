@@ -4,7 +4,8 @@ function CertificationsSection({ certificates }) {
   return (
     <section id="certificates" className="py-24 relative">
         <div className="pp-section-num">07</div>
-    <div  className="pp-card p-6 rounded-sm mt-6">
+    <h3 className="pp-serif text-4xl pp-dark font-bold mb-3">Certifications</h3>
+    <div className="pp-card p-6 rounded-sm mt-6">
       <h4 className="pp-serif text-sm pp-brown font-semibold italic mb-4 pb-3 border-b border-black/5 flex items-center gap-2">
         <span className="text-lg">🏆</span> Certifications
       </h4>
