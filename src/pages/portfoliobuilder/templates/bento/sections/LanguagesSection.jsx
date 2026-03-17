@@ -2,10 +2,9 @@ function LanguagesSection({ languages }) {
   if (!languages?.length) return null;
 
   return (
+     <section id="Certifications" className="reveal-item pt-10">
+      <h3 className="text-4xl md:text-5xl font-extrabold mb-16 text-center">🗣️ Languages </h3>
     <div className="glass-premium p-6 rounded-3xl break-inside-avoid flex flex-col shadow-xl border border-white/10 hover:bg-white/5 transition-all duration-300">
-      <h4 className="text-lg font-bold text-gray-300 mb-5 border-b border-white/10 pb-3 flex items-center gap-2">
-        🗣️ Languages
-      </h4>
       <div className="flex flex-wrap gap-3">
         {languages.map((lang, i) => (
           <div
@@ -18,6 +17,7 @@ function LanguagesSection({ languages }) {
         ))}
       </div>
     </div>
+    </section>
   );
 }
 
