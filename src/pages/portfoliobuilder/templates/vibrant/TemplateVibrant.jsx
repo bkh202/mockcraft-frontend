@@ -7,7 +7,7 @@ import ProjectsSection from "./sections/ProjectsSection";
 import EducationSection from "./sections/EducationSection";
 import ContactSection from "./sections/ContactSection";
 import LanguagesSection from "./sections/LanguagesSection";
-import CertificatesSection from "./sections/CertificatesSection";
+
 
 function TemplateVibrant({ data }) {
   return (
