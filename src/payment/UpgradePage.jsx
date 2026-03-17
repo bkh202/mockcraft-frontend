@@ -43,7 +43,7 @@ export default function UpgradePage() {
         setStep(1);
 
         // Step 2 — Cashfree load + checkout
-        const cashfree = await load({ mode: "sandbox" }); // production mein "production"
+        const cashfree = await load({ mode: "production" }); // production mein "production"
 
         await cashfree.checkout({
             paymentSessionId: order.paymentSessionId,
@@ -168,7 +168,7 @@ export default function UpgradePage() {
                   Processing…
                 </>
               ) : (
-                "Unlock Premium — ₹499/month"
+                "Unlock Premium — ₹199/month"
               )}
             </button>
 
