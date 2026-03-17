@@ -8,6 +8,8 @@ import ExperienceSection from "./sections/ExperienceSection";
 import ProjectsSection from "./sections/ProjectsSection";
 import EducationSection from "./sections/EducationSection";
 import ContactSection from "./sections/ContactSection";
+import LanguagesSection from "./sections/LanguagesSection";
+import CertificationsSection from "./sections/CertificationsSection";
 
 function TemplateMatrix({ data }) {
   const intro = `> INITIALIZING PORTFOLIO...\n> DECRYPTING PROFILE DATA...\n> ACCESS GRANTED. WELCOME.`;
@@ -161,6 +163,8 @@ function TemplateMatrix({ data }) {
           {data.experience?.length > 0 && <ExperienceSection data={data} />}
           {data.projects?.length > 0 && <ProjectsSection data={data} />}
           {data.education?.length > 0 && <EducationSection data={data} />}
+          <LanguagesSection languages={data.languages} />
+          <CertificationsSection certificates={data.certificates} />
           <ContactSection data={data} />
         </div>
       </div>

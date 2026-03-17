@@ -5,6 +5,8 @@ import ProjectsSection from "./sections/ProjectsSection";
 import ExperienceSection from "./sections/ExperienceSection";
 import EducationSection from "./sections/EducationSection";
 import ContactSection from "./sections/ContactSection";
+import LanguagesSection from "./sections/LanguagesSection";
+import CertificationsSection from "./sections/CertificationsSection";
 
 function TemplateCyber({ data }) {
   return (
@@ -79,6 +81,8 @@ function TemplateCyber({ data }) {
           <ProjectsSection data={data} />
           {data.experience?.length > 0 && <ExperienceSection data={data} />}
           <EducationSection data={data} />
+          <LanguagesSection languages={data.languages} />
+          <CertificationsSection certificates={data.certificates} />
           <ContactSection data={data} />
         </div>
       </div>

@@ -6,6 +6,8 @@ import ExperienceSection from "./sections/ExperienceSection";
 import ProjectsSection from "./sections/ProjectsSection";
 import EducationSection from "./sections/EducationSection";
 import ContactSection from "./sections/ContactSection";
+import LanguagesSection from "./sections/LanguagesSection";
+import CertificatesSection from "./sections/CertificatesSection";
 
 function TemplateVibrant({ data }) {
   return (
@@ -171,6 +173,10 @@ function TemplateVibrant({ data }) {
               <ProjectsSection data={data} />
               <EducationSection data={data} />
             </div>
+          </div>
+          <div>
+          <LanguagesSection languages={data.languages} />
+          <CertificatesSection certificates={data.certificates} />
           </div>
 
           <ContactSection data={data} />

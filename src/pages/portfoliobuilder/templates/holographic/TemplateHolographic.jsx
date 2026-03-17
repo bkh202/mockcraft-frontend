@@ -5,6 +5,8 @@ import ExperienceSection from "./sections/ExperienceSection";
 import ProjectsSection from "./sections/ProjectsSection";
 import EducationSection from "./sections/EducationSection";
 import ContactSection from "./sections/ContactSection";
+import LanguagesSection from "./sections/LanguagesSection";
+import CertificationsSection from "./sections/CertificationsSection";
 
 function TemplateHolographic({ data }) {
   return (
@@ -105,6 +107,8 @@ function TemplateHolographic({ data }) {
           {data.experience?.length > 0 && <ExperienceSection data={data} />}
           <ProjectsSection data={data} />
           <EducationSection data={data} />
+          <LanguagesSection languages={data.languages} />
+          <CertificationsSection certificates={data.certificates} />
           <ContactSection data={data} />
         </div>
       </div>

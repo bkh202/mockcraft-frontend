@@ -5,6 +5,8 @@ import ProjectsSection from "./sections/ProjectsSection";
 import SkillsSection from "./sections/SkillsSection";
 import EducationSection from "./sections/EducationSection";
 import ContactSection from "./sections/ContactSection";
+import LanguagesSection from "./sections/LanguagesSection";
+import CertificationsSection from "./sections/CertificationsSection";
 
 function TemplateEditorial({ data }) {
   return (
@@ -150,6 +152,10 @@ function TemplateEditorial({ data }) {
           <SkillsSection data={data} />
           <hr className="ed-divider" />
           <EducationSection data={data} />
+          <hr className="ed-divider" />
+          <LanguagesSection languages={data.languages} />
+          <CertificationsSection certificates={data.certificates} />
+          <hr className="ed-divider" />
           <ContactSection data={data} />
         </div>
       </div>
