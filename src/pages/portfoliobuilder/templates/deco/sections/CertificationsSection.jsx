@@ -2,10 +2,18 @@ function CertificationsSection({ certificates }) {
   if (!certificates?.length) return null;
 
   return (
+    <section className="py-28 relative">
     <div className="ad-card p-8">
-      <h4 className="ad-sans text-xs tracking-[0.3em] ad-gold mb-6 pb-4 border-b border-yellow-700/20">
-        CERTIFICATIONS
-      </h4>
+      <div className="ad-num">V</div>
+      <div className="text-center mb-20">
+        <div className="ad-ornament mb-6">
+          <div className="ad-ornament-line rev" />
+          <div className="ad-diamond" />
+          <div className="ad-ornament-line" />
+        </div>
+        <h3 className="ad-section-title text-3xl ad-cream">Certificates</h3>
+        <div className="ad-divider w-48 mx-auto mt-6" />
+      </div>
       <div className="space-y-4">
         {certificates.map((cert, i) => (
           <div key={i} className="flex items-start gap-4 border-b border-yellow-700/10 pb-4 last:border-0 last:pb-0">
@@ -23,6 +31,7 @@ function CertificationsSection({ certificates }) {
         ))}
       </div>
     </div>
+    </section>
   );
 }
 

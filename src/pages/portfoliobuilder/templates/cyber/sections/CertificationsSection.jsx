@@ -2,7 +2,7 @@ function CertificationsSection({ certificates }) {
   if (!certificates?.length) return null;
 
   return (
-    <>
+    <section id="education" className="pt-10">
       <h2 className="text-2xl font-bold mb-6">{">"} cat certificates.log</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {certificates.map((cert, i) => (
@@ -20,7 +20,7 @@ function CertificationsSection({ certificates }) {
           </div>
         ))}
       </div>
-    </>
+    </section>
   );
 }
 
