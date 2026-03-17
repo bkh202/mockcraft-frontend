@@ -9,7 +9,7 @@ import ProjectsSection from "./sections/ProjectsSection";
 import EducationSection from "./sections/EducationSection";
 import ContactSection from "./sections/ContactSection";
 import LanguagesSection from "./sections/LanguagesSection";
-import CertificationsSection from "./sections/CertificationsSection";
+
 
 function SidebarTemplate({ data }) {
   if (!data) return null;
