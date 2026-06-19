@@ -5,7 +5,7 @@ const getBaseURL = () => {
   if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
     return 'http://localhost:8081';
   }
-  return 'https://mockcraft-backend-production.up.railway.app';
+  return 'https://mockcraft-backend.onrender.com';
 };
 
 const axiosInstance = axios.create({
