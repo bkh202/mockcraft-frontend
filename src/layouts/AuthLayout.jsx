@@ -1,4 +1,5 @@
 import { useState } from "react";
+import SubPageLogo from "../logo/SubPageLogo";
 
 export default function AuthLayout({ children, type = "login" }) {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,11 +20,8 @@ export default function AuthLayout({ children, type = "login" }) {
       <div className="lg:w-1/2 bg-white p-8 md:p-12 lg:p-16 flex flex-col justify-between border-r border-gray-200">
         <div>
           <div className="flex items-center gap-4 mb-8">
-            <div className="w-14 h-14 rounded-xl bg-gray-100 flex items-center justify-center border border-gray-200">
-              <i className="fa fa-rocket text-3xl text-black"></i>
-            </div>
             <div>
-              <h1 className="text-3xl font-bold text-black">MockCraft</h1>
+              <h1 className="text-4xl font-bold text-black"><SubPageLogo /></h1>
               <p className="text-base text-gray-700">AI-Powered Practice Platform</p>
             </div>
           </div>
@@ -35,7 +33,7 @@ export default function AuthLayout({ children, type = "login" }) {
             <p className="text-xl text-gray-800 leading-relaxed max-w-lg">
               {type === "login"
                 ? "Continue your learning journey with personalized practice and AI-powered insights."
-                : "Join 50,000+ learners who are mastering exams and skills with smart practice."}
+                : "Join 50+ learners who are mastering exams and skills with smart practice."}
             </p>
           </div>
 
