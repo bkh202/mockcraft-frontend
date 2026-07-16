@@ -1,4 +1,3 @@
-// CommonSubjectsPage.jsx
 import EngineeringBranchPage from "../shared/EngineeringBranchPage";
 
 const config = {
@@ -15,48 +14,48 @@ const config = {
       name: "Engineering Mathematics",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-blue-100",
-      icon: "🧮",
+      color: "bg-gray-100",
+      icon: "fa-calculator",
       topics: ["Calculus", "Linear Algebra", "Probability", "Differential Equations", "Numerical Methods"]
     },
     {
       name: "Engineering Physics",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-green-100",
-      icon: "⚛️",
+      color: "bg-gray-100",
+      icon: "fa-atom",
       topics: ["Mechanics", "Optics", "Thermodynamics", "Modern Physics", "Semiconductors"]
     },
     {
       name: "Engineering Chemistry",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-purple-100",
-      icon: "🧪",
+      color: "bg-gray-100",
+      icon: "fa-flask",
       topics: ["Organic", "Inorganic", "Physical", "Materials", "Corrosion"]
     },
     {
       name: "English & Communication",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-red-100",
-      icon: "📝",
+      color: "bg-gray-100",
+      icon: "fa-pencil-alt",
       topics: ["Grammar", "Vocabulary", "Comprehension", "Technical Writing", "Presentation"]
     },
     {
       name: "General Aptitude",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-yellow-100",
-      icon: "🧠",
+      color: "bg-gray-100",
+      icon: "fa-brain",
       topics: ["Quantitative", "Logical", "Verbal", "Data Interpretation", "Reasoning"]
     },
     {
       name: "Engineering Drawing",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-indigo-100",
-      icon: "📐",
+      color: "bg-gray-100",
+      icon: "fa-drafting-compass",
       topics: ["Projections", "Sections", "Isometric", "CAD Basics", "Dimensioning"]
     }
   ],
@@ -67,7 +66,7 @@ const config = {
   ],
   adaptiveSubject: "Engineering Mathematics",
   quizLabel: "Try AI‑Powered Common Subjects Quiz",
-  formIcon: "🧮",
+  formIcon: "fa-calculator",
   formDescription: "Let our AI generate personalized common engineering questions based on your preferences"
 };
 

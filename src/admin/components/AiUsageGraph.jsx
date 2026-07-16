@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import api from "../../api/axiosInstance";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid,
-  Tooltip, ResponsiveContainer, Legend
+  Tooltip, ResponsiveContainer
 } from "recharts";
 
 export default function AiUsageGraph() {
@@ -34,39 +34,41 @@ export default function AiUsageGraph() {
   const total = data.reduce((sum, d) => sum + d.calls, 0);
   const max = Math.max(...data.map(d => d.calls), 0);
 
-  if (loading) return (
-    <div style={{ textAlign: "center", padding: "40px", color: "#6b7280" }}>
-      Loading graph...
-    </div>
-  );
+  if (loading) {
+    return (
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 flex items-center justify-center py-10">
+        <i className="fa fa-spinner fa-spin text-2xl text-black"></i>
+        <span className="ml-3 text-gray-600 font-medium">Loading graph...</span>
+      </div>
+    );
+  }
 
-  if (data.length === 0) return (
-    <div style={{ textAlign: "center", padding: "40px", color: "#9ca3af" }}>
-      No AI usage data yet.
-    </div>
-  );
+  if (data.length === 0) {
+    return (
+      <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 text-center py-10">
+        <p className="text-gray-500 font-medium">No AI usage data yet.</p>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ background: "white", borderRadius: "12px", padding: "24px", boxShadow: "0 1px 3px rgba(0,0,0,0.08)", border: "1px solid #e5e7eb" }}>
-      
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6">
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "20px" }}>
+      <div className="flex justify-between items-start mb-5">
         <div>
-          <h2 style={{ fontSize: "16px", fontWeight: "700", color: "#111827", margin: 0 }}>
-            🤖 AI Usage — Last 7 Days
+          <h2 className="text-lg font-extrabold text-black flex items-center gap-2">
+            <i className="fa fa-robot text-black"></i> AI Usage — Last 7 Days
           </h2>
-          <p style={{ fontSize: "12px", color: "#6b7280", marginTop: "4px" }}>
-            Total calls in period
-          </p>
+          <p className="text-sm text-gray-500 mt-0.5">Total calls in period</p>
         </div>
-        <div style={{ display: "flex", gap: "16px" }}>
-          <div style={{ textAlign: "right" }}>
-            <p style={{ fontSize: "11px", color: "#6b7280", margin: 0 }}>Total</p>
-            <p style={{ fontSize: "22px", fontWeight: "700", color: "#1d4ed8", margin: 0 }}>{total}</p>
+        <div className="flex gap-6">
+          <div className="text-right">
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Total</p>
+            <p className="text-2xl font-black text-black">{total}</p>
           </div>
-          <div style={{ textAlign: "right" }}>
-            <p style={{ fontSize: "11px", color: "#6b7280", margin: 0 }}>Peak Day</p>
-            <p style={{ fontSize: "22px", fontWeight: "700", color: "#7e22ce", margin: 0 }}>{max}</p>
+          <div className="text-right">
+            <p className="text-xs font-bold text-gray-500 uppercase tracking-wider">Peak Day</p>
+            <p className="text-2xl font-black text-black">{max}</p>
           </div>
         </div>
       </div>
@@ -88,10 +90,18 @@ export default function AiUsageGraph() {
             allowDecimals={false}
           />
           <Tooltip
-            contentStyle={{ borderRadius: "8px", border: "1px solid #e5e7eb", fontSize: "12px" }}
+            contentStyle={{
+              borderRadius: "8px",
+              border: "1px solid #e5e7eb",
+              fontSize: "12px",
+              background: "white",
+              color: "#000"
+            }}
             formatter={(value) => [`${value} calls`, "AI Calls"]}
+            labelStyle={{ color: "#000" }}
+            itemStyle={{ color: "#000" }}
           />
-          <Bar dataKey="calls" fill="#3b82f6" radius={[6, 6, 0, 0]} maxBarSize={48} />
+          <Bar dataKey="calls" fill="#000000" radius={[6, 6, 0, 0]} maxBarSize={48} />
         </BarChart>
       </ResponsiveContainer>
     </div>

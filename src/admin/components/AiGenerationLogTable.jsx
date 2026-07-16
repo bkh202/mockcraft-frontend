@@ -23,7 +23,6 @@ export default function AiGenerationLogTable() {
     setLoading(true);
     try {
       const res = await api.get(`/admin/ai/logs?page=${page}&size=10`);
-      // ✅ FIX: res.data is a Page object — extract .content safely
       const data = res.data;
       setLogs(Array.isArray(data) ? data : (data.content || []));
       setTotalPages(data.totalPages || 1);
@@ -42,26 +41,26 @@ export default function AiGenerationLogTable() {
   });
 
   return (
-    <div style={{ background: "white", borderRadius: "12px", padding: "24px", boxShadow: "0 1px 3px rgba(0,0,0,0.08)", border: "1px solid #e5e7eb", marginTop: "24px" }}>
-
+    <div className="bg-white rounded-xl border border-gray-200 shadow-sm p-6 mt-6">
       {/* Header */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginBottom: "16px" }}>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-4">
         <div>
-          <h2 style={{ fontSize: "16px", fontWeight: "700", color: "#111827", margin: 0 }}>
-            📋 AI Generation Logs
+          <h2 className="text-lg font-extrabold text-black flex items-center gap-2">
+            <i className="fa fa-list text-black"></i> AI Generation Logs
           </h2>
-          <p style={{ fontSize: "12px", color: "#6b7280", marginTop: "2px" }}>
-            Quiz generation history with tokens & latency
-          </p>
+          <p className="text-sm text-gray-500 mt-0.5">Quiz generation history with tokens & latency</p>
         </div>
-        <div style={{ display: "flex", gap: "8px" }}>
+        <div className="flex gap-2">
           {["ALL", "SUCCESS", "FAILED"].map(f => (
-            <button key={f} onClick={() => setFilter(f)} style={{
-              padding: "4px 12px", borderRadius: "999px", fontSize: "12px",
-              fontWeight: "600", border: "none", cursor: "pointer",
-              background: filter === f ? "#1d4ed8" : "#f3f4f6",
-              color: filter === f ? "white" : "#6b7280"
-            }}>
+            <button
+              key={f}
+              onClick={() => setFilter(f)}
+              className={`px-3 py-1.5 rounded-full text-xs font-bold transition-colors border ${
+                filter === f
+                  ? "bg-black text-white border-black"
+                  : "bg-gray-100 text-gray-600 border-gray-200 hover:bg-gray-200 hover:text-black"
+              }`}
+            >
               {f}
             </button>
           ))}
@@ -69,59 +68,84 @@ export default function AiGenerationLogTable() {
       </div>
 
       {loading ? (
-        <p style={{ textAlign: "center", color: "#9ca3af", padding: "32px" }}>Loading logs...</p>
+        <div className="flex items-center justify-center py-10">
+          <i className="fa fa-spinner fa-spin text-2xl text-black"></i>
+          <span className="ml-3 text-gray-600 font-medium">Loading logs...</span>
+        </div>
       ) : filtered.length === 0 ? (
-        <p style={{ textAlign: "center", color: "#9ca3af", padding: "32px" }}>No logs found.</p>
+        <p className="text-center text-gray-500 font-medium py-10">No logs found.</p>
       ) : (
-        <div style={{ overflowX: "auto" }}>
-          <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "12px" }}>
+        <div className="overflow-x-auto">
+          <table className="w-full text-sm">
             <thead>
-              <tr style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb" }}>
+              <tr className="bg-gray-50 border-b border-gray-200">
                 {HEADERS.map(h => (
-                  <th key={h} style={{ padding: "10px 12px", textAlign: "left", color: "#6b7280", fontWeight: "600", fontSize: "11px", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+                  <th key={h} className="px-3 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap">
                     {h}
                   </th>
                 ))}
               </tr>
             </thead>
-            <tbody>
+            <tbody className="divide-y divide-gray-100">
               {filtered.map(log => (
-                <tr key={log.id} style={{ borderBottom: "1px solid #f3f4f6" }}
-                  onMouseEnter={e => e.currentTarget.style.background = "#f9fafb"}
-                  onMouseLeave={e => e.currentTarget.style.background = "white"}
-                >
-                  <td style={{ padding: "10px 12px", whiteSpace: "nowrap" }}>
-                    <span style={{ background: "#eff6ff", color: "#1d4ed8", padding: "2px 8px", borderRadius: "999px", fontSize: "11px", fontWeight: "600" }}>
-                      #{log.userId}
+                <tr key={log.id} className="hover:bg-gray-50 transition-colors">
+                  {/* User */}
+                  <td className="px-3 py-3 whitespace-nowrap">
+                    <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-gray-100 text-black text-xs font-bold border border-gray-200">
+                      <i className="fa fa-user text-gray-500"></i> #{log.userId}
                     </span>
-                    <span style={{ marginLeft: "6px", color: "#6b7280", fontSize: "11px" }}>{log.tier}</span>
+                    <span className="ml-2 text-xs text-gray-400">{log.tier}</span>
                   </td>
-                  <td style={{ padding: "10px 12px", color: "#374151", fontWeight: "500" }}>{log.category || "—"}</td>
-                  <td style={{ padding: "10px 12px", color: "#6b7280", maxWidth: "120px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{log.subject || "—"}</td>
-                  <td style={{ padding: "10px 12px", color: "#6b7280", maxWidth: "100px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>{log.topic || "—"}</td>
-                  <td style={{ padding: "10px 12px" }}>
-                    {log.company
-                      ? <span style={{ background: "#fdf4ff", color: "#7e22ce", padding: "2px 8px", borderRadius: "999px", fontSize: "11px", fontWeight: "600" }}>🏢 {log.company}</span>
-                      : <span style={{ color: "#d1d5db" }}>—</span>}
+                  {/* Category */}
+                  <td className="px-3 py-3 text-sm font-medium text-black">{log.category || "—"}</td>
+                  {/* Subject */}
+                  <td className="px-3 py-3 text-sm text-gray-600 max-w-[120px] truncate">{log.subject || "—"}</td>
+                  {/* Topic */}
+                  <td className="px-3 py-3 text-sm text-gray-600 max-w-[100px] truncate">{log.topic || "—"}</td>
+                  {/* Company */}
+                  <td className="px-3 py-3">
+                    {log.company ? (
+                      <span className="inline-flex items-center gap-1 px-2.5 py-1 rounded-full bg-gray-100 text-black text-xs font-bold border border-gray-200">
+                        <i className="fa fa-building text-gray-500"></i> {log.company}
+                      </span>
+                    ) : (
+                      <span className="text-gray-300">—</span>
+                    )}
                   </td>
-                  <td style={{ padding: "10px 12px", textAlign: "center" }}>
-                    {log.tokensUsed != null
-                      ? <span style={{ color: "#1d4ed8", fontWeight: "700" }}>{log.tokensUsed}</span>
-                      : <span style={{ color: "#d1d5db" }}>—</span>}
+                  {/* Tokens */}
+                  <td className="px-3 py-3 text-center">
+                    {log.tokensUsed != null ? (
+                      <span className="font-bold text-black">{log.tokensUsed}</span>
+                    ) : (
+                      <span className="text-gray-300">—</span>
+                    )}
                   </td>
-                  <td style={{ padding: "10px 12px", textAlign: "center" }}>
+                  {/* Latency */}
+                  <td className="px-3 py-3 text-center">
                     {log.latencyMs != null ? (
-                      <span style={{ color: log.latencyMs > 5000 ? "#dc2626" : log.latencyMs > 2000 ? "#d97706" : "#15803d", fontWeight: "600" }}>
+                      <span className="font-bold text-black">
                         {log.latencyMs > 1000 ? `${(log.latencyMs / 1000).toFixed(1)}s` : `${log.latencyMs}ms`}
                       </span>
-                    ) : <span style={{ color: "#d1d5db" }}>—</span>}
+                    ) : (
+                      <span className="text-gray-300">—</span>
+                    )}
                   </td>
-                  <td style={{ padding: "10px 12px" }}>
-                    <span style={{ background: log.success ? "#f0fdf4" : "#fef2f2", color: log.success ? "#15803d" : "#b91c1c", padding: "3px 8px", borderRadius: "999px", fontSize: "11px", fontWeight: "600" }}>
-                      {log.success ? "✅ OK" : "❌ Failed"}
+                  {/* Status */}
+                  <td className="px-3 py-3">
+                    <span className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
+                      log.success
+                        ? "bg-gray-100 text-black border-gray-300"
+                        : "bg-gray-200 text-gray-700 border-gray-300"
+                    }`}>
+                      {log.success ? (
+                        <><i className="fa fa-check-circle mr-1 text-black"></i> OK</>
+                      ) : (
+                        <><i className="fa fa-times-circle mr-1 text-gray-500"></i> Failed</>
+                      )}
                     </span>
                   </td>
-                  <td style={{ padding: "10px 12px", color: "#9ca3af", whiteSpace: "nowrap", fontSize: "11px" }}>
+                  {/* Time */}
+                  <td className="px-3 py-3 text-xs text-gray-400 whitespace-nowrap">
                     {formatDate(log.createdAt)}
                   </td>
                 </tr>
@@ -133,15 +157,31 @@ export default function AiGenerationLogTable() {
 
       {/* Pagination */}
       {totalPages > 1 && (
-        <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "16px" }}>
-          <button disabled={page === 0} onClick={() => setPage(p => p - 1)}
-            style={{ padding: "6px 14px", background: "#e5e7eb", border: "none", borderRadius: "6px", cursor: page === 0 ? "not-allowed" : "pointer", opacity: page === 0 ? 0.5 : 1 }}>
-            Prev
+        <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
+          <button
+            disabled={page === 0}
+            onClick={() => setPage(p => p - 1)}
+            className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors border ${
+              page === 0
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
+                : "bg-white text-black border-gray-300 hover:bg-gray-100 hover:border-black"
+            }`}
+          >
+            <i className="fa fa-chevron-left mr-1"></i> Prev
           </button>
-          <span style={{ fontSize: "13px", color: "#6b7280" }}>Page {page + 1} of {totalPages}</span>
-          <button disabled={page + 1 === totalPages} onClick={() => setPage(p => p + 1)}
-            style={{ padding: "6px 14px", background: "#e5e7eb", border: "none", borderRadius: "6px", cursor: page + 1 === totalPages ? "not-allowed" : "pointer", opacity: page + 1 === totalPages ? 0.5 : 1 }}>
-            Next
+          <span className="text-sm font-medium text-gray-600">
+            Page {page + 1} of {totalPages}
+          </span>
+          <button
+            disabled={page + 1 === totalPages}
+            onClick={() => setPage(p => p + 1)}
+            className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors border ${
+              page + 1 === totalPages
+                ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
+                : "bg-white text-black border-gray-300 hover:bg-gray-100 hover:border-black"
+            }`}
+          >
+            Next <i className="fa fa-chevron-right ml-1"></i>
           </button>
         </div>
       )}

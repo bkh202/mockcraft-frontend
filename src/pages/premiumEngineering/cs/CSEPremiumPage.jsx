@@ -14,48 +14,48 @@ const config = {
       name: "Data Structures",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-blue-100",
-      icon: "📊",
+      color: "bg-gray-100",
+      icon: "fa-chart-bar",
       topics: ["Arrays", "Linked Lists", "Trees", "Graphs", "Sorting"]
     },
     {
       name: "Operating Systems",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-green-100",
-      icon: "🖥️",
+      color: "bg-gray-100",
+      icon: "fa-desktop",
       topics: ["Processes", "Memory", "File Systems", "Scheduling"]
     },
     {
       name: "Database Management",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-purple-100",
-      icon: "🗄️",
+      color: "bg-gray-100",
+      icon: "fa-database",
       topics: ["SQL", "Normalization", "Transactions", "Indexing"]
     },
     {
       name: "Computer Networks",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-red-100",
-      icon: "🌐",
+      color: "bg-gray-100",
+      icon: "fa-network-wired",
       topics: ["TCP/IP", "Routing", "Security", "Wireless"]
     },
     {
       name: "Algorithms",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-yellow-100",
-      icon: "🧠",
+      color: "bg-gray-100",
+      icon: "fa-brain",
       topics: ["Dynamic Programming", "Greedy", "Backtracking", "Searching"]
     },
     {
       name: "OOPS & Programming",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-indigo-100",
-      icon: "💻",
+      color: "bg-gray-100",
+      icon: "fa-code",
       topics: ["C++", "Java", "Python", "Design Patterns"]
     }
   ],
@@ -69,7 +69,7 @@ const config = {
   ],
   adaptiveSubject: "Data Structures",
   quizLabel: "Try AI‑Powered CSE Quiz",
-  formIcon: "💻",
+  formIcon: "fa-laptop",
   formDescription: "Let our AI generate personalized computer science questions based on your preferences"
 };
 

@@ -2,13 +2,13 @@ import { useEffect, useState } from "react";
 import api from "../../api/axiosInstance";
 
 const CARDS = [
-  { key: "totalUsers",       label: "Total Users",       icon: "👥", bg: "#eff6ff", border: "#bfdbfe", text: "#1d4ed8" },
-  { key: "newUsersToday",    label: "New Today",          icon: "🆕", bg: "#f0fdf4", border: "#bbf7d0", text: "#15803d" },
-  { key: "trialUsers",       label: "Trial Users",        icon: "⏳", bg: "#fefce8", border: "#fde68a", text: "#b45309" },
-  { key: "premiumUsers",     label: "Premium Users",      icon: "👑", bg: "#fdf4ff", border: "#e9d5ff", text: "#7e22ce" },
-  { key: "totalTodayCalls",  label: "AI Calls Today",     icon: "🤖", bg: "#eff6ff", border: "#bfdbfe", text: "#1d4ed8" },
-  { key: "todayRateLimited", label: "Rate Limit Hits",    icon: "⚠️", bg: "#fff7ed", border: "#fed7aa", text: "#c2410c" },
-  { key: "blockedUsers",     label: "Blocked Users",      icon: "🚫", bg: "#fef2f2", border: "#fecaca", text: "#b91c1c" },
+  { key: "totalUsers",       label: "Total Users",       icon: "fa-users" },
+  { key: "newUsersToday",    label: "New Today",          icon: "fa-user-plus" },
+  { key: "trialUsers",       label: "Trial Users",        icon: "fa-hourglass-half" },
+  { key: "premiumUsers",     label: "Premium Users",      icon: "fa-crown" },
+  { key: "totalTodayCalls",  label: "AI Calls Today",     icon: "fa-robot" },
+  { key: "todayRateLimited", label: "Rate Limit Hits",    icon: "fa-exclamation-triangle" },
+  { key: "blockedUsers",     label: "Blocked Users",      icon: "fa-ban" },
 ];
 
 export default function StatsCards() {
@@ -30,41 +30,29 @@ export default function StatsCards() {
   }, []);
 
   return (
-    <div style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(auto-fit, minmax(150px, 1fr))",
-      gap: "16px",
-      marginBottom: "24px"
-    }}>
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 xl:grid-cols-7 gap-4 mb-6">
       {CARDS.map(card => (
         <Card
           key={card.key}
           label={card.label}
           value={loading ? "..." : stats[card.key]}
           icon={card.icon}
-          bg={card.bg}
-          border={card.border}
-          text={card.text}
         />
       ))}
     </div>
   );
 }
 
-function Card({ label, value, icon, bg, border, text }) {
+function Card({ label, value, icon }) {
   return (
-    <div style={{
-      background: bg,
-      border: `1px solid ${border}`,
-      borderRadius: "12px",
-      padding: "16px 20px",
-      boxShadow: "0 1px 3px rgba(0,0,0,0.06)"
-    }}>
-      <div style={{ fontSize: "22px", marginBottom: "6px" }}>{icon}</div>
-      <p style={{ color: "#6b7280", fontSize: "12px", fontWeight: "500", marginBottom: "4px" }}>
+    <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm hover:shadow-md transition-shadow">
+      <div className="text-2xl text-black mb-1">
+        <i className={`fa ${icon}`}></i>
+      </div>
+      <p className="text-sm font-bold text-gray-500 uppercase tracking-wider mb-1">
         {label}
       </p>
-      <p style={{ color: text, fontSize: "28px", fontWeight: "700", lineHeight: 1 }}>
+      <p className="text-2xl font-black text-black leading-tight">
         {value}
       </p>
     </div>

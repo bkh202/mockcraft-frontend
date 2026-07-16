@@ -9,38 +9,56 @@ const indexToOption = (i) => ["A", "B", "C", "D"][i] ?? null;
 
 export const SUBJECTS = [
   {
-    name: "Current Affairs", questions: "500+", difficulty: "Medium",
-    color: "bg-red-100", icon: "📰",
+    name: "Current Affairs",
+    questions: "500+",
+    difficulty: "Medium",
+    color: "bg-gray-100",
+    icon: "fa-newspaper",
     topics: ["National News", "International Affairs", "Science & Tech", "Sports", "Awards & Honors", "Government Schemes"],
     examWeightage: { banking: "40-50%", ssc: "30-40%", upsc: "50-60%" }
   },
   {
-    name: "History", questions: "300+", difficulty: "Medium",
-    color: "bg-amber-100", icon: "🏛️",
+    name: "History",
+    questions: "300+",
+    difficulty: "Medium",
+    color: "bg-gray-100",
+    icon: "fa-landmark",
     topics: ["Ancient India", "Medieval India", "Modern India", "World History", "Art & Culture", "Freedom Struggle"],
     examWeightage: { banking: "15-20%", ssc: "25-30%", upsc: "20-25%" }
   },
   {
-    name: "Geography", questions: "250+", difficulty: "Medium",
-    color: "bg-green-100", icon: "🌍",
+    name: "Geography",
+    questions: "250+",
+    difficulty: "Medium",
+    color: "bg-gray-100",
+    icon: "fa-globe",
     topics: ["Physical Geography", "Indian Geography", "World Geography", "Economic Geography", "Climate", "Resources"],
     examWeightage: { banking: "10-15%", ssc: "15-20%", upsc: "15-20%" }
   },
   {
-    name: "Polity", questions: "200+", difficulty: "Hard",
-    color: "bg-blue-100", icon: "⚖️",
+    name: "Polity",
+    questions: "200+",
+    difficulty: "Hard",
+    color: "bg-gray-100",
+    icon: "fa-scale-balanced",
     topics: ["Constitution", "Parliament", "Judiciary", "Local Government", "Amendment", "Fundamental Rights"],
     examWeightage: { banking: "10-15%", ssc: "15-20%", upsc: "20-25%" }
   },
   {
-    name: "Economy", questions: "180+", difficulty: "Hard",
-    color: "bg-purple-100", icon: "💰",
+    name: "Economy",
+    questions: "180+",
+    difficulty: "Hard",
+    color: "bg-gray-100",
+    icon: "fa-coins",
     topics: ["Basic Concepts", "Budget", "Planning", "Banking & Finance", "International Trade", "Economic Terms"],
     examWeightage: { banking: "20-25%", ssc: "10-15%", upsc: "15-20%" }
   },
   {
-    name: "Science", questions: "220+", difficulty: "Medium",
-    color: "bg-cyan-100", icon: "🔬",
+    name: "Science",
+    questions: "220+",
+    difficulty: "Medium",
+    color: "bg-gray-100",
+    icon: "fa-flask",
     topics: ["Physics", "Chemistry", "Biology", "Space Science", "Technology", "Nobel Prizes"],
     examWeightage: { banking: "10-15%", ssc: "15-20%", upsc: "10-15%" }
   }

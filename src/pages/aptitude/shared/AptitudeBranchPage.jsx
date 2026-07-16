@@ -1,10 +1,11 @@
+import { Link } from "react-router-dom";
 import { useAptitudeQuizEngine } from "./useAptitudeQuizEngine";
 import AptitudeCardsView from "./AptitudeCardsView";
 import AptitudeFormView from "./AptitudeFormView";
-import QuizView from "./../../premiumEngineering/shared/QuizView";  // reuse existing QuizView (timer optional)
+import QuizView from "./../../premiumEngineering/shared/QuizView"; // reused, already updated
 
 export default function AptitudeBranchPage({ config, children }) {
-  const { branch, resultPath } = config;
+  const { branch, resultPath, parentPath, parentLabel, prevLink, prevLabel, nextLink, nextLabel } = config;
   const engine = useAptitudeQuizEngine(branch, resultPath);
 
   if (engine.view === "quiz" && engine.quizData) {
@@ -38,61 +39,41 @@ export default function AptitudeBranchPage({ config, children }) {
   }
 
   return (
-    <>
+    <div className="min-h-screen bg-white text-black">
       <AptitudeCardsView config={config} onSelectSubject={engine.handleSelectSubject} />
       {children}
-      {/* Back link (shared across all pages) */}
-      <div className="mt-8 flex items-center justify-between">
-        <a
-          href={config.parentPath}
-          className="inline-flex items-center gap-2 px-4 py-2 text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M10 19l-7-7m0 0l7-7m-7 7h18"
-            />
-          </svg>
-          Back to {config.parentLabel}
-        </a>
 
-        <div className="flex gap-4">
-          {config.prevLink && (
-            <a
-              href={config.prevLink}
-              className="inline-flex items-center gap-2 px-4 py-2 text-gray-600 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors"
+      {/* Navigation Links */}
+      <div className="max-w-7xl mx-auto px-4 py-8 flex flex-col sm:flex-row items-center justify-between gap-4 border-t border-gray-200 mt-8">
+        <Link
+          to={parentPath}
+          className="inline-flex items-center gap-2 px-5 py-2.5 text-gray-700 bg-white rounded-xl border border-gray-300 hover:bg-gray-100 hover:border-black transition-all shadow-sm text-base font-bold"
+        >
+          <i className="fa fa-arrow-left text-sm"></i>
+          Back to {parentLabel}
+        </Link>
+
+        <div className="flex flex-wrap items-center gap-4">
+          {prevLink && prevLabel && (
+            <Link
+              to={prevLink}
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-gray-700 bg-white rounded-xl border border-gray-300 hover:bg-gray-100 hover:border-black transition-all shadow-sm text-base font-bold"
             >
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M10 19l-7-7m0 0l7-7m-7 7h18"
-                />
-              </svg>
-              Previous: {config.prevLabel}
-            </a>
+              <i className="fa fa-arrow-left text-sm"></i>
+              Previous: {prevLabel}
+            </Link>
           )}
-          {config.nextLink && (
-            <a
-              href={config.nextLink}
-              className="inline-flex items-center gap-2 px-4 py-2 text-blue-600 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors"
+          {nextLink && nextLabel && (
+            <Link
+              to={nextLink}
+              className="inline-flex items-center gap-2 px-5 py-2.5 text-gray-700 bg-white rounded-xl border border-gray-300 hover:bg-gray-100 hover:border-black transition-all shadow-sm text-base font-bold"
             >
-              Next: {config.nextLabel}
-              <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth={2}
-                  d="M13 7l5 5m0 0l-5 5m5-5H6"
-                />
-              </svg>
-            </a>
+              Next: {nextLabel}
+              <i className="fa fa-arrow-right text-sm"></i>
+            </Link>
           )}
         </div>
       </div>
-    </>
+    </div>
   );
 }

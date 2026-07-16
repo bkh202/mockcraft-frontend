@@ -14,48 +14,48 @@ const config = {
       name: "Embedded Systems",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-blue-100",
-      icon: "⚙️",
+      color: "bg-gray-100",
+      icon: "fa-cogs",
       topics: ["Microcontrollers", "RTOS", "ARM Cortex", "Firmware", "Embedded C", "Peripherals"]
     },
     {
       name: "Internet of Things (IoT)",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-green-100",
-      icon: "📶",
+      color: "bg-gray-100",
+      icon: "fa-wifi",
       topics: ["IoT Protocols", "Sensors", "Cloud Integration", "Edge Computing", "MQTT", "LoRaWAN"]
     },
     {
       name: "VLSI & Chip Design",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-purple-100",
-      icon: "🔬",
+      color: "bg-gray-100",
+      icon: "fa-microchip",
       topics: ["Digital VLSI", "Analog VLSI", "Verilog/VHDL", "FPGA", "ASIC", "Physical Design"]
     },
     {
       name: "Modern Communication Technologies",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-yellow-100",
-      icon: "📡",
+      color: "bg-gray-100",
+      icon: "fa-satellite",
       topics: ["5G/NR", "LTE", "MIMO", "OFDM", "Software Defined Radio", "Satellite Communication"]
     },
     {
       name: "Robotics & Automation",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-red-100",
-      icon: "🤖",
+      color: "bg-gray-100",
+      icon: "fa-robot",
       topics: ["Robot Kinematics", "Sensors & Actuators", "ROS", "Control Algorithms", "Autonomous Systems"]
     },
     {
       name: "Consumer Electronics",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-indigo-100",
-      icon: "📺",
+      color: "bg-gray-100",
+      icon: "fa-tv",
       topics: ["Audio Systems", "Display Technologies", "Wearables", "Home Automation", "Power Management"]
     }
   ],
@@ -69,7 +69,7 @@ const config = {
   ],
   adaptiveSubject: "Embedded Systems",
   quizLabel: "Try AI‑Powered Electronics Technology Quiz",
-  formIcon: "📱",
+  formIcon: "fa-mobile-alt",
   formDescription: "Let our AI generate personalized electronics technology questions based on your preferences"
 };
 

@@ -14,48 +14,48 @@ const config = {
       name: "Building Information Modeling (BIM)",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-blue-100",
-      icon: "🏗️",
+      color: "bg-gray-100",
+      icon: "fa-cube",
       topics: ["Revit", "Navisworks", "Clash Detection", "4D/5D BIM", "IFC Standards"]
     },
     {
       name: "Smart Cities & Infrastructure",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-purple-100",
-      icon: "🌆",
+      color: "bg-gray-100",
+      icon: "fa-city",
       topics: ["IoT in Infrastructure", "Smart Grids", "Intelligent Transport", "Urban Analytics", "Digital Twins"]
     },
     {
       name: "Sustainable Construction",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-green-100",
-      icon: "🌱",
+      color: "bg-gray-100",
+      icon: "fa-recycle",
       topics: ["Green Building (LEED)", "Sustainable Materials", "Energy Efficiency", "Waste Reduction", "Life Cycle Assessment"]
     },
     {
       name: "Geospatial Technologies",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-yellow-100",
-      icon: "🗺️",
+      color: "bg-gray-100",
+      icon: "fa-globe",
       topics: ["GIS", "Remote Sensing", "GPS/GNSS", "LiDAR", "Spatial Analysis"]
     },
     {
       name: "Construction Automation & Robotics",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-red-100",
-      icon: "🤖",
+      color: "bg-gray-100",
+      icon: "fa-robot",
       topics: ["Robotics in Construction", "Drones", "3D Printing", "Automated Equipment", "Construction AI"]
     },
     {
       name: "Advanced Construction Materials",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-indigo-100",
-      icon: "🧪",
+      color: "bg-gray-100",
+      icon: "fa-flask",
       topics: ["High‑Performance Concrete", "Smart Materials", "Nanomaterials", "Composites", "Self‑healing Materials"]
     }
   ],
@@ -69,7 +69,7 @@ const config = {
   ],
   adaptiveSubject: "Building Information Modeling (BIM)",
   quizLabel: "Try AI‑Powered Civil Technology Quiz",
-  formIcon: "🏗️",
+  formIcon: "fa-cube",
   formDescription: "Let our AI generate personalized civil technology questions based on your preferences"
 };
 

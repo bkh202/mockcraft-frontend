@@ -18,7 +18,6 @@ const TrendChart = ({ topic, range }) => {
 
     getTopicTrend(topic, range)
       .then(res => {
-       
         const formatted = (res.data || []).map(item => ({
           ...item,
           dateLabel: new Date(item.date).toLocaleDateString()
@@ -30,10 +29,10 @@ const TrendChart = ({ topic, range }) => {
 
   if (!topic) {
     return (
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 h-80 flex items-center justify-center text-gray-400">
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 h-80 flex items-center justify-center text-gray-500">
         <div className="text-center">
-          <span className="text-4xl block mb-2">🔍</span>
-          Select a topic to view trend
+          <i className="fa fa-search text-4xl block mb-2 text-gray-300"></i>
+          <span className="text-lg font-medium">Select a topic to view trend</span>
         </div>
       </div>
     );
@@ -41,8 +40,8 @@ const TrendChart = ({ topic, range }) => {
 
   if (!data.length) {
     return (
-      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 h-80 flex items-center justify-center text-gray-400">
-        No data available
+      <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 h-80 flex items-center justify-center text-gray-500">
+        <span className="text-lg font-medium">No data available</span>
       </div>
     );
   }
@@ -56,15 +55,15 @@ const TrendChart = ({ topic, range }) => {
     const previous = payload.find(p => p.dataKey === "previousAccuracy");
 
     return (
-      <div className="bg-white p-3 rounded-lg shadow border">
-        <p className="text-sm font-medium">{label}</p>
+      <div className="bg-white p-3 rounded-lg shadow border border-gray-200">
+        <p className="text-base font-bold text-black">{label}</p>
         {current && (
-          <p className="text-indigo-600 font-semibold">
-            Current: {current.value.toFixed(1)}%
+          <p className="text-black font-bold">
+            Current: <span className="text-gray-800">{current.value.toFixed(1)}%</span>
           </p>
         )}
         {previous && (
-          <p className="text-gray-500 font-medium">
+          <p className="text-gray-600 font-medium">
             Previous: {previous.value.toFixed(1)}%
           </p>
         )}
@@ -73,22 +72,22 @@ const TrendChart = ({ topic, range }) => {
   };
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-        <span>📊</span> {topic} Trend
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+      <h3 className="text-xl font-extrabold text-black mb-4 flex items-center gap-2">
+        <i className="fa fa-chart-line text-black"></i> {topic} Trend
       </h3>
 
       <ResponsiveContainer width="100%" height={350}>
         <LineChart data={data}>
-          <CartesianGrid strokeDasharray="3 3" stroke="#f0f0f0" />
-          <XAxis dataKey="dateLabel" tick={{ fontSize: 12 }} />
-          <YAxis domain={[0, 100]} tick={{ fontSize: 12 }} />
+          <CartesianGrid strokeDasharray="3 3" stroke="#e5e7eb" />
+          <XAxis dataKey="dateLabel" tick={{ fontSize: 12, fill: '#6b7280' }} />
+          <YAxis domain={[0, 100]} tick={{ fontSize: 12, fill: '#6b7280' }} />
           <Tooltip content={<CustomTooltip />} />
 
           <Line
             type="monotone"
             dataKey="accuracy"
-            stroke="#6366f1"
+            stroke="#000000"
             strokeWidth={3}
             dot={false}
           />
@@ -107,7 +106,7 @@ const TrendChart = ({ topic, range }) => {
           <Line
             type="monotone"
             dataKey="rolling"
-            stroke="#f59e0b"
+            stroke="#6b7280"
             strokeWidth={2}
             strokeDasharray="4 4"
             dot={false}

@@ -3,21 +3,16 @@ import HowToUse from "./HowToUse";
 import Features from "./Features";
 import GrowthTips from "./GrowthTips";
 import Motivation from "./Motivation";
-import Navbar from "../../Componenets/nav/Navbar";
+import Navbar from "../../Componenets/nav/Navbar"; // already updated
 import PremiumModules from "./PremiumModules";
 import Testimonials from "./Testimonials";
 
-
-
 const LandingPage = () => {
   return (
-    <div className="bg-white">
+    <div className="bg-black">
       <Navbar />
       <HeroSection />
-      
-      {/* 🚀 THE USP COMES RIGHT AFTER HERO */}
       <PremiumModules />
-      
       <HowToUse />
       <Features />
       <GrowthTips />

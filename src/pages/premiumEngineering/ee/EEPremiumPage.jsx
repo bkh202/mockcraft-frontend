@@ -14,48 +14,48 @@ const config = {
       name: "Power Systems",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-blue-100",
-      icon: "⚡",
+      color: "bg-gray-100",
+      icon: "fa-bolt",
       topics: ["Generation", "Transmission", "Distribution", "Protection", "Stability"]
     },
     {
       name: "Electrical Machines",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-green-100",
-      icon: "🔌",
+      color: "bg-gray-100",
+      icon: "fa-plug",
       topics: ["Transformers", "DC Machines", "Induction Motors", "Synchronous", "Starters"]
     },
     {
       name: "Control Systems",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-purple-100",
-      icon: "🎛️",
+      color: "bg-gray-100",
+      icon: "fa-sliders-h",
       topics: ["Transfer Functions", "Stability", "Controllers", "State Space", "Root Locus"]
     },
     {
       name: "Power Electronics",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-red-100",
-      icon: "🔋",
+      color: "bg-gray-100",
+      icon: "fa-battery-three-quarters",
       topics: ["Converters", "Inverters", "Choppers", "Thyristors", "Drives"]
     },
     {
       name: "EMF Theory",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-yellow-100",
-      icon: "🧲",
+      color: "bg-gray-100",
+      icon: "fa-magnet",
       topics: ["Coulomb's Law", "Gauss's Law", "Maxwell's Equations", "Wave Propagation", "Antennas"]
     },
     {
       name: "Measurements",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-indigo-100",
-      icon: "📐",
+      color: "bg-gray-100",
+      icon: "fa-ruler",
       topics: ["Instruments", "Bridges", "Transducers", "Error Analysis", "Calibration"]
     }
   ],
@@ -69,7 +69,7 @@ const config = {
   ],
   adaptiveSubject: "Power Systems",
   quizLabel: "Try AI‑Powered Electrical Quiz",
-  formIcon: "⚡",
+  formIcon: "fa-bolt",
   formDescription: "Let our AI generate personalized electrical engineering questions based on your preferences"
 };
 

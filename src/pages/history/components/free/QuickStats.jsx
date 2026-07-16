@@ -1,4 +1,3 @@
-// QuickStats.jsx
 import React from 'react';
 
 const QuickStats = ({ topics, trend }) => {
@@ -13,20 +12,20 @@ const QuickStats = ({ topics, trend }) => {
   const latestScore = trend.length > 0 ? `${trend[trend.length - 1].accuracy}%` : 'N/A';
 
   return (
-    <div className="bg-linear-to-br from-blue-50 to-indigo-50 rounded-xl p-6 border border-blue-100">
-      <h3 className="font-medium text-gray-900 mb-4">Quick Stats</h3>
+    <div className="bg-white rounded-xl shadow-sm border border-gray-200 p-6">
+      <h3 className="text-lg font-extrabold text-black mb-4">Quick Stats</h3>
       <div className="space-y-4">
         <div className="flex justify-between items-center">
-          <span className="text-gray-600">Best Topic</span>
-          <span className="font-medium">{bestTopic}</span>
+          <span className="text-base font-medium text-gray-600">Best Topic</span>
+          <span className="font-bold text-black">{bestTopic}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-gray-600">Need Improvement</span>
-          <span className="font-medium">{worstTopic}</span>
+          <span className="text-base font-medium text-gray-600">Need Improvement</span>
+          <span className="font-bold text-black">{worstTopic}</span>
         </div>
         <div className="flex justify-between items-center">
-          <span className="text-gray-600">Latest Score</span>
-          <span className="font-medium">{latestScore}</span>
+          <span className="text-base font-medium text-gray-600">Latest Score</span>
+          <span className="font-bold text-black">{latestScore}</span>
         </div>
       </div>
     </div>

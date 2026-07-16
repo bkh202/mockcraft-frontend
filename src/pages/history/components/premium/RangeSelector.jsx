@@ -8,15 +8,15 @@ const RangeSelector = ({ range, setRange }) => {
   ];
 
   return (
-    <div className="flex gap-3 bg-white p-3 rounded-xl shadow border w-fit">
+    <div className="flex gap-3 bg-white p-3 rounded-xl shadow-sm border border-gray-200 w-fit">
       {options.map(option => (
         <button
           key={option.value}
           onClick={() => setRange(option.value)}
-          className={`px-4 py-2 rounded-lg text-sm font-medium transition ${
+          className={`px-4 py-2 rounded-lg text-sm font-bold transition ${
             range === option.value
-              ? "bg-indigo-600 text-white"
-              : "bg-gray-100 text-gray-600 hover:bg-gray-200"
+              ? "bg-black text-white border border-black"
+              : "bg-gray-100 text-gray-700 hover:bg-gray-200 hover:text-black"
           }`}
         >
           {option.label}

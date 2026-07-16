@@ -1,35 +1,56 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import axios from "../../../api/axiosInstance";
-import {
-  Save,
-  Loader2,
-  CheckCircle,
-  User,
-  Edit3,
-  Code,
-  Globe,
-  Briefcase,
-  GraduationCap,
-  BookOpen,
-  Award,
-  Link
-} from "lucide-react";
 
-// Shared components
+// Shared components (assume these are already updated to use FontAwesome & black/white)
 import ProfileSection from "../shared/ProfileSection";
 import SummarySection from "../shared/SummarySection";
 import SkillsSection from "../shared/SkillsSection";
 import LanguagesSection from "../shared/LanguagesSection";
 import ProjectsSection from "../shared/ProjectsSection";
 import ExperienceSection from "../shared/ExperienceSection";
-import EducationSection from "../shared/EducationSection"; // if exists
+import EducationSection from "../shared/EducationSection";
 import CertificatesSection from "../shared/CertificatesSection";
 import LinksSection from "../shared/LinksSection";
 import TabBar from "../shared/TabBar";
 
-// Edit-specific components
-import PortfolioHeader from "../shared/PortfolioHeader";// or reuse a shared header?
+// Local header component (or we could reuse a shared one, but we'll define it here)
+function EditPortfolioHeader({ saving, saveSuccess, onSave }) {
+  return (
+    <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
+      <div>
+        <h1 className="text-3xl font-extrabold text-black">Edit Portfolio</h1>
+        <p className="text-lg text-gray-600 mt-1">Update your details and save changes</p>
+      </div>
+      <button
+        onClick={onSave}
+        disabled={saving}
+        className={`flex items-center gap-2 px-6 py-3 rounded-xl font-bold text-lg transition-all ${
+          saving
+            ? "bg-gray-300 text-gray-500 cursor-not-allowed"
+            : "bg-black text-white hover:bg-gray-800 shadow-sm"
+        }`}
+      >
+        {saving ? <i className="fa fa-spinner fa-spin"></i> : <i className="fa fa-save"></i>}
+        {saving ? "Saving..." : "Save Changes"}
+        {saveSuccess && <i className="fa fa-check-circle text-green-500"></i>}
+      </button>
+    </div>
+  );
+}
+
+// Tab definitions with FontAwesome icons
+const tabs = [
+  { id: "profile", label: "Profile", icon: "fa-user" },
+  { id: "summary", label: "Summary", icon: "fa-edit" },
+  { id: "skills", label: "Skills", icon: "fa-code" },
+  { id: "languages", label: "Languages", icon: "fa-globe" },
+  { id: "projects", label: "Projects", icon: "fa-briefcase" },
+  { id: "experience", label: "Experience", icon: "fa-graduation-cap" },
+  { id: "education", label: "Education", icon: "fa-book" },
+  { id: "certificates", label: "Certificates", icon: "fa-award" },
+  { id: "links", label: "Links", icon: "fa-link" },
+];
 
 function EditPortfolioPage() {
   const { id } = useParams();
@@ -102,43 +123,31 @@ function EditPortfolioPage() {
     }));
   };
 
-  const tabs = [
-    { id: "profile", label: "Profile", icon: User },
-    { id: "summary", label: "Summary", icon: Edit3 },
-    { id: "skills", label: "Skills", icon: Code },
-    { id: "languages", label: "Languages", icon: Globe },
-    { id: "projects", label: "Projects", icon: Briefcase },
-    { id: "experience", label: "Experience", icon: GraduationCap },
-    { id: "education", label: "Education", icon: BookOpen },
-    { id: "certificates", label: "Certificates", icon: Award },
-    { id: "links", label: "Links", icon: Link }
-  ];
-
   if (loading) {
     return (
-      <div className="min-h-screen bg-linear-to-br from-slate-50 to-gray-100 flex items-center justify-center">
-        <div className="flex items-center gap-3 text-gray-600">
-          <Loader2 className="h-8 w-8 animate-spin text-blue-600" />
-          <span className="text-lg">Loading portfolio data...</span>
+      <div className="min-h-screen bg-white flex items-center justify-center">
+        <div className="flex items-center gap-3 text-black">
+          <i className="fa fa-spinner fa-spin text-3xl"></i>
+          <span className="text-lg font-bold">Loading portfolio data...</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 to-gray-100 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
-        <PortfolioHeader
+        <EditPortfolioHeader
           saving={saving}
           saveSuccess={saveSuccess}
           onSave={handleSave}
         />
 
         {data && (
-          <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-xl p-6 md:p-8 border border-white/20">
+          <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8">
             <TabBar tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
-            <div className="space-y-6">
+            <div className="space-y-6 mt-6">
               {activeTab === "profile" && (
                 <ProfileSection data={data} setData={setData} />
               )}

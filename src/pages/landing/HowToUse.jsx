@@ -1,33 +1,35 @@
 const HowToUse = () => {
   const steps = [
-    { step: "Choose your Domain", desc: "Select from 50+ categories", icon: "🎯", duration: "2 mins" },
-    { step: "Adaptive Practice", desc: "AI adjusts difficulty on the fly", icon: "🧠", duration: "Daily" },
-    { step: "Targeted Revision", desc: "Fix weak topics specifically", icon: "🔧", duration: "Smart" },
-    { step: "Analytics & Mocks", desc: "Track progress with real stats", icon: "📊", duration: "Weekly" },
+    { step: "Choose your Domain", desc: "Select from 50+ categories", icon: "fa-bullseye", duration: "2 mins" },
+    { step: "Adaptive Practice", desc: "AI adjusts difficulty on the fly", icon: "fa-brain", duration: "Daily" },
+    { step: "Targeted Revision", desc: "Fix weak topics specifically", icon: "fa-tools", duration: "Smart" },
+    { step: "Analytics & Mocks", desc: "Track progress with real stats", icon: "fa-chart-bar", duration: "Weekly" },
   ];
 
   return (
-    <section className="bg-slate-950 py-24 px-4 border-t border-slate-900">
+    <section className="bg-black py-24 px-4 border-t border-gray-800">
       <div className="max-w-7xl mx-auto">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-black text-white mb-4 tracking-tight">
-            Master it in <span className="text-transparent bg-clip-text bg-linear-to-r from-blue-400 to-cyan-400">4 Easy Steps</span>
+            Master it in <span className="text-gray-300">4 Easy Steps</span>
           </h2>
-          <p className="text-lg text-slate-400 max-w-2xl mx-auto font-medium">
+          <p className="text-lg text-gray-400 max-w-2xl mx-auto font-light">
             A simple, scientifically proven process for maximum retention.
           </p>
         </div>
-        
+
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
           {steps.map((item, i) => (
-            <div key={i} className="relative group bg-slate-900/40 backdrop-blur-sm rounded-3xl p-8 border border-slate-800 hover:border-blue-500/50 hover:bg-slate-800/60 transition-all duration-300">
-              <div className="absolute -top-4 -left-4 w-12 h-12 bg-linear-to-br from-blue-500 to-cyan-500 rounded-xl flex items-center justify-center text-white font-black shadow-lg shadow-blue-500/30 transform group-hover:scale-110 transition-transform">
+            <div key={i} className="relative group bg-black backdrop-blur-sm rounded-3xl p-8 border border-gray-800 hover:border-gray-600 hover:bg-white/5 transition-all duration-300">
+              <div className="absolute -top-4 -left-4 w-12 h-12 bg-white text-black rounded-xl flex items-center justify-center font-black shadow-sm transform group-hover:scale-110 transition-transform">
                 {i + 1}
               </div>
-              <div className="text-4xl mb-6 mt-2">{item.icon}</div>
+              <div className="text-4xl mb-6 mt-2 text-white">
+                <i className={`fa ${item.icon}`}></i>
+              </div>
               <h3 className="text-xl font-bold text-white mb-2">{item.step}</h3>
-              <p className="text-slate-400 font-medium mb-4">{item.desc}</p>
-              <div className="inline-block px-3 py-1 bg-slate-950 border border-slate-800 rounded-md text-xs font-bold text-cyan-400 uppercase tracking-widest">
+              <p className="text-gray-400 font-light mb-4">{item.desc}</p>
+              <div className="inline-block px-3 py-1 bg-white/5 border border-gray-800 rounded-md text-xs font-bold text-gray-300 uppercase tracking-widest">
                 {item.duration}
               </div>
             </div>
@@ -38,5 +40,4 @@ const HowToUse = () => {
   );
 };
 
-
-export default HowToUse
+export default HowToUse;

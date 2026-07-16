@@ -1,11 +1,6 @@
 import { useEffect, useState } from "react";
 import api from "../../api/axiosInstance";
 
-const TIER_STYLE = {
-  PREMIUM: { bg: "#fdf4ff", color: "#7e22ce", label: "👑 Premium" },
-  FREE:    { bg: "#f3f4f6", color: "#374151", label: "🆓 Free"    },
-};
-
 const formatDate = (dateStr) => {
   if (!dateStr) return "—";
   const d = new Date(dateStr);
@@ -48,101 +43,129 @@ export default function UsersTable() {
     loadData();
   };
 
-  if (loading) return <p style={{ color: "#6b7280", textAlign: "center", padding: "16px" }}>Loading users...</p>;
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center py-8">
+        <i className="fa fa-spinner fa-spin text-2xl text-black"></i>
+        <span className="ml-3 text-gray-600 font-medium">Loading users...</span>
+      </div>
+    );
+  }
 
   return (
-    <div style={{ overflowX: "auto" }}>
-      <table style={{ width: "100%", borderCollapse: "collapse", fontSize: "13px" }}>
+    <div className="overflow-x-auto">
+      <table className="w-full text-sm">
         <thead>
-          <tr style={{ background: "#f9fafb", borderBottom: "1px solid #e5e7eb" }}>
-            {["Name", "Email", "Tier", "Trial Ends", "Joined", "AI Calls", "Rate Hits", "Status", "Action"].map(h => (
-              <th key={h} style={{ padding: "10px 12px", textAlign: "left", color: "#6b7280", fontWeight: "600", fontSize: "11px", textTransform: "uppercase", whiteSpace: "nowrap" }}>
+          <tr className="bg-gray-50 border-b border-gray-200">
+            {["Name", "Email", "Tier", "Trial Ends", "Joined", "AI Calls", "Rate Hits", "Status", "Action"].map((h) => (
+              <th
+                key={h}
+                className="px-3 py-3 text-left text-xs font-bold text-gray-500 uppercase tracking-wider whitespace-nowrap"
+              >
                 {h}
               </th>
             ))}
           </tr>
         </thead>
         <tbody>
-          {users.map(user => {
+          {users.map((user) => {
             const trialActive = isTrialActive(user.trialEndDate);
-            const tierInfo = TIER_STYLE[user.tier] || TIER_STYLE.FREE;
 
             return (
-              <tr key={user.id} style={{ borderBottom: "1px solid #f3f4f6" }}
-                onMouseEnter={e => e.currentTarget.style.background = "#f9fafb"}
-                onMouseLeave={e => e.currentTarget.style.background = "white"}
+              <tr
+                key={user.id}
+                className="border-b border-gray-100 hover:bg-gray-50 transition-colors"
               >
                 {/* Name */}
-                <td style={{ padding: "10px 12px", color: "#111827", fontWeight: "500" }}>
+                <td className="px-3 py-3 text-sm font-bold text-black whitespace-nowrap">
                   {user.name || "—"}
                 </td>
 
                 {/* Email */}
-                <td style={{ padding: "10px 12px", color: "#6b7280", maxWidth: "160px", overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                <td className="px-3 py-3 text-sm text-gray-600 max-w-[160px] truncate">
                   {user.email}
                 </td>
 
                 {/* Tier */}
-                <td style={{ padding: "10px 12px" }}>
-                  <span style={{
-                    background: tierInfo.bg, color: tierInfo.color,
-                    padding: "3px 8px", borderRadius: "999px", fontSize: "11px", fontWeight: "600"
-                  }}>
-                    {tierInfo.label}
+                <td className="px-3 py-3">
+                  <span
+                    className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
+                      user.tier === "PREMIUM"
+                        ? "bg-gray-100 text-black border-gray-300"
+                        : "bg-gray-50 text-gray-600 border-gray-200"
+                    }`}
+                  >
+                    {user.tier === "PREMIUM" ? (
+                      <><i className="fa fa-crown text-black mr-1"></i> Premium</>
+                    ) : (
+                      <><i className="fa fa-user text-gray-400 mr-1"></i> Free</>
+                    )}
                   </span>
                 </td>
 
                 {/* Trial End */}
-                <td style={{ padding: "10px 12px", whiteSpace: "nowrap" }}>
+                <td className="px-3 py-3 whitespace-nowrap">
                   {user.trialEndDate ? (
-                    <span style={{ color: trialActive ? "#15803d" : "#9ca3af", fontWeight: trialActive ? "600" : "400" }}>
-                      {trialActive ? "⏳ " : "✗ "}{formatDate(user.trialEndDate)}
+                    <span className={`font-medium ${trialActive ? "text-black" : "text-gray-400"}`}>
+                      {trialActive ? (
+                        <i className="fa fa-clock mr-1 text-black"></i>
+                      ) : (
+                        <i className="fa fa-times mr-1 text-gray-400"></i>
+                      )}
+                      {formatDate(user.trialEndDate)}
                     </span>
                   ) : "—"}
                 </td>
 
                 {/* Joined */}
-                <td style={{ padding: "10px 12px", color: "#6b7280", whiteSpace: "nowrap" }}>
+                <td className="px-3 py-3 text-sm text-gray-500 whitespace-nowrap">
                   {formatDate(user.joinedDate)}
                 </td>
 
                 {/* AI Calls */}
-                <td style={{ padding: "10px 12px", color: "#1d4ed8", fontWeight: "600", textAlign: "center" }}>
+                <td className="px-3 py-3 text-sm font-bold text-black text-center">
                   {user.totalCalls}
                 </td>
 
                 {/* Rate Hits */}
-                <td style={{ padding: "10px 12px", textAlign: "center" }}>
-                  <span style={{
-                    background: user.rateLimitHits > 0 ? "#fff7ed" : "#f3f4f6",
-                    color: user.rateLimitHits > 0 ? "#c2410c" : "#6b7280",
-                    padding: "2px 8px", borderRadius: "999px", fontSize: "11px", fontWeight: "600"
-                  }}>
+                <td className="px-3 py-3 text-center">
+                  <span
+                    className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
+                      user.rateLimitHits > 0
+                        ? "bg-gray-200 text-black border-gray-300"
+                        : "bg-gray-50 text-gray-400 border-gray-200"
+                    }`}
+                  >
                     {user.rateLimitHits}
                   </span>
                 </td>
 
                 {/* Status */}
-                <td style={{ padding: "10px 12px" }}>
-                  <span style={{
-                    background: user.blocked ? "#fef2f2" : "#f0fdf4",
-                    color: user.blocked ? "#b91c1c" : "#15803d",
-                    padding: "3px 8px", borderRadius: "999px", fontSize: "11px", fontWeight: "600"
-                  }}>
-                    {user.blocked ? "🚫 Blocked" : "✅ Active"}
+                <td className="px-3 py-3">
+                  <span
+                    className={`px-2.5 py-1 rounded-full text-xs font-bold border ${
+                      user.blocked
+                        ? "bg-gray-200 text-gray-700 border-gray-300"
+                        : "bg-gray-100 text-black border-gray-300"
+                    }`}
+                  >
+                    {user.blocked ? (
+                      <><i className="fa fa-ban text-gray-500 mr-1"></i> Blocked</>
+                    ) : (
+                      <><i className="fa fa-check-circle text-black mr-1"></i> Active</>
+                    )}
                   </span>
                 </td>
 
                 {/* Action */}
-                <td style={{ padding: "10px 12px" }}>
+                <td className="px-3 py-3">
                   <button
                     onClick={() => handleBlockToggle(user)}
-                    style={{
-                      background: user.blocked ? "#16a34a" : "#dc2626",
-                      color: "white", border: "none", borderRadius: "6px",
-                      padding: "4px 10px", fontSize: "11px", fontWeight: "600",
-                      cursor: "pointer"
-                    }}
+                    className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-colors border ${
+                      user.blocked
+                        ? "bg-white text-black border-gray-300 hover:bg-gray-100"
+                        : "bg-black text-white border-gray-300 hover:bg-gray-800"
+                    }`}
                   >
                     {user.blocked ? "Unblock" : "Block"}
                   </button>
@@ -154,21 +177,31 @@ export default function UsersTable() {
       </table>
 
       {/* Pagination */}
-      <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", marginTop: "16px" }}>
+      <div className="flex justify-between items-center mt-4 pt-4 border-t border-gray-200">
         <button
           disabled={page === 0}
-          onClick={() => setPage(p => p - 1)}
-          style={{ padding: "6px 14px", background: "#e5e7eb", border: "none", borderRadius: "6px", cursor: page === 0 ? "not-allowed" : "pointer", opacity: page === 0 ? 0.5 : 1 }}
+          onClick={() => setPage((p) => p - 1)}
+          className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors border ${
+            page === 0
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
+              : "bg-white text-black border-gray-300 hover:bg-gray-100 hover:border-black"
+          }`}
         >
-          Prev
+          <i className="fa fa-chevron-left mr-1"></i> Prev
         </button>
-        <span style={{ fontSize: "13px", color: "#6b7280" }}>Page {page + 1} of {totalPages}</span>
+        <span className="text-sm font-medium text-gray-600">
+          Page {page + 1} of {totalPages}
+        </span>
         <button
           disabled={page + 1 === totalPages}
-          onClick={() => setPage(p => p + 1)}
-          style={{ padding: "6px 14px", background: "#e5e7eb", border: "none", borderRadius: "6px", cursor: page + 1 === totalPages ? "not-allowed" : "pointer", opacity: page + 1 === totalPages ? 0.5 : 1 }}
+          onClick={() => setPage((p) => p + 1)}
+          className={`px-4 py-2 rounded-lg text-sm font-bold transition-colors border ${
+            page + 1 === totalPages
+              ? "bg-gray-100 text-gray-400 cursor-not-allowed border-gray-200"
+              : "bg-white text-black border-gray-300 hover:bg-gray-100 hover:border-black"
+          }`}
         >
-          Next
+          Next <i className="fa fa-chevron-right ml-1"></i>
         </button>
       </div>
     </div>

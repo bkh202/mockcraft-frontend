@@ -13,8 +13,8 @@ const config = {
       name: "Hardware",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-blue-100",
-      icon: "💻",
+      color: "bg-gray-100",
+      icon: "fa-desktop",
       subtopics: ["CPU", "Memory", "Storage", "I/O Devices", "Motherboard", "Peripherals"],
       tip: "Focus on basic components and their functions"
     },
@@ -22,8 +22,8 @@ const config = {
       name: "Software",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-green-100",
-      icon: "📱",
+      color: "bg-gray-100",
+      icon: "fa-mobile-alt",
       subtopics: ["OS", "Application", "Utility", "Programming", "Database", "Networking"],
       tip: "Understand types of software and their uses"
     },
@@ -31,8 +31,8 @@ const config = {
       name: "Networking",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-purple-100",
-      icon: "🌐",
+      color: "bg-gray-100",
+      icon: "fa-network-wired",
       subtopics: ["LAN/WAN", "Protocols", "Topologies", "Devices", "Internet", "Security"],
       tip: "Learn common protocols and network devices"
     },
@@ -40,8 +40,8 @@ const config = {
       name: "Database",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-red-100",
-      icon: "🗄️",
+      color: "bg-gray-100",
+      icon: "fa-database",
       subtopics: ["RDBMS", "SQL", "Normalization", "Keys", "Transactions", "SQL Commands"],
       tip: "Practice SQL queries and normalization"
     },
@@ -49,8 +49,8 @@ const config = {
       name: "Algorithms",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-yellow-100",
-      icon: "🧠",
+      color: "bg-gray-100",
+      icon: "fa-brain",
       subtopics: ["Sorting", "Searching", "Complexity", "Flowcharts", "Pseudocode", "Basic Algorithms"],
       tip: "Understand time complexity and basic algorithms"
     },
@@ -58,18 +58,18 @@ const config = {
       name: "Security",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-indigo-100",
-      icon: "🔒",
+      color: "bg-gray-100",
+      icon: "fa-shield-alt",
       subtopics: ["Virus", "Malware", "Firewall", "Encryption", "Authentication", "Cyber Laws"],
       tip: "Know common threats and protection methods"
     }
   ],
   difficultyLevels: [
-    { level: "Easy", color: "bg-green-100 text-green-800", subjects: 1 },
-    { level: "Medium", color: "bg-yellow-100 text-yellow-800", subjects: 3 },
-    { level: "Hard", color: "bg-red-100 text-red-800", subjects: 2 }
+    { level: "Easy", color: "bg-gray-100 text-gray-700", subjects: 1 },
+    { level: "Medium", color: "bg-gray-200 text-gray-800", subjects: 3 },
+    { level: "Hard", color: "bg-gray-300 text-black", subjects: 2 }
   ],
-  formIcon: "💻",
+  formIcon: "fa-desktop",
   formDescription: "Let our AI generate personalized computer aptitude questions based on your preferences",
   prevLink: "/aptitude/gk",
   prevLabel: "GK",
@@ -81,9 +81,11 @@ const config = {
 export default function ComputerAptitude() {
   return (
     <AptitudeBranchPage config={config}>
-      {/* Custom sections unique to ComputerAptitude */}
+      {/* ─── Exam-wise Focus ─── */}
       <div className="mb-8">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">🎯 Exam-wise Focus</h3>
+        <h3 className="text-2xl font-extrabold text-black mb-4 flex items-center gap-2">
+          <i className="fa fa-bullseye text-black"></i> Exam-wise Focus
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
             { exam: "SSC CGL", topics: ["Hardware", "Software", "MS Office"], weightage: "15%" },
@@ -93,42 +95,20 @@ export default function ComputerAptitude() {
           ].map((exam, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl p-4 border border-gray-200 hover:shadow-md cursor-pointer"
+              className="bg-white rounded-2xl p-4 border border-gray-200 hover:shadow-md hover:border-black transition-all cursor-pointer"
             >
               <div className="flex items-center gap-3 mb-3">
-                <div
-                  className={`w-10 h-10 rounded-lg ${
-                    exam.exam.includes("SSC")
-                      ? "bg-blue-100"
-                      : exam.exam.includes("Banking")
-                      ? "bg-green-100"
-                      : exam.exam.includes("GATE")
-                      ? "bg-purple-100"
-                      : "bg-orange-100"
-                  } flex items-center justify-center`}
-                >
-                  <span
-                    className={
-                      exam.exam.includes("SSC")
-                        ? "text-blue-600"
-                        : exam.exam.includes("Banking")
-                        ? "text-green-600"
-                        : exam.exam.includes("GATE")
-                        ? "text-purple-600"
-                        : "text-orange-600"
-                    }
-                  >
-                    {exam.exam.includes("SSC") ? "📝" : exam.exam.includes("Banking") ? "💰" : exam.exam.includes("GATE") ? "🔧" : "🚂"}
-                  </span>
+                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center border border-gray-200">
+                  <i className="fa fa-graduation-cap text-black"></i>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900">{exam.exam}</h4>
+                  <h4 className="font-bold text-black">{exam.exam}</h4>
                   <p className="text-sm text-gray-600">Weightage: {exam.weightage}</p>
                 </div>
               </div>
               <div className="flex flex-wrap gap-2">
                 {exam.topics.map((topic, idx) => (
-                  <span key={idx} className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded">
+                  <span key={idx} className="text-xs px-2 py-1 bg-gray-100 text-gray-700 rounded-full border border-gray-200">
                     {topic}
                   </span>
                 ))}
@@ -138,42 +118,45 @@ export default function ComputerAptitude() {
         </div>
       </div>
 
-      <div className="bg-linear-to-r from-purple-600 to-indigo-600 rounded-2xl p-6 mb-8 text-white">
+      {/* ─── CTA Banner ─── (now black) */}
+      <div className="bg-black rounded-2xl p-6 mb-8 text-white border border-gray-800 shadow-sm">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="mb-4 md:mb-0">
-            <h3 className="text-xl font-bold mb-2">🤖 Try AI-Powered Computer Quiz</h3>
-            <p className="text-purple-100">
+            <h3 className="text-xl font-extrabold mb-2 flex items-center gap-2">
+              <i className="fa fa-robot text-white"></i> Try AI-Powered Computer Quiz
+            </h3>
+            <p className="text-gray-300">
               Get detailed results with AI explanations after completing computer aptitude quizzes
             </p>
           </div>
         </div>
       </div>
 
-      <div className="bg-linear-to-r from-blue-50 to-indigo-50 rounded-2xl p-6 mb-8">
-        <h3 className="text-xl font-bold text-gray-900 mb-4">💼 MS Office Suite</h3>
+      {/* ─── MS Office Suite ─── */}
+      <div className="bg-white rounded-2xl p-6 border border-gray-200 shadow-sm mb-8">
+        <h3 className="text-2xl font-extrabold text-black mb-4 flex items-center gap-2">
+          <i className="fa fa-file-alt text-black"></i> MS Office Suite
+        </h3>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {[
-            { name: "MS Word", icon: "📄", color: "bg-blue-100", subtopic: "MS Word" },
-            { name: "MS Excel", icon: "📊", color: "bg-green-100", subtopic: "MS Excel" },
-            { name: "MS PowerPoint", icon: "📽️", color: "bg-purple-100", subtopic: "MS PowerPoint" },
+            { name: "MS Word", icon: "fa-file-word", subtopic: "MS Word" },
+            { name: "MS Excel", icon: "fa-file-excel", subtopic: "MS Excel" },
+            { name: "MS PowerPoint", icon: "fa-file-powerpoint", subtopic: "MS PowerPoint" },
           ].map((app, idx) => (
             <div
               key={idx}
-              className="bg-white/80 backdrop-blur-sm rounded-xl p-4 hover:shadow-md cursor-pointer"
+              className="bg-gray-50 rounded-xl p-4 border border-gray-200 hover:border-black hover:shadow-sm transition-all cursor-pointer"
               onClick={() => {
-                // This would need to be handled via the engine; for simplicity, we rely on the card click triggering form.
-                // In a real scenario, you'd need to set the subject and subtopic programmatically.
-                // Since the engine is inside BranchPage, we can't directly access it here.
-                // For demo, we keep the original onClick but it won't work with the shared architecture unless we pass a handler.
-                // We'll leave as is – the user will need to click the main cards.
+                // You would need to trigger the subject selection via the engine if needed.
+                // For now, this is a static UI element.
               }}
             >
               <div className="flex items-center gap-3 mb-3">
-                <div className={`w-10 h-10 rounded-lg ${app.color} flex items-center justify-center`}>
-                  <span className="text-blue-600">{app.icon}</span>
+                <div className="w-10 h-10 rounded-lg bg-gray-100 flex items-center justify-center border border-gray-200">
+                  <i className={`${app.icon} text-xl text-black`}></i>
                 </div>
                 <div>
-                  <h4 className="font-semibold text-gray-900">{app.name}</h4>
+                  <h4 className="font-bold text-black">{app.name}</h4>
                 </div>
               </div>
               <p className="text-sm text-gray-600">AI questions</p>

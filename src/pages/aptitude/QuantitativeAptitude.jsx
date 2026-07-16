@@ -1,4 +1,3 @@
-// QuantitativeAptitude.jsx
 import AptitudeBranchPage from "./shared/AptitudeBranchPage";
 
 const config = {
@@ -14,57 +13,57 @@ const config = {
       name: "Arithmetic",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-blue-100",
-      icon: "➕",
+      color: "bg-gray-100",
+      icon: "fa-plus",
       subtopics: ["Percentage", "Profit & Loss", "Ratio", "Time & Work", "Time Speed Distance", "Simple & Compound Interest"],
     },
     {
       name: "Algebra",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-green-100",
-      icon: "📐",
+      color: "bg-gray-100",
+      icon: "fa-ruler",
       subtopics: ["Equations", "Inequalities", "Quadratic Equations", "Progressions", "Logarithms", "Functions"],
     },
     {
       name: "Geometry",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-purple-100",
-      icon: "📏",
+      color: "bg-gray-100",
+      icon: "fa-ruler-combined",
       subtopics: ["Triangles", "Circles", "Polygons", "Coordinate Geometry", "Mensuration", "Trigonometry"],
     },
     {
       name: "Number System",
       questions: "AI-Based",
       difficulty: "Easy",
-      color: "bg-red-100",
-      icon: "🔢",
+      color: "bg-gray-100",
+      icon: "fa-hashtag",
       subtopics: ["Divisibility", "HCF & LCM", "Remainders", "Decimal Fractions", "Surds & Indices", "Number Theory"],
     },
     {
       name: "Modern Math",
       questions: "AI-Based",
       difficulty: "Hard",
-      color: "bg-yellow-100",
-      icon: "🧮",
+      color: "bg-gray-100",
+      icon: "fa-calculator",
       subtopics: ["Set Theory", "Probability", "Permutations", "Combinations", "Statistics", "Linear Programming"],
     },
     {
       name: "Data Sufficiency",
       questions: "AI-Based",
       difficulty: "Medium",
-      color: "bg-indigo-100",
-      icon: "❓",
+      color: "bg-gray-100",
+      icon: "fa-question",
       subtopics: ["Quant DS", "Comparison DS", "Value DS", "Yes/No DS", "Two Statements", "Both Needed"],
     },
   ],
   difficultyLevels: [
-    { level: "Easy", color: "bg-green-100 text-green-800", subjects: 2 },
-    { level: "Medium", color: "bg-yellow-100 text-yellow-800", subjects: 3 },
-    { level: "Hard", color: "bg-red-100 text-red-800", subjects: 1 },
+    { level: "Easy", color: "bg-gray-100 text-gray-700", subjects: 2 },
+    { level: "Medium", color: "bg-gray-200 text-gray-800", subjects: 3 },
+    { level: "Hard", color: "bg-gray-300 text-black", subjects: 1 },
   ],
-  formIcon: "➕",
+  formIcon: "fa-plus",
   formDescription: "Let our AI generate personalized quantitative aptitude questions based on your preferences",
   prevLink: "/aptitude",
   prevLabel: "Aptitude",
@@ -76,18 +75,20 @@ const config = {
 export default function QuantitativeAptitude() {
   return (
     <AptitudeBranchPage config={config}>
-      {/* Custom AI Quiz Banner */}
-      <div className="bg-linear-to-r from-purple-600 to-indigo-600 rounded-2xl p-6 mb-8 text-white">
+      {/* CTA Banner – now black */}
+      <div className="bg-black rounded-2xl p-6 mb-8 text-white border border-gray-800 shadow-sm">
         <div className="flex flex-col md:flex-row items-center justify-between">
           <div className="mb-4 md:mb-0">
-            <h3 className="text-xl font-bold mb-2">🤖 Try AI-Powered Adaptive Learning</h3>
-            <p className="text-purple-100">
+            <h3 className="text-xl font-extrabold mb-2 flex items-center gap-2">
+              <i className="fa fa-robot text-white"></i> Try AI-Powered Adaptive Learning
+            </h3>
+            <p className="text-gray-300">
               Get detailed results with AI explanations after completing quizzes
             </p>
           </div>
           <button
-            // Note: This button is decorative; actual quiz start must be done via subject cards.
-            className="bg-white text-purple-600 px-6 py-3 rounded-xl font-bold hover:bg-gray-100 transition-colors"
+            // Decorative; actual quiz start is via subject cards
+            className="bg-white text-black px-6 py-3 rounded-xl font-bold hover:bg-gray-200 transition-colors border border-gray-300"
           >
             Start Adaptive Quiz
           </button>

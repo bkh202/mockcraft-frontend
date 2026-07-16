@@ -1,6 +1,4 @@
-// ResumeAnalyzerPage.jsx
 import React, { useState } from 'react';
-import { UploadCloud, Loader2 } from 'lucide-react';
 import axiosInstance from '../../api/axiosInstance';
 import AnalyzerDashboard from '../../pages/dashboard/AnalyzerDashboard';
 import { useLocation } from 'react-router-dom';
@@ -61,7 +59,7 @@ export default function ResumeAnalyzerPage() {
 
     if (parsedResumeData) {
         return (
-            <div className="min-h-screen bg-gray-50 py-6 transition-colors">
+            <div className="min-h-screen bg-white py-6">
                 <AnalyzerDashboard resumeData={parsedResumeData} />
                 <div className="max-w-6xl mx-auto px-6 mt-6 flex justify-end">
                     <button
@@ -69,9 +67,9 @@ export default function ResumeAnalyzerPage() {
                             setParsedResumeData(null);
                             localStorage.removeItem('parsedResumeData');
                         }}
-                        className="flex items-center gap-2 text-sm font-bold text-slate-500 hover:text-rose-500 transition-colors bg-white px-4 py-2 rounded-lg border border-slate-200 shadow-sm"
+                        className="flex items-center gap-2 text-base font-bold text-gray-600 hover:text-black transition-colors bg-white px-5 py-2.5 rounded-xl border border-gray-200 shadow-sm hover:border-gray-400"
                     >
-                        <span>←</span> Upload a different resume
+                        <i className="fa fa-arrow-left"></i> Upload a different resume
                     </button>
                 </div>
             </div>
@@ -79,18 +77,18 @@ export default function ResumeAnalyzerPage() {
     }
 
     return (
-        <div className="min-h-screen flex items-center justify-center bg-gray-50 p-6">
-            <div className="max-w-xl w-full bg-white rounded-3xl p-10 shadow-sm border border-gray-100 text-center">
+        <div className="min-h-screen flex items-center justify-center bg-white p-6">
+            <div className="max-w-xl w-full bg-white rounded-3xl p-10 shadow-sm border border-gray-200 text-center">
 
-                <div className="w-20 h-20 bg-indigo-50 rounded-2xl flex items-center justify-center mx-auto mb-6">
-                    <UploadCloud className="w-10 h-10 text-indigo-600" />
+                <div className="w-20 h-20 bg-gray-100 rounded-2xl flex items-center justify-center mx-auto mb-6 border border-gray-200">
+                    <i className="fa fa-cloud-upload-alt text-4xl text-black"></i>
                 </div>
 
-                <h1 className="text-3xl font-black text-slate-900 mb-4">
+                <h1 className="text-3xl sm:text-4xl font-extrabold text-black mb-4">
                     Upload Resume to Analyze
                 </h1>
 
-                <p className="text-slate-500 mb-8 font-medium">
+                <p className="text-lg text-gray-600 mb-8 font-medium">
                     Upload your latest PDF resume. Our AI will parse it and grade it against your target Job Description.
                 </p>
 
@@ -104,28 +102,26 @@ export default function ResumeAnalyzerPage() {
                     />
                     <div className={`border-2 border-dashed rounded-2xl p-8 transition-all duration-200 ${
                         isUploading
-                            ? 'border-slate-200 bg-slate-50'
-                            : 'border-indigo-200 bg-indigo-50 hover:bg-indigo-100 hover:border-indigo-400'
+                            ? 'border-gray-300 bg-gray-50'
+                            : 'border-gray-300 bg-gray-50 hover:bg-gray-100 hover:border-black'
                     }`}>
                         {isUploading ? (
-                            <div className="flex flex-col items-center gap-3 text-indigo-600">
-                                <Loader2 className="w-8 h-8 animate-spin" />
-                                <span className="font-bold">Parsing with AI... Please wait</span>
+                            <div className="flex flex-col items-center gap-3 text-black">
+                                <i className="fa fa-spinner fa-spin text-3xl"></i>
+                                <span className="font-bold text-lg">Parsing with AI... Please wait</span>
                             </div>
                         ) : (
-                            <div className="text-indigo-700 font-bold flex flex-col items-center gap-2">
+                            <div className="text-black font-bold flex flex-col items-center gap-2 text-lg">
                                 <span>Click or Drag & Drop your PDF here</span>
-                                <span className="text-xs font-medium opacity-70">Max file size: 5MB</span>
+                                <span className="text-sm font-medium text-gray-400">Max file size: 5MB</span>
                             </div>
                         )}
                     </div>
                 </div>
 
                 {uploadError && (
-                    <div className="mt-6 text-sm font-bold text-rose-600 bg-rose-50 p-4 rounded-xl border border-rose-100 flex items-center justify-center gap-2">
-                        <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                        </svg>
+                    <div className="mt-6 text-base font-bold text-red-600 bg-red-50 p-4 rounded-xl border border-red-200 flex items-center justify-center gap-2">
+                        <i className="fa fa-exclamation-circle text-lg"></i>
                         {uploadError}
                     </div>
                 )}

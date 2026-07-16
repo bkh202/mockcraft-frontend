@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "../../../api/axiosInstance";
 
-// Shared components
+// Shared components (assume these are already updated to use FontAwesome & black/white)
 import ProfileSection from "../shared/ProfileSection";
 import SummarySection from "../shared/SummarySection";
 import SkillsSection from "../shared/SkillsSection";
@@ -13,15 +13,24 @@ import CertificatesSection from "../shared/CertificatesSection";
 import LinksSection from "../shared/LinksSection";
 import TabBar from "../shared/TabBar";
 
-// Create-specific components
+// Create-specific components (updated above)
 import CreatePortfolioHeader from "./components/CreatePortfolioHeader";
 import ErrorBanner from "./components/ErrorBanner";
 import FileUploadSection from "./components/FileUploadSection";
 import TemplateSelector from "./components/TemplateSelector";
 import GenerateButton from "./components/GenerateButton";
 
-// Icons for tabs
-import { User, Edit3, Code, Globe, Briefcase, GraduationCap, Award, Link } from "lucide-react";
+// Icons (now using FontAwesome classes, but we keep the tab icons as FontAwesome strings)
+const tabs = [
+  { id: "profile", label: "Profile", icon: "fa-user" },
+  { id: "summary", label: "Summary", icon: "fa-edit" },
+  { id: "skills", label: "Skills", icon: "fa-code" },
+  { id: "languages", label: "Languages", icon: "fa-globe" },
+  { id: "projects", label: "Projects", icon: "fa-briefcase" },
+  { id: "experience", label: "Experience", icon: "fa-graduation-cap" },
+  { id: "certificates", label: "Certificates", icon: "fa-award" },
+  { id: "links", label: "Links", icon: "fa-link" },
+];
 
 function CreatePortfolioPage() {
   const navigate = useNavigate();
@@ -108,7 +117,6 @@ function CreatePortfolioPage() {
     try {
       setLoading(true);
 
-      // Find the selected template layout
       const templates = [
         { id: 4, layout: "modern" },
         { id: 5, layout: "minimal" },
@@ -130,8 +138,6 @@ function CreatePortfolioPage() {
         { id: 21, layout: "paper" },
         { id: 22, layout: "artdeco" },
         { id: 23, layout: "quantum" }
-
-
       ];
       const selectedTplObj = templates.find(t => t.id === selectedTemplate);
       const layoutString = selectedTplObj ? selectedTplObj.layout : "modern";
@@ -165,7 +171,7 @@ function CreatePortfolioPage() {
     }
   };
 
-  // Helper functions for array updates
+  // Helper functions (unchanged)
   const updateField = (section, index, field, value) => {
     setEditedData(prev => {
       const updated = [...(prev[section] || [])];
@@ -188,24 +194,13 @@ function CreatePortfolioPage() {
     }));
   };
 
-  const tabs = [
-    { id: "profile", label: "Profile", icon: User },
-    { id: "summary", label: "Summary", icon: Edit3 },
-    { id: "skills", label: "Skills", icon: Code },
-    { id: "languages", label: "Languages", icon: Globe },
-    { id: "projects", label: "Projects", icon: Briefcase },
-    { id: "experience", label: "Experience", icon: GraduationCap },
-    { id: "certificates", label: "Certificates", icon: Award },
-    { id: "links", label: "Links", icon: Link }
-  ];
-
   return (
-    <div className="min-h-screen bg-linear-to-br from-slate-50 to-indigo-50 py-8 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-white py-8 px-4 sm:px-6 lg:px-8">
       <div className="max-w-5xl mx-auto">
         <CreatePortfolioHeader />
         <ErrorBanner errorMessage={errorMessage} onDismiss={() => setErrorMessage("")} />
 
-        <div className="bg-white/80 backdrop-blur-sm rounded-3xl shadow-2xl p-6 md:p-8 border border-white/20">
+        <div className="bg-white rounded-3xl shadow-sm border border-gray-200 p-6 md:p-8">
           <FileUploadSection
             file={file}
             setFile={setFile}
@@ -218,7 +213,7 @@ function CreatePortfolioPage() {
           />
 
           {editedData && (
-            <div className="border-t pt-8">
+            <div className="border-t border-gray-200 pt-8">
               <TabBar tabs={tabs} activeTab={activeTab} onTabChange={setActiveTab} />
 
               <div className="space-y-6">

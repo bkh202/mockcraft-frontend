@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import axios from '../../../api/axiosInstance'; // Tera current path
+import axios from '../../../api/axiosInstance';
 
-// 1. Saare Templates Import Kar Le
+// Import all templates (same as above)
 import ModernTemplate from "../templates/modern/ModernTemplate";
 import MinimalTemplate from "../templates/minimal/MinimalTemplate";
 import CreativeTemplate from "../templates/creative/CreativeTemplate";
@@ -24,7 +24,6 @@ import TemplatePaper from '../templates/paper/TemplatePaper';
 import TemplateArtDeco from '../templates/deco/TemplateArtDeco';
 import TemplateQuantum from '../templates/quantum/TemplateQuantum';
 
-// 2. THE REGISTRY
 const templateComponents = {
   modern: ModernTemplate,
   minimal: MinimalTemplate,
@@ -49,7 +48,7 @@ const templateComponents = {
 };
 
 function PreviewPortfolio() {
-  const { id } = useParams(); // Yeh actually slug aa raha hai URL se
+  const { id } = useParams();
   const navigate = useNavigate();
 
   const [portfolio, setPortfolio] = useState(null);
@@ -57,7 +56,6 @@ function PreviewPortfolio() {
   const [publishing, setPublishing] = useState(false);
 
   useEffect(() => {
-    // 🛑 THE GUARD CLAUSE: Strict check to prevent backend crash
     if (!id || id === 'undefined') {
       console.warn("🛑 DEBUG: Portfolio ID is undefined. API call aborted.");
       setLoading(false);
@@ -67,15 +65,10 @@ function PreviewPortfolio() {
     const fetchMyPortfolio = async () => {
       try {
         const token = localStorage.getItem('token');
-
-        // 🛑 THE BRUTAL FIX: Backend ke naye PREVIEW endpoint ko hit karo jahan Slug accept hota hai
         const response = await axios.get(`/portfolio/preview/${id}`, {
           headers: { Authorization: `Bearer ${token}` }
         });
-
         const data = response.data;
-
-        // 🛑 SAFETY CHECK: Safe JSON parsing
         let parsedCustomData = {};
         if (data.customData) {
           try {
@@ -86,7 +79,6 @@ function PreviewPortfolio() {
             console.error("JSON parse failed for customData:", parseErr);
           }
         }
-
         setPortfolio({
           ...data,
           parsedData: parsedCustomData
@@ -101,20 +93,15 @@ function PreviewPortfolio() {
     fetchMyPortfolio();
   }, [id]);
 
-  // Publish Handler
   const handlePublish = async () => {
     setPublishing(true);
     try {
       const token = localStorage.getItem('token');
-
-      // Asli numeric ID bhej rahe hain Publish karne ke liye
       await axios.put(`/portfolio/publish/${id}`, {}, {
         headers: { Authorization: `Bearer ${token}` }
       });
-
       setPortfolio(prev => ({ ...prev, isPublished: true }));
       alert("🎉 Portfolio Successfully Published!");
-
     } catch (error) {
       console.error("Error publishing", error);
       alert("Failed to publish. Check console logs.");
@@ -123,13 +110,14 @@ function PreviewPortfolio() {
     }
   };
 
-  if (loading) return <div className="p-10 text-center font-bold text-xl">Loading Preview...</div>;
+  if (loading) return (
+    <div className="p-10 text-center font-bold text-xl text-gray-500">
+      <i className="fa fa-spinner fa-spin mr-2"></i> Loading Preview...
+    </div>
+  );
   if (!portfolio) return <div className="p-10 text-center text-red-500">Portfolio not found!</div>;
 
-  // 🚀 Template Logic Extraction
   let configObj = portfolio.parsedData?.templateConfig;
-
-  // Handle Double Stringified Data
   if (typeof configObj === "string") {
     try {
       configObj = JSON.parse(configObj);
@@ -137,24 +125,17 @@ function PreviewPortfolio() {
       console.error("JSON parse failed for templateConfig:", e);
     }
   }
-
-  // Get layout name
   const templateName = configObj?.layout || portfolio.parsedData?.layout || "modern";
-
-  // Find component from registry
   const TemplateComponent = templateComponents[templateName] || ModernTemplate;
 
   return (
-    <div className="relative min-h-screen pb-24">
-      {/* 🚀 Render the Correct Template Dynamically */}
+    <div className="relative min-h-screen pb-24 bg-white">
       <TemplateComponent data={portfolio.parsedData} />
 
-      {/* Floating Control Bar */}
-      <div className="fixed bottom-0 left-0 w-full bg-white/90 backdrop-blur-md border-t border-gray-200 shadow-[0_-10px_40px_rgba(0,0,0,0.1)] p-4 z-50">
+      <div className="fixed bottom-0 left-0 w-full bg-white/95 backdrop-blur-md border-t border-gray-200 shadow-[0_-10px_40px_rgba(0,0,0,0.05)] p-4 z-50">
         <div className="max-w-6xl mx-auto flex flex-col sm:flex-row justify-between items-center gap-4">
-
           <div>
-            <h3 className="font-bold text-gray-800 text-lg">Preview Mode 👀</h3>
+            <h3 className="font-bold text-black text-lg">Preview Mode 👀</h3>
             <p className="text-sm text-gray-500">Check how your portfolio looks before making it live.</p>
           </div>
 
@@ -168,23 +149,22 @@ function PreviewPortfolio() {
                   href={`/p/${portfolio.slug}`}
                   target="_blank"
                   rel="noreferrer"
-                  className="px-6 py-2 bg-gray-900 hover:bg-black text-white font-bold rounded-lg transition-colors"
+                  className="px-6 py-2 bg-black hover:bg-gray-800 text-white font-bold rounded-lg transition-colors border border-gray-200"
                 >
-                  View Public Link ↗
+                  View Public Link <i className="fa fa-external-link-alt ml-2"></i>
                 </a>
               </div>
             ) : (
               <button
                 onClick={handlePublish}
                 disabled={publishing}
-                // FIXED TAILWIND CLASS: bg-gradient-to-r
-                className="px-8 py-2.5 bg-linear-to-r from-indigo-600 to-purple-600 hover:from-indigo-700 hover:to-purple-700 text-white font-bold rounded-lg shadow-lg hover:shadow-xl transition-all disabled:opacity-70 flex items-center gap-2"
+                className="px-8 py-2.5 bg-black hover:bg-gray-800 text-white font-bold rounded-lg shadow-sm hover:shadow-md transition-all disabled:opacity-70 flex items-center gap-2 border border-gray-200"
               >
-                {publishing ? "Publishing..." : "🚀 Publish to Web"}
+                {publishing ? <i className="fa fa-spinner fa-spin"></i> : <i className="fa fa-globe"></i>}
+                {publishing ? "Publishing..." : "Publish to Web"}
               </button>
             )}
           </div>
-
         </div>
       </div>
     </div>

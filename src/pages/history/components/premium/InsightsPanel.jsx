@@ -32,44 +32,44 @@ const InsightsPanel = ({ range }) => {
         if (delta > 0) {
           generated.push({
             text: `Your accuracy improved by ${delta.toFixed(1)}% compared to the previous period.`,
-            icon: "📈",
-            color: "text-green-600",
+            icon: "fa-arrow-up",
+            color: "text-black",
           });
         } else if (delta < 0) {
           generated.push({
             text: `Your accuracy declined by ${Math.abs(delta).toFixed(1)}% compared to the previous period.`,
-            icon: "📉",
-            color: "text-red-600",
+            icon: "fa-arrow-down",
+            color: "text-gray-500",
           });
         } else {
           generated.push({
             text: "Your accuracy remained stable compared to last period.",
-            icon: "➡️",
-            color: "text-gray-600",
+            icon: "fa-arrow-right",
+            color: "text-gray-500",
           });
         }
 
         if (badge?.badge) {
           generated.push({
             text: `Current performance level: ${badge.badge}.`,
-            icon: "🏅",
-            color: "text-indigo-600",
+            icon: "fa-trophy",
+            color: "text-black",
           });
         }
 
         if (strong.length > 0) {
           generated.push({
             text: `Your strongest topic is ${strong[0].topic} with ${strong[0].accuracy.toFixed(1)}% accuracy.`,
-            icon: "💪",
-            color: "text-green-600",
+            icon: "fa-check-circle",
+            color: "text-black",
           });
         }
 
         if (weak.length > 0) {
           generated.push({
             text: `You should improve ${weak[0].topic}. Current accuracy: ${weak[0].accuracy.toFixed(1)}%.`,
-            icon: "⚠️",
-            color: "text-orange-600",
+            icon: "fa-exclamation-triangle",
+            color: "text-gray-600",
           });
         }
 
@@ -83,9 +83,9 @@ const InsightsPanel = ({ range }) => {
   }, [range]);
 
   return (
-    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-100 hover:shadow-md transition-shadow">
-      <h3 className="text-lg font-semibold mb-4 flex items-center gap-2">
-        <span>💡</span> Performance Insights ({range})
+    <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200 hover:shadow-md transition-shadow">
+      <h3 className="text-xl font-extrabold text-black mb-4 flex items-center gap-2">
+        <i className="fa fa-lightbulb text-black"></i> Performance Insights ({range})
       </h3>
 
       {loading ? (
@@ -98,13 +98,13 @@ const InsightsPanel = ({ range }) => {
           ))}
         </div>
       ) : insights.length === 0 ? (
-        <p className="text-gray-400 text-center py-4">No insights available</p>
+        <p className="text-gray-500 text-center py-4 text-lg font-medium">No insights available</p>
       ) : (
         <ul className="space-y-4">
           {insights.map((item, i) => (
             <li key={i} className="flex items-start gap-3 text-gray-700">
-              <span className="text-xl">{item.icon}</span>
-              <span className={`flex-1 ${item.color}`}>{item.text}</span>
+              <i className={`fa ${item.icon} text-xl w-6 text-center ${item.color}`}></i>
+              <span className={`flex-1 text-base ${item.color}`}>{item.text}</span>
             </li>
           ))}
         </ul>
