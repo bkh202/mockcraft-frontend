@@ -14,23 +14,18 @@ export default function TrialBanner() {
 
   return (
     <div
-      style={{
-        background: isUrgent ? "#dc2626" : "#facc15",
-        color: isUrgent ? "#ffffff" : "#111827",
-        padding: "8px 16px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "space-between",
-        fontSize: "14px",
-        fontWeight: "500",
-        width: "100%",
-         zIndex: 9999,
-        position: "sticky",  // ✅ fixed se sticky karo
-        top: 0,
-      }}
+      className={`sticky top-0 z-50 w-full px-4 py-2.5 flex items-center justify-between text-sm sm:text-base font-bold ${
+        isUrgent
+          ? "bg-gray-900 text-white"
+          : "bg-gray-100 text-gray-800 border-b border-gray-200"
+      }`}
     >
-      <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
-        <span>{isUrgent ? "⚠️" : "🎉"}</span>
+      <div className="flex items-center gap-2 sm:gap-3">
+        <i
+          className={`fa ${isUrgent ? "fa-exclamation-triangle" : "fa-gift"} ${
+            isUrgent ? "text-red-400" : "text-gray-500"
+          }`}
+        ></i>
         <span>
           {daysLeft === 0
             ? "Your free trial expires today!"
@@ -38,34 +33,23 @@ export default function TrialBanner() {
         </span>
       </div>
 
-      <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
+      <div className="flex items-center gap-3 sm:gap-4">
         <button
           onClick={() => navigate("/upgrade")}
-          style={{
-            background: isUrgent ? "#ffffff" : "#111827",
-            color: isUrgent ? "#dc2626" : "#facc15",
-            border: "none",
-            borderRadius: "999px",
-            padding: "4px 12px",
-            fontSize: "12px",
-            fontWeight: "700",
-            cursor: "pointer",
-          }}
+          className={`px-3 py-1.5 rounded-full text-xs sm:text-sm font-extrabold transition-colors border ${
+            isUrgent
+              ? "bg-white text-gray-900 hover:bg-gray-100 border-gray-300"
+              : "bg-black text-white hover:bg-gray-800 border-gray-300"
+          }`}
         >
           Upgrade Now
         </button>
         <button
           onClick={() => setDismissed(true)}
-          style={{
-            background: "transparent",
-            border: "none",
-            cursor: "pointer",
-            fontSize: "18px",
-            opacity: 0.7,
-            color: isUrgent ? "#ffffff" : "#111827",
-          }}
+          className="text-base opacity-70 hover:opacity-100 transition-opacity"
+          aria-label="Dismiss"
         >
-          ✕
+          <i className="fa fa-times"></i>
         </button>
       </div>
     </div>

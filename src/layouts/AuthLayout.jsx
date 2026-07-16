@@ -3,6 +3,16 @@ import { useState } from "react";
 export default function AuthLayout({ children, type = "login" }) {
   const [isLoading, setIsLoading] = useState(false);
 
+  const features = [
+    { text: "AI-Adaptive Question Bank", icon: "fa-brain" },
+    { text: "Weakness Detection & Analysis", icon: "fa-search" },
+    { text: "Performance Analytics Dashboard", icon: "fa-chart-pie" },
+    { text: "Mock Tests with Real Exam Simulation", icon: "fa-clock" },
+    { text: "Resume to Portfolio", icon: "fa-file-alt" },
+    { text: "Resume Analyzer", icon: "fa-file-pdf" },
+    { text: "AI Interviewer", icon: "fa-microphone" },
+  ];
+
   return (
     <div className="min-h-screen flex flex-col lg:flex-row bg-white text-black">
       {/* Left Side - Brand/Info Section */}
@@ -29,20 +39,14 @@ export default function AuthLayout({ children, type = "login" }) {
             </p>
           </div>
 
-          {/* Features List */}
+          {/* Features List with Icons */}
           <div className="mt-8 md:mt-12 space-y-4">
-            {[
-              "AI-Adaptive Question Bank",
-              "Weakness Detection & Analysis",
-              "Performance Analytics Dashboard",
-              "Mock Tests with Real Exam Simulation",
-              "Resume to Portfolio",
-              "Resume Analyzer",
-              "AI Interviewer",
-            ].map((feature, index) => (
+            {features.map((feature, index) => (
               <div key={index} className="flex items-center gap-3">
-                <div className="w-2.5 h-2.5 bg-black rounded-full shrink-0"></div>
-                <span className="text-lg text-gray-800">{feature}</span>
+                <div className="w-8 h-8 rounded-lg bg-gray-100 flex items-center justify-center shrink-0 border border-gray-200">
+                  <i className={`fa ${feature.icon} text-black text-sm`}></i>
+                </div>
+                <span className="text-lg text-gray-800">{feature.text}</span>
               </div>
             ))}
           </div>
@@ -52,11 +56,11 @@ export default function AuthLayout({ children, type = "login" }) {
         <div className="mt-8 pt-6 border-t border-gray-200">
           <div className="flex flex-wrap gap-6 text-gray-500">
             <div>
-              <p className="text-2xl font-bold text-black">50K+</p>
+              <p className="text-2xl font-bold text-black">50+</p>
               <p className="text-sm text-gray-600">Active Learners</p>
             </div>
             <div>
-              <p className="text-2xl font-bold text-black">10K+</p>
+              <p className="text-2xl font-bold text-black">1K+</p>
               <p className="text-sm text-gray-600">Mock Tests Taken</p>
             </div>
             <div>

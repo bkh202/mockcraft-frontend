@@ -35,45 +35,49 @@ export default function PaymentStatusPage() {
     }, [orderId]);
 
     if (status === "verifying") return (
-        <div className="min-h-screen bg-gray-50 flex flex-col items-center justify-center gap-4">
-            <div className="w-10 h-10 border-4 border-indigo-200 border-t-indigo-600 rounded-full animate-spin" />
-            <p className="text-gray-500 font-medium">Verifying payment...</p>
+        <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
+            <div className="animate-spin rounded-full h-12 w-12 border-4 border-gray-200 border-t-black"></div>
+            <p className="text-gray-600 font-medium text-lg">Verifying payment...</p>
         </div>
     );
 
     if (status === "success") return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl p-10 shadow-sm border border-gray-100 text-center max-w-md w-full">
-                <div className="text-5xl mb-4 animate-bounce">👑</div>
-                <h2 className="text-2xl font-black text-gray-900 mb-2">
-                    Premium <span className="text-indigo-600">Activated!</span>
+        <div className="min-h-screen bg-white flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-10 text-center max-w-md w-full">
+                <div className="text-5xl mb-4 flex justify-center">
+                    <i className="fa fa-crown text-black"></i>
+                </div>
+                <h2 className="text-3xl font-extrabold text-black mb-2">
+                    Premium <span className="text-gray-700">Activated!</span>
                 </h2>
-                <p className="text-gray-500 text-sm mb-6">
-                    Welcome to MockCraft Premium! Sab features unlock hain.
+                <p className="text-gray-600 text-base mb-6">
+                    Welcome to MockCraft Premium! All features are unlocked.
                 </p>
                 <button
                     onClick={() => navigate("/dashboard")}
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition"
+                    className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3.5 rounded-xl transition border border-gray-300"
                 >
-                    Go to Dashboard →
+                    Go to Dashboard <i className="fa fa-arrow-right ml-2"></i>
                 </button>
             </div>
         </div>
     );
 
     return (
-        <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-            <div className="bg-white rounded-2xl p-10 shadow-sm border border-gray-100 text-center max-w-md w-full">
-                <div className="text-5xl mb-4">❌</div>
-                <h2 className="text-2xl font-black text-gray-900 mb-2">Payment Failed</h2>
-                <p className="text-gray-500 text-sm mb-6">
-                    Kuch issue aaya — dobara try karo.
+        <div className="min-h-screen bg-white flex items-center justify-center p-4">
+            <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-10 text-center max-w-md w-full">
+                <div className="text-5xl mb-4 flex justify-center">
+                    <i className="fa fa-times-circle text-gray-600"></i>
+                </div>
+                <h2 className="text-3xl font-extrabold text-black mb-2">Payment Failed</h2>
+                <p className="text-gray-600 text-base mb-6">
+                    Something went wrong — please try again.
                 </p>
                 <button
                     onClick={() => navigate("/upgrade")}
-                    className="w-full bg-indigo-600 hover:bg-indigo-700 text-white font-bold py-3 rounded-xl transition"
+                    className="w-full bg-black hover:bg-gray-800 text-white font-bold py-3.5 rounded-xl transition border border-gray-300"
                 >
-                    Try Again
+                    Try Again <i className="fa fa-redo ml-2"></i>
                 </button>
             </div>
         </div>

@@ -53,34 +53,51 @@ export default function ForgotPassword() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8 w-full max-w-md">
+    <div className="min-h-screen bg-white flex items-center justify-center p-4">
+      <div className="bg-white rounded-2xl shadow-sm border border-gray-200 p-8 w-full max-w-md">
 
         {/* Step Indicator */}
         <div className="flex items-center justify-center gap-2 mb-6">
           {["Email", "OTP", "Password"].map((label, i) => (
             <div key={i} className="flex items-center gap-2">
-              <div className={`w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold
-                ${step > i + 1 ? "bg-green-500 text-white" :
-                  step === i + 1 ? "bg-indigo-600 text-white" :
-                  "bg-gray-200 text-gray-400"}`}>
-                {step > i + 1 ? "✓" : i + 1}
+              <div
+                className={`w-8 h-8 rounded-full flex items-center justify-center text-xs font-bold border ${
+                  step > i + 1
+                    ? "bg-gray-200 text-black border-gray-300"
+                    : step === i + 1
+                    ? "bg-black text-white border-black"
+                    : "bg-white text-gray-400 border-gray-300"
+                }`}
+              >
+                {step > i + 1 ? <i className="fa fa-check text-xs"></i> : i + 1}
               </div>
-              <span className={`text-xs font-medium ${step === i + 1 ? "text-indigo-600" : "text-gray-400"}`}>
+              <span
+                className={`text-sm font-bold ${
+                  step === i + 1 ? "text-black" : "text-gray-400"
+                }`}
+              >
                 {label}
               </span>
-              {i < 2 && <div className={`w-8 h-0.5 ${step > i + 1 ? "bg-green-500" : "bg-gray-200"}`} />}
+              {i < 2 && (
+                <div
+                  className={`w-8 h-0.5 ${
+                    step > i + 1 ? "bg-gray-400" : "bg-gray-200"
+                  }`}
+                />
+              )}
             </div>
           ))}
         </div>
 
         {/* Step 1 — Email */}
         {step === 1 && (
-          <form onSubmit={handleSendOtp} className="space-y-4">
+          <form onSubmit={handleSendOtp} className="space-y-5">
             <div className="text-center mb-4">
-              <div className="text-3xl mb-2">🔐</div>
-              <h2 className="text-xl font-black text-gray-900">Forgot Password?</h2>
-              <p className="text-sm text-gray-500 mt-1">Enter your email — we'll send an OTP</p>
+              <div className="text-3xl mb-3 flex justify-center">
+                <i className="fa fa-lock text-black"></i>
+              </div>
+              <h2 className="text-2xl font-extrabold text-black">Forgot Password?</h2>
+              <p className="text-base text-gray-600 mt-1">Enter your email — we'll send an OTP</p>
             </div>
             <input
               type="email"
@@ -88,47 +105,61 @@ export default function ForgotPassword() {
               onChange={(e) => setEmail(e.target.value)}
               placeholder="you@example.com"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-black focus:outline-none text-base text-black"
             />
-            {error && <p className="text-sm text-red-600 text-center">{error}</p>}
-            <button type="submit" disabled={loading}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition">
-              {loading ? "Sending OTP..." : "Send OTP →"}
+            {error && <p className="text-sm text-gray-600 text-center flex items-center justify-center gap-2"><i className="fa fa-exclamation-circle"></i> {error}</p>}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-black hover:bg-gray-800 disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition border border-gray-300"
+            >
+              {loading ? <><i className="fa fa-spinner fa-spin mr-2"></i> Sending OTP...</> : "Send OTP →"}
             </button>
-            <button type="button" onClick={() => navigate("/login")}
-              className="w-full text-sm text-gray-400 hover:text-gray-600 mt-2">
-              ← Back to Login
+            <button
+              type="button"
+              onClick={() => navigate("/login")}
+              className="w-full text-sm text-gray-500 hover:text-black transition font-medium mt-2"
+            >
+              <i className="fa fa-arrow-left mr-1"></i> Back to Login
             </button>
           </form>
         )}
 
         {/* Step 2 — OTP */}
         {step === 2 && (
-          <form onSubmit={handleVerifyOtp} className="space-y-4">
+          <form onSubmit={handleVerifyOtp} className="space-y-5">
             <div className="text-center mb-4">
-              <div className="text-3xl mb-2">📧</div>
-              <h2 className="text-xl font-black text-gray-900">Enter OTP</h2>
-              <p className="text-sm text-gray-500 mt-1">
-                OTP sent to <span className="font-semibold text-indigo-600">{email}</span>
+              <div className="text-3xl mb-3 flex justify-center">
+                <i className="fa fa-envelope text-black"></i>
+              </div>
+              <h2 className="text-2xl font-extrabold text-black">Enter OTP</h2>
+              <p className="text-base text-gray-600 mt-1">
+                OTP sent to <span className="font-bold text-black">{email}</span>
               </p>
-              <p className="text-xs text-gray-400 mt-1">Valid for 10 minutes</p>
+              <p className="text-sm text-gray-400 mt-1">Valid for 10 minutes</p>
             </div>
             <input
               type="text"
               value={otp}
-              onChange={(e) => setOtp(e.target.value.replace(/\D/, "").slice(0, 6))}
+              onChange={(e) => setOtp(e.target.value.replace(/\D/g, "").slice(0, 6))}
               placeholder="Enter 6-digit OTP"
               maxLength={6}
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none text-center text-2xl tracking-widest font-bold"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-black focus:outline-none text-center text-2xl tracking-widest font-bold text-black"
             />
-            {error && <p className="text-sm text-red-600 text-center">{error}</p>}
-            <button type="submit" disabled={loading || otp.length !== 6}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition">
-              {loading ? "Verifying..." : "Verify OTP →"}
+            {error && <p className="text-sm text-gray-600 text-center flex items-center justify-center gap-2"><i className="fa fa-exclamation-circle"></i> {error}</p>}
+            <button
+              type="submit"
+              disabled={loading || otp.length !== 6}
+              className="w-full bg-black hover:bg-gray-800 disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition border border-gray-300"
+            >
+              {loading ? <><i className="fa fa-spinner fa-spin mr-2"></i> Verifying...</> : "Verify OTP →"}
             </button>
-            <button type="button" onClick={() => handleSendOtp({ preventDefault: () => {} })}
-              className="w-full text-sm text-indigo-500 hover:text-indigo-700 mt-1">
+            <button
+              type="button"
+              onClick={() => handleSendOtp({ preventDefault: () => {} })}
+              className="w-full text-sm text-gray-500 hover:text-black transition font-medium"
+            >
               Resend OTP
             </button>
           </form>
@@ -136,11 +167,13 @@ export default function ForgotPassword() {
 
         {/* Step 3 — New Password */}
         {step === 3 && (
-          <form onSubmit={handleResetPassword} className="space-y-4">
+          <form onSubmit={handleResetPassword} className="space-y-5">
             <div className="text-center mb-4">
-              <div className="text-3xl mb-2">🔑</div>
-              <h2 className="text-xl font-black text-gray-900">New Password</h2>
-              <p className="text-sm text-gray-500 mt-1">Choose a strong password</p>
+              <div className="text-3xl mb-3 flex justify-center">
+                <i className="fa fa-key text-black"></i>
+              </div>
+              <h2 className="text-2xl font-extrabold text-black">New Password</h2>
+              <p className="text-base text-gray-600 mt-1">Choose a strong password</p>
             </div>
             <div className="relative">
               <input
@@ -149,11 +182,14 @@ export default function ForgotPassword() {
                 onChange={(e) => setNewPassword(e.target.value)}
                 placeholder="New password"
                 required
-                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none pr-12"
+                className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-black focus:outline-none pr-12 text-base text-black"
               />
-              <button type="button" onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-3 flex items-center text-gray-400">
-                {showPassword ? "🙈" : "👁"}
+              <button
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-3 flex items-center text-gray-500 hover:text-black text-lg"
+              >
+                <i className={`fa ${showPassword ? "fa-eye-slash" : "fa-eye"}`}></i>
               </button>
             </div>
             <input
@@ -162,12 +198,15 @@ export default function ForgotPassword() {
               onChange={(e) => setConfirmPassword(e.target.value)}
               placeholder="Confirm new password"
               required
-              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-indigo-500 focus:outline-none"
+              className="w-full px-4 py-3 border border-gray-300 rounded-xl focus:ring-2 focus:ring-black focus:border-black focus:outline-none text-base text-black"
             />
-            {error && <p className="text-sm text-red-600 text-center">{error}</p>}
-            <button type="submit" disabled={loading}
-              className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white font-bold py-3 rounded-xl transition">
-              {loading ? "Resetting..." : "Reset Password ✓"}
+            {error && <p className="text-sm text-gray-600 text-center flex items-center justify-center gap-2"><i className="fa fa-exclamation-circle"></i> {error}</p>}
+            <button
+              type="submit"
+              disabled={loading}
+              className="w-full bg-black hover:bg-gray-800 disabled:opacity-60 text-white font-bold py-3.5 rounded-xl transition border border-gray-300"
+            >
+              {loading ? <><i className="fa fa-spinner fa-spin mr-2"></i> Resetting...</> : "Reset Password ✓"}
             </button>
           </form>
         )}
